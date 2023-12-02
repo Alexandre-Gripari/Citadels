@@ -1,6 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
-public class Constructions extends Cards {
+public class Constructions extends Card {
 
     private int value;
 

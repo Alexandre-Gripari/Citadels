@@ -1,10 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
-public abstract class Cards {
+public abstract class Card {
     protected String name;
     protected Color color;
 
-    protected Cards(String name, Color color){
+    protected Card(String name, Color color){
         this.name=name;
         this.color=color;
     }

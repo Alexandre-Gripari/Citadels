@@ -1,4 +1,4 @@
-package main.java.fr.cotedazur.univ.polytech.startingpoint.cards;
+package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 public enum Color {
     RELIGIEUX,
