@@ -7,6 +7,12 @@ public class City{
     private ArrayList<Constructions> city;
 
     public City() {
-        ArrayList<Constructions> city= new ArrayList<>();
+        city = new ArrayList<>();
     }
+
+    public void add(Constructions c) { city.add(c); }
+
+    public Constructions get(int i) { return city.get(i); }
+
+    public Integer size() { return city.size(); }
 }
