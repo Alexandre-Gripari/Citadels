@@ -51,20 +51,26 @@ public class Player {
         Constructions c2 = d.draw();
         if (c1.getValue() <= c2.getValue()){
             d.add(c2);
+            System.out.println("Le joueur " + number + " a pioché " + c1);
             return c1;
         }
         else {
             d.add(c1);
+            System.out.println("Le joueur " + number + " a pioché " + c2);
             return c2;
         }
     }
 
-    public void takeGold(){ gold += 2; }
+    public void takeGold(){
+        gold += 2;
+        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
+    }
 
     public void buildConstruction(){
         for (int i=0; i<hand.size(); i++){
             int valueOfConstruction = hand.get(i).getValue();
             if (gold >= valueOfConstruction){
+                System.out.println("Le joueur " + number + " construit " + hand.get(i));
                 gold -= valueOfConstruction;
                 city.add(hand.get(i));
                 hand.remove(i);

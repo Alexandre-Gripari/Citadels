@@ -40,7 +40,7 @@ public class Game {
         draw.addXConstructions(new Constructions("Port", Color.COMMERCIAL, 4), 3);
         draw.addXConstructions(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5), 2);
 
-        //draw.shuffle();
+        draw.shuffle();
 
     }
 
@@ -49,7 +49,9 @@ public class Game {
     }
 
     public boolean isFinished() {
-        return nbTurn == 3;
+        for (Player player : players)
+            if (player.getCity().size() >= 3) return true;
+        return false;
     }
 
     public Player[] getPlayers() {
@@ -63,8 +65,10 @@ public class Game {
     public void play() {
         while(!isFinished()) {
             nbTurn++;
+            System.out.println("Tour " + (int) nbTurn + " : ");
             for(Player player : players) {
-                //player.play();
+                player.play(draw);
+                System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
     }

@@ -15,4 +15,11 @@ public class City{
     public Constructions get(int i) { return city.get(i); }
 
     public Integer size() { return city.size(); }
+
+    public String toString() {
+        String ville = "";
+        for (Constructions constructions : city)
+            ville += constructions + ", ";
+        return ville;
+    }
 }

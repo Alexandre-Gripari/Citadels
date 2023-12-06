@@ -24,4 +24,11 @@ public class Hand{ // extends Arraylist ?
 
     public void remove(int i) { hand.remove(i); }
 
+    public  String toString() {
+        String main = "";
+        for (Constructions constructions : hand)
+            main += constructions + " ";
+        return main;
+    }
+
 }
