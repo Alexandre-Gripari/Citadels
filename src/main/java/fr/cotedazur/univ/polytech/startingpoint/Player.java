@@ -5,7 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private int number;
     private int gold;
     private Hand hand;
@@ -45,6 +45,7 @@ public class Player {
         buildConstruction();
     }
 
+
     /* Renvoie la construction (quartier) la moins chère entre les 2 en haut de la pioche */
     public Constructions takeConstruction(Draw d){
         Constructions c1 = d.draw();
@@ -78,8 +79,16 @@ public class Player {
             }
         }
     }
+
+    @Override
     public String toString(){
         return "Player " + this.getNumber();
     }
+
+    @Override
+    public int compareTo(Player other){
+        return this.getCity().compareTo(other.getCity());
+    }
+
 }
 

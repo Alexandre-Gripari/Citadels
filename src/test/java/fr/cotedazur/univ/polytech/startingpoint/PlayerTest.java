@@ -93,4 +93,18 @@ class PlayerTest {
 
         assertEquals(1, p1.getGold());
     }
+
+    @Test
+    void testcompareTo(){
+        init();
+        assertEquals(0, p1.compareTo(p2));
+        p1.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        assertEquals(1, p1.compareTo(p2));
+        p2.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        assertEquals(0, p1.compareTo(p2));
+        p1.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        assertEquals(1, p1.compareTo(p2));
+        p2.getCity().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
+        assertEquals(-2, p1.compareTo(p2));
+    }
 }

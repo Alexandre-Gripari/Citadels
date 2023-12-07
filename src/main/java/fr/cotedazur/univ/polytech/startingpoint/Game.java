@@ -4,9 +4,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Game {
 
@@ -46,6 +44,12 @@ public class Game {
 
         draw.shuffle();
 
+        for (int i = 0; i < 4; i++) {
+            for (Player player : players) {
+                player.getHand().add(draw.draw());
+            }
+        }
+
     }
 
     public Draw getDraw() {
@@ -75,20 +79,17 @@ public class Game {
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
-        switch(getPlayers()[0].getCity().compareTo(getPlayers()[1].getCity())){
-            case 1:
-                System.out.println("Le joueur 1 gagne avec "+getPlayers()[0].getCity().cityValue()+" points.\nLe joueur 2 finit lamentablement avec "+getPlayers()[1].getCity().cityValue()+ " points.");
-                break;
-            case -1:
-                System.out.println("Le joueur 2 gagne avec "+getPlayers()[1].getCity().cityValue()+" points.\nLe joueur 1 finit misérablement avec "+getPlayers()[0].getCity().cityValue()+ " points.");
-                break;
-            case 0:
-                System.out.println("Il y a égalité avec "+getPlayers()[0].getCity().cityValue()+" points.");
-                break;
+        sortPlayers();
+        if (players[0].getCity().cityValue() == players[1].getCity().cityValue()) System.out.println("Egalité ! Les deux joueurs ont " + players[0].getCity().cityValue() + " points !");
+        else {
+            System.out.println("Le joueur " + players[1].getNumber() + " a gagné avec " + players[1].getCity().cityValue() + " points !");
+            System.out.println("Le joueur " + players[0].getNumber() + " a perdu lamentablement avec " + players[0].getCity().cityValue() + " points !");
         }
+
     }
 
-
-
+    public void sortPlayers(){
+        Arrays.sort(players);
+    }
 
 }

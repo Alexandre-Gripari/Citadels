@@ -23,15 +23,10 @@ public class City{
         return value;
     }
     public int compareTo(City other){
-        if(cityValue()-other.cityValue()<0){
-            return -1;
-        }if(cityValue()-other.cityValue()>0){
-            return 1;
-        }else{
-            return 0;
-        }
+        return this.cityValue()-other.cityValue();
     }
 
+    @Override
     public String toString() {
         String ville = "";
         for (Constructions constructions : city)

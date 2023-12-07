@@ -46,8 +46,15 @@ class CityTest {
 
     @Test
     void compareTo(){
-        assertEquals(-1,city1.compareTo(city2));
-        assertEquals(1,city2.compareTo(city1));
+        assertEquals(-9,city1.compareTo(city2));
+        assertEquals(9,city2.compareTo(city1));
+
+        assertEquals(0,city1.compareTo(city1));
+
+        assertEquals(0,city2.compareTo(city2));
+        assertEquals(0,city3.compareTo(city3));
+
         assertEquals(0,city1.compareTo(city3));
+        assertEquals(0,city3.compareTo(city1));
     }
 }

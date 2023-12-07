@@ -17,6 +17,7 @@ public abstract class Card {
         return this.color;
     }
 
+    @Override
     public String toString(){
         return this.name;
     }
