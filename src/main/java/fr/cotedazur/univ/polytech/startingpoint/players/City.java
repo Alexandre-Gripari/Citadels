@@ -15,6 +15,22 @@ public class City{
     public Constructions get(int i) { return city.get(i); }
 
     public Integer size() { return city.size(); }
+    public int cityValue(){
+        int value=0;
+        for(int i=0;i<this.size();i++){
+            value+=this.get(i).getValue();
+        }
+        return value;
+    }
+    public int compareTo(City other){
+        if(cityValue()-other.cityValue()<0){
+            return -1;
+        }if(cityValue()-other.cityValue()>0){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 
     public String toString() {
         String ville = "";

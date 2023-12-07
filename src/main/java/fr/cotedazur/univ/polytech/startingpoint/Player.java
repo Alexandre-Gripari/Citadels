@@ -78,7 +78,6 @@ public class Player {
             }
         }
     }
-
     public String toString(){
         return "Player " + this.getNumber();
     }

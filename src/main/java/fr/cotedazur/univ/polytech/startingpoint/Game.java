@@ -4,6 +4,10 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class Game {
 
     private Player[] players;
@@ -66,13 +70,23 @@ public class Game {
         while(!isFinished()) {
             nbTurn++;
             System.out.println("Tour " + (int) nbTurn + " : ");
-            for(Player player : players) {
+            for (Player player : players) {
                 player.play(draw);
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
+        switch(getPlayers()[0].getCity().compareTo(getPlayers()[1].getCity())){
+            case 1:
+                System.out.println("Le joueur 1 gagne avec "+getPlayers()[0].getCity().cityValue()+" points.\nLe joueur 2 finit lamentablement avec "+getPlayers()[1].getCity().cityValue()+ " points.");
+                break;
+            case -1:
+                System.out.println("Le joueur 2 gagne avec "+getPlayers()[1].getCity().cityValue()+" points.\nLe joueur 1 finit misérablement avec "+getPlayers()[0].getCity().cityValue()+ " points.");
+                break;
+            case 0:
+                System.out.println("Il y a égalité avec "+getPlayers()[0].getCity().cityValue()+" points.");
+                break;
+        }
     }
-
 
 
 

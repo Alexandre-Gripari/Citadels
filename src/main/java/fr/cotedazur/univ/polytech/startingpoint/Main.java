@@ -1,8 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.Game;
-import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 public class Main {
@@ -15,7 +13,6 @@ public class Main {
             for (int i = 0; i < 4; i++)
                 player.getHand().add(game.getDraw().draw());
         }
-
         game.play();
     }
 
