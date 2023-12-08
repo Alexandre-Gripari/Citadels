@@ -5,5 +5,6 @@ public enum Color {
     NOBLE,
     SOLDATESQUE,
     COMMERCIAL,
-    MERVEILLEUX
+    MERVEILLEUX,
+    NEUTRE;
 }
