@@ -26,10 +26,10 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[1].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        game.sortPlayers();
+        game.sortPlayersByPoints();
         assertEquals(1, game.getPlayers()[1].getNumber());
         game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 4));
-        game.sortPlayers();
+        game.sortPlayersByPoints();
         assertEquals(2, game.getPlayers()[1].getNumber());
     }
 

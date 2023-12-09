@@ -1,16 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Game {
 
     private Player[] players;
     private double nbTurn;
     private Draw draw;
+    private List<Character> characters;
 
     public Game(Player[] players) {
         this.players = players;
@@ -50,6 +53,7 @@ public class Game {
             }
         }
 
+        characters = Arrays.asList(Character.values());
     }
 
     public Draw getDraw() {
@@ -73,13 +77,14 @@ public class Game {
     public void play() {
         while(!isFinished()) {
             nbTurn++;
+            choiceOfCharacter();
             System.out.println("Tour " + (int) nbTurn + " : ");
             for (Player player : players) {
                 player.play(draw);
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
-        sortPlayers();
+        sortPlayersByPoints();
         if (players[0].getCity().cityValue() == players[1].getCity().cityValue()) System.out.println("Egalité ! Les deux joueurs ont " + players[0].getCity().cityValue() + " points !");
         else {
             System.out.println("Le joueur " + players[1].getNumber() + " a gagné avec " + players[1].getCity().cityValue() + " points !");
@@ -88,8 +93,14 @@ public class Game {
 
     }
 
-    public void sortPlayers(){
+    public void sortPlayersByPoints(){
         Arrays.sort(players);
+    }
+
+    public void choiceOfCharacter(){
+        for (Player player : players) {
+            player.chooseCharacter(characters);
+        }
     }
 
 }
