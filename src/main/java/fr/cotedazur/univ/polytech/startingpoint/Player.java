@@ -48,6 +48,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void play(Draw draw){
+        System.out.println("Le joueur " + number + " est le " + character.getName());
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
         buildConstruction();
@@ -101,7 +102,7 @@ public class Player implements Comparable<Player> {
     public void chooseCharacter(List<Character> characters){
         character = characters.get(0);
         characters.remove(0);
-        System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
+        //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
     }
 
 }

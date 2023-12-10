@@ -42,6 +42,29 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        assertFalse(game.isFinished());
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         assertTrue(game.isFinished());
+    }
+
+    @Test
+    void testChoiceOfCharacter() {
+        Player player1 = new Player(1, new Hand());
+        Player player2 = new Player(2, new Hand());
+        Player[] players = {player1, player2};
+        Game game = new Game(players);
+        game.init();
+        assertEquals(8, game.getCharacters().size());
+        game.discardCharacter();
+        assertEquals(5, game.getCharacters().size());
+        game.choiceOfCharacter();
+        assertEquals(8, game.getCharacters().size());
+
+
+
     }
 }

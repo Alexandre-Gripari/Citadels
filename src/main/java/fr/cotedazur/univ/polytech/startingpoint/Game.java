@@ -5,8 +5,10 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Game {
 
@@ -14,6 +16,7 @@ public class Game {
     private double nbTurn;
     private Draw draw;
     private List<Character> characters;
+    private Character[] charactersDiscarded = new Character[3];
 
     public Game(Player[] players) {
         this.players = players;
@@ -53,7 +56,7 @@ public class Game {
             }
         }
 
-        characters = Arrays.asList(Character.values());
+        characters = new ArrayList<>(List.of(Character.values()));
     }
 
     public Draw getDraw() {
@@ -62,7 +65,7 @@ public class Game {
 
     public boolean isFinished() {
         for (Player player : players)
-            if (player.getCity().size() >= 3) return true;
+            if (player.getCity().size() >= 8) return true;
         return false;
     }
 
@@ -74,11 +77,21 @@ public class Game {
         return nbTurn;
     }
 
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public Character[] getCharactersDiscarded() {
+        return charactersDiscarded;
+    }
+
+
     public void play() {
         while(!isFinished()) {
             nbTurn++;
+            discardCharacter();
             choiceOfCharacter();
-            System.out.println("Tour " + (int) nbTurn + " : ");
+            System.out.println("\nTour " + (int) nbTurn + " : ");
             for (Player player : players) {
                 player.play(draw);
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
@@ -101,6 +114,28 @@ public class Game {
         for (Player player : players) {
             player.chooseCharacter(characters);
         }
+        for (Player player : players) {
+            characters.add(player.getCharacter());
+        }
+        characters.addAll(Arrays.asList(charactersDiscarded));
     }
+
+    public void discardCharacter(){
+        Random random = new Random();
+        for (int i = 0; i < 2; i++) {
+            int randoms = random.nextInt(characters.size());
+            Character characterDiscarded = characters.get(randoms);
+            System.out.println("Le personnage " + characterDiscarded + " a été défaussé.");
+            charactersDiscarded[i] = characterDiscarded;
+            characters.remove(characterDiscarded);
+        }
+
+        int randoms = random.nextInt(characters.size());
+        Character characterDiscarded = characters.get(randoms);
+        charactersDiscarded[2] = characterDiscarded;
+        characters.remove(characterDiscarded);
+        System.out.println("Un personnage a été défaussé face cachée.\n");
+    }
+
 
 }
