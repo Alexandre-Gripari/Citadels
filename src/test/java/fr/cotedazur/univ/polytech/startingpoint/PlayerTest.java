@@ -41,6 +41,7 @@ class PlayerTest {
         p2 = new Player(2, 1, hand2, new City());
         p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
     }
 
     @Test

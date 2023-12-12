@@ -5,10 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
 
@@ -89,9 +86,10 @@ public class Game {
     public void play() {
         while(!isFinished()) {
             nbTurn++;
+            System.out.println("\nTour " + (int) nbTurn + " : ");
             discardCharacter();
             choiceOfCharacter();
-            System.out.println("\nTour " + (int) nbTurn + " : ");
+            sortPlayersByCharacter();
             for (Player player : players) {
                 player.play(draw);
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
@@ -135,6 +133,11 @@ public class Game {
         charactersDiscarded[2] = characterDiscarded;
         characters.remove(characterDiscarded);
         System.out.println("Un personnage a été défaussé face cachée.\n");
+    }
+
+    //tri selon le numéro du personnage du joueur
+    public void sortPlayersByCharacter(){
+        Arrays.sort(players, Comparator.comparingInt(p -> p.getCharacter().getNumber()));
     }
 
 

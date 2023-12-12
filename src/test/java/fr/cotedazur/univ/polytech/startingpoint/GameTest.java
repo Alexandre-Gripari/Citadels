@@ -63,8 +63,21 @@ class GameTest {
         assertEquals(5, game.getCharacters().size());
         game.choiceOfCharacter();
         assertEquals(8, game.getCharacters().size());
+    }
 
 
-
+    @Test
+    void testSortPLayerByCharacter() {
+        Player player1 = new Player(1, new Hand());
+        Player player2 = new Player(2, new Hand());
+        Player[] players = {player1, player2};
+        Game game = new Game(players);
+        game.init();
+        for (int i = 0; i < 20; i++)  {
+            game.discardCharacter();
+            game.choiceOfCharacter();
+            game.sortPlayersByCharacter();
+            assertTrue(game.getPlayers()[0].getCharacter().getNumber() <= game.getPlayers()[1].getCharacter().getNumber());
+        }
     }
 }
