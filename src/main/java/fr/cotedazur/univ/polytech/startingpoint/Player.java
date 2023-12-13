@@ -67,6 +67,10 @@ public class Player implements Comparable<Player> {
         System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
     }
 
+    public void addGold(int gold) {
+        this.gold += gold;
+    }
+
     public void buildConstruction(){
         for (int i=0; i<hand.size(); i++){
             int valueOfConstruction = hand.get(i).getValue();

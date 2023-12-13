@@ -22,18 +22,41 @@ public enum Character {
     },
 
     EVEQUE("Évêque", Color.RELIGIEUX, 5){
-        public void ability(){return;}
+        public void ability(Player player){
+            int nbOfReligiousConstructions = 0;
+            for (int i = 0; i < player.getCity().size(); i++) {
+                if (player.getCity().get(i).getColor() == this.getColor()) nbOfReligiousConstructions++;
+            }
+            player.addGold(nbOfReligiousConstructions);
+        }
     },
 
     MARCHAND("Marchand", Color.COMMERCIAL, 6){
-        public void ability(){return;}
+        public void ability(Player player){
+            int nbOfCommercialConstructions = 1;
+            for (int i = 0; i < player.getCity().size(); i++) {
+                if (player.getCity().get(i).getColor() == this.getColor()) nbOfCommercialConstructions++;
+            }
+            player.addGold(nbOfCommercialConstructions);
+        }
     },
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
         public void ability(){return;}
     },
 
     CONDOTIERE("Condotière", Color.SOLDATESQUE, 8){
-        public void ability(){return;}
+        public void ability(Player selfPlayer, Player targetedPlayer, int index){
+            int nbOfArmyConstructions = 0;
+            for (int i = 0; i < selfPlayer.getCity().size(); i++) {
+                if (selfPlayer.getCity().get(i).getColor() == this.getColor()) nbOfArmyConstructions++;
+            }
+            selfPlayer.addGold(nbOfArmyConstructions);
+            if (targetedPlayer != null) {
+                int cost = targetedPlayer.getCity().get(index).getValue() - 1;
+                targetedPlayer.getCity().remove(index);
+                selfPlayer.addGold(-cost);
+            }
+        }
     };
 
     private String name;
