@@ -74,6 +74,7 @@ public enum Character {
     public Color getColor() { return this.color; }
 
     public int getNumber() { return this.number; }
+
 }
 
 

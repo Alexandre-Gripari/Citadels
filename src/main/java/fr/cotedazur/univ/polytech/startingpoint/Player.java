@@ -1,15 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+
+import java.util.List;
 
 public class Player implements Comparable<Player> {
     private int number;
     private int gold;
     private Hand hand;
     private City city;
+    private Character character;
 
     public Player(int number, Hand hand){
         this(number, 2, hand, new City());
@@ -21,6 +25,10 @@ public class Player implements Comparable<Player> {
         this.gold = gold;
         this.hand = hand;
         this.city = city;
+    }
+
+    public Character getCharacter() {
+        return character;
     }
 
     public int getNumber() {
@@ -40,6 +48,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void play(Draw draw){
+        System.out.println("Le joueur " + number + " est le " + character.getName());
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
         buildConstruction();
@@ -92,6 +101,12 @@ public class Player implements Comparable<Player> {
     @Override
     public int compareTo(Player other){
         return this.getCity().compareTo(other.getCity());
+    }
+
+    public void chooseCharacter(List<Character> characters){
+        character = characters.get(0);
+        characters.remove(0);
+        //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
     }
 
 }

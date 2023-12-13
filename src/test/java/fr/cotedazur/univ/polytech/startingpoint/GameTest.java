@@ -26,10 +26,10 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[1].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        game.sortPlayers();
+        game.sortPlayersByPoints();
         assertEquals(1, game.getPlayers()[1].getNumber());
         game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 4));
-        game.sortPlayers();
+        game.sortPlayersByPoints();
         assertEquals(2, game.getPlayers()[1].getNumber());
     }
 
@@ -42,6 +42,42 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        assertFalse(game.isFinished());
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         assertTrue(game.isFinished());
+    }
+
+    @Test
+    void testChoiceOfCharacter() {
+        Player player1 = new Player(1, new Hand());
+        Player player2 = new Player(2, new Hand());
+        Player[] players = {player1, player2};
+        Game game = new Game(players);
+        game.init();
+        assertEquals(8, game.getCharacters().size());
+        game.discardCharacter();
+        assertEquals(5, game.getCharacters().size());
+        game.choiceOfCharacter();
+        assertEquals(8, game.getCharacters().size());
+    }
+
+
+    @Test
+    void testSortPLayerByCharacter() {
+        Player player1 = new Player(1, new Hand());
+        Player player2 = new Player(2, new Hand());
+        Player[] players = {player1, player2};
+        Game game = new Game(players);
+        game.init();
+        for (int i = 0; i < 20; i++)  {
+            game.discardCharacter();
+            game.choiceOfCharacter();
+            game.sortPlayersByCharacter();
+            assertTrue(game.getPlayers()[0].getCharacter().getNumber() <= game.getPlayers()[1].getCharacter().getNumber());
+        }
     }
 }
