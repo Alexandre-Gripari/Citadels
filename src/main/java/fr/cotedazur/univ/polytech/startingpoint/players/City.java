@@ -12,6 +12,8 @@ public class City{
 
     public void add(Constructions c) { city.add(c); }
 
+    public void remove(int i) { city.remove(i); }
+
     public Constructions get(int i) { return city.get(i); }
 
     public Integer size() { return city.size(); }
