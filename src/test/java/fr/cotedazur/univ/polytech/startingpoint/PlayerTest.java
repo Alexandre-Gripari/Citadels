@@ -107,4 +107,18 @@ class PlayerTest {
         p2.getCity().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
         assertEquals(-2, p1.compareTo(p2));
     }
+
+    @Test
+    void testDraw(){
+        init();
+        p1.draw(draw, 1);
+        assertEquals(3, p1.getHand().size());
+        assertEquals(4, draw.size());
+        p1.draw(draw, 2);
+        assertEquals(5, p1.getHand().size());
+        assertEquals(2, draw.size());
+        p1.draw(draw, 3);
+        assertEquals(8, p1.getHand().size());
+        assertEquals(0, draw.size());
+    }
 }

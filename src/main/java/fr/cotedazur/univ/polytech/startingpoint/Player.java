@@ -90,5 +90,12 @@ public class Player implements Comparable<Player> {
         return this.getCity().compareTo(other.getCity());
     }
 
+    public void draw(Draw d, int nb){
+        for(int i=0;i<nb;i++){
+            this.hand.add(d.draw());
+        }
+    }
+
+
 }
 

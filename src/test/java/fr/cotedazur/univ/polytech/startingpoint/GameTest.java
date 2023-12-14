@@ -44,4 +44,6 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         assertTrue(game.isFinished());
     }
+
+
 }

@@ -49,4 +49,7 @@ public class Draw {
     	return drawDeck.size();
     }
 
+    public boolean contains(Constructions x) {
+        return drawDeck.contains(x);
+    }
 }

@@ -1,7 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 public enum Character {
 
@@ -14,7 +16,28 @@ public enum Character {
     },
 
     MAGICIEN("Magicien", Color.NEUTRE, 3){
-        public void ability(){return;}
+        @Override
+        public void ability(Draw draw, Player ... players){
+            Hand hand = players[0].getHand();
+            int size = hand.size();
+            if (players.length == 1) {
+                for (int i = 0; i < size; i++) {
+                    draw.add(hand.get(0));
+                    hand.remove(0);
+                }
+                players[0].draw(draw, size);
+
+            }
+            else {
+                Hand hand2 = players[1].getHand();
+                Hand tmp = new Hand();
+                tmp.setHand(hand);
+                hand.setHand(hand2);
+                hand2.setHand(tmp);
+            }
+
+
+        }
     },
 
     ROI("Roi", Color.NEUTRE, 4){
@@ -29,7 +52,9 @@ public enum Character {
         public void ability(){return;}
     },
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
-        public void ability(){return;}
+        public void ability(Draw draw,Player ... players){
+            players[0].draw(draw,2);
+        }
     },
 
     CONDOTIERE("Condotière", Color.SOLDATESQUE, 8){
@@ -51,6 +76,11 @@ public enum Character {
     public Color getColor() { return this.color; }
 
     public int getNumber() { return this.number; }
+
+
+    public void ability(Draw d, Player ... players) {
+    }
+
 }
 
 
