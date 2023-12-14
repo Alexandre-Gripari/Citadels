@@ -1,11 +1,16 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,6 +41,7 @@ class PlayerTest {
         p2 = new Player(2, 1, hand2, new City());
         p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
     }
 
     @Test
@@ -106,5 +112,30 @@ class PlayerTest {
         assertEquals(1, p1.compareTo(p2));
         p2.getCity().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
         assertEquals(-2, p1.compareTo(p2));
+    }
+
+    @Test
+    void testChooseCharacter() {
+        init();
+        List<Character> CharacterList = new ArrayList<>(List.of(Character.values()));
+        p1.chooseCharacter(CharacterList);
+        assertEquals("Assassin", p1.getCharacter().getName());
+        p2.chooseCharacter(CharacterList);
+        assertEquals("Voleur", p2.getCharacter().getName());
+
+        assertEquals(6,CharacterList.size());
+
+        List<Character> CharacterList2 = new ArrayList<>();
+        CharacterList2.add(Character.CONDOTIERE);
+        CharacterList2.add(Character.MAGICIEN);
+
+        p1.chooseCharacter(CharacterList2);
+        assertEquals("Condotière", p1.getCharacter().getName());
+        p2.chooseCharacter(CharacterList2);
+        assertEquals("Magicien", p2.getCharacter().getName());
+
+        assertEquals(0,CharacterList2.size());
+
+
     }
 }
