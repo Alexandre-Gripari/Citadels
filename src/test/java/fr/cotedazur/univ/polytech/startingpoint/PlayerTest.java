@@ -21,6 +21,8 @@ class PlayerTest {
     Player p1;
     Player p2;
     Draw draw;
+    Player[] opponentOfP1 = new Player[1];
+    Player[] opponentOfP2 = new Player[1];
 
     void init() {
         hand1 = new Hand();
@@ -42,28 +44,30 @@ class PlayerTest {
         p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
         p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
+
+        opponentOfP2[0] = p1;
     }
 
     @Test
     void play() {
         init();
         assertEquals(1, p2.getGold());
-        p2.play(draw);
+        p2.play(draw, opponentOfP2);
         assertEquals(2, p2.getGold());
         assertEquals("Temple", p2.getCity().get(0).getName());
         assertEquals("Forteresse", p2.getHand().get(0).getName());
-        p2.play(draw);
+        p2.play(draw, opponentOfP2);
         assertEquals(2, p2.getGold());
         assertEquals("Forteresse", p2.getCity().get(1).getName());
         assertTrue(p2.getHand().isEmpty());
-        p2.play(draw);
+        p2.play(draw, opponentOfP2);
         assertEquals(2, p2.getGold());
         assertEquals("Château", p2.getHand().get(0).getName());
-        p2.play(draw);
+        p2.play(draw, opponentOfP2);
         assertEquals(0, p2.getGold());
         assertEquals(0, p2.getHand().size());
         assertEquals(3, p2.getCity().size());
-        p2.play(draw);
+        p2.play(draw, opponentOfP2);
         assertEquals(0, p2.getGold());
         assertEquals("Marché", p2.getHand().get(0).getName());
         assertEquals("Château", p2.getCity().get(2).getName());
@@ -85,6 +89,16 @@ class PlayerTest {
         assertEquals(2, p1.getGold());
         p1.takeGold();
         assertEquals(4, p1.getGold());
+    }
+
+    @Test
+    void addGold() {
+        init();
+        assertEquals(1, p2.getGold());
+        p2.addGold(4);
+        assertEquals(5, p2.getGold());
+        p2.addGold(-5);
+        assertEquals(0, p2.getGold());
     }
 
     @Test
@@ -121,12 +135,12 @@ class PlayerTest {
         p1.chooseCharacter(CharacterList);
         assertEquals("Assassin", p1.getCharacter().getName());
         p2.chooseCharacter(CharacterList);
-        assertEquals("Voleur", p2.getCharacter().getName());
+        assertEquals("Roi", p2.getCharacter().getName());
 
         assertEquals(6,CharacterList.size());
 
         List<Character> CharacterList2 = new ArrayList<>();
-        CharacterList2.add(Character.CONDOTIERE);
+        CharacterList2.add(Character.CONDOTTIERE);
         CharacterList2.add(Character.MAGICIEN);
 
         p1.chooseCharacter(CharacterList2);
