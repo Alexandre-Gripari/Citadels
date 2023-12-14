@@ -20,7 +20,7 @@ public enum Character {
     ROI("Roi", Color.NOBLE, 4){
         public void ability(Player player){
             for (int i = 0; i < player.getCity().size(); i++) {
-                if (player.getCity().get(i).getColor() == Color.NOBLE) addGold(1);
+                if (player.getCity().get(i).getColor() == Color.NOBLE) player.addGold(1);
             }
 
         }

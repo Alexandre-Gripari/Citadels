@@ -105,5 +105,8 @@ public class Player implements Comparable<Player> {
         //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
     }
 
+        public void addGold(int n) {
+            gold += n;
+        }
 }
 
