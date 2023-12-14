@@ -123,14 +123,21 @@ public class Player implements Comparable<Player> {
         return this.getCity().compareTo(other.getCity());
     }
 
+    public void draw(Draw d, int nb){
+        for(int i=0;i<nb;i++){
+            this.hand.add(d.draw());
+        }
+    }
+
     public void chooseCharacter(List<Character> characters){
         character = characters.get(0);
         characters.remove(0);
         //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
     }
 
-        public void addGold(int n) {
-            gold += n;
-        }
+    public void addGold(int n) {
+        gold += n;
+    }
+
 }
 

@@ -1,7 +1,9 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 public enum Character {
 
@@ -15,11 +17,32 @@ public enum Character {
             for (int i = 0; i < player.getCity().size(); i++) {
                 if (player.getCity().get(i).getColor() == Color.NOBLE) player.addGold(1);
             }
-
         }
-
     },
+          
+    MAGICIEN("Magicien", Color.NEUTRE, 3){
+        @Override
+        public void ability(Draw draw, Player ... players){
+            Hand hand = players[0].getHand();
+            int size = hand.size();
+            if (players.length == 1) {
+                for (int i = 0; i < size; i++) {
+                    draw.add(hand.get(0));
+                    hand.remove(0);
+                }
+                players[0].draw(draw, size);
 
+            }
+            else {
+                Hand hand2 = players[1].getHand();
+                Hand tmp = new Hand();
+                tmp.setHand(hand);
+                hand.setHand(hand2);
+                hand2.setHand(tmp);
+            }
+       }
+    },
+  
     EVEQUE("Évêque", Color.RELIGIEUX, 5){
         @Override
         public void ability(Player player){
@@ -45,8 +68,9 @@ public enum Character {
     },
 
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
-        @Override
-        public void ability(Player player){return;}
+        public void ability(Draw draw,Player ... players){
+            players[0].draw(draw,2);
+        }
     },
 
     VOLEUR("Voleur", Color.NEUTRE, 2){
@@ -101,6 +125,8 @@ public enum Character {
 
     public int getNumber() { return this.number; }
 
+    public void ability(Draw d, Player ... players) {
+    }
 }
 
 
