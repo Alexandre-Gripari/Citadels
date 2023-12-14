@@ -130,6 +130,7 @@ public class Game {
             characters.add(player.getCharacter());
         }
         characters.addAll(Arrays.asList(charactersDiscarded));
+        reorganizePlayers();
     }
 
     public void discardCharacter(){
@@ -152,6 +153,16 @@ public class Game {
     //tri selon le numéro du personnage du joueur
     public void sortPlayersByCharacter(){
         Arrays.sort(players, Comparator.comparingInt(p -> p.getCharacter().getNumber()));
+    }
+
+    public void reorganizePlayers() {
+        if (players[0].getCharacter() != Character.ROI) {
+            Player p = players[0];
+            for(int i = 0; i < players.length-1; i++)
+                players[i] = players[i+1];
+            players[players.length-1] = p;
+            reorganizePlayers();
+        }
     }
 
 

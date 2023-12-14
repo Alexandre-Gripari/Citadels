@@ -10,9 +10,14 @@ public enum Character {
         public void ability(Player player){return;}
     },
 
-    ROI("Roi", Color.NEUTRE, 4){
-        @Override
-        public void ability(Player player){return;}
+    ROI("Roi", Color.NOBLE, 4){
+        public void ability(Player player){
+            for (int i = 0; i < player.getCity().size(); i++) {
+                if (player.getCity().get(i).getColor() == Color.NOBLE) player.addGold(1);
+            }
+
+        }
+
     },
 
     EVEQUE("Évêque", Color.RELIGIEUX, 5){
