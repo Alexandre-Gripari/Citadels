@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.Test;
 
+import static fr.cotedazur.univ.polytech.startingpoint.cards.Character.ROI;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
@@ -26,10 +27,10 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[1].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        game.sortPlayers();
+        game.sortPlayersByPoints();
         assertEquals(1, game.getPlayers()[1].getNumber());
         game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 4));
-        game.sortPlayers();
+        game.sortPlayersByPoints();
         assertEquals(2, game.getPlayers()[1].getNumber());
     }
 
@@ -42,8 +43,58 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        assertFalse(game.isFinished());
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         assertTrue(game.isFinished());
     }
 
+    @Test
+    void testChoiceOfCharacter() {
+        Player player1 = new Player(1, new Hand());
+        Player player2 = new Player(2, new Hand());
+        Player[] players = {player1, player2};
+        Game game = new Game(players);
+        game.init();
+        assertEquals(8, game.getCharacters().size());
+        game.discardCharacter();
+        assertEquals(5, game.getCharacters().size());
+        game.choiceOfCharacter();
+        assertEquals(8, game.getCharacters().size());
+    }
 
+
+    @Test
+    void testSortPLayerByCharacter() {
+        Player player1 = new Player(1, new Hand());
+        Player player2 = new Player(2, new Hand());
+        Player[] players = {player1, player2};
+        Game game = new Game(players);
+        game.init();
+        for (int i = 0; i < 20; i++)  {
+            game.discardCharacter();
+            game.choiceOfCharacter();
+            game.sortPlayersByCharacter();
+            assertTrue(game.getPlayers()[0].getCharacter().getNumber() <= game.getPlayers()[1].getCharacter().getNumber());
+        }
+    }
+
+    @Test
+    void testReorganizePlayers() {
+        Player p1 = new Player(1, new Hand());
+        Player p2 = new Player(2, new Hand());
+        Player p3 = new Player(3, new Hand());
+        Player p4 = new Player(4, new Hand());
+        Game game = new Game(new Player[]{p1, p2, p3, p4});
+        game.init();
+        p1.chooseCharacter(game.getCharacters());
+        p2.chooseCharacter(game.getCharacters());
+        p3.chooseCharacter(game.getCharacters());
+        p4.chooseCharacter(game.getCharacters());
+        game.reorganizePlayers();
+        assertEquals(ROI, game.getPlayers()[0].getCharacter());
+    }
 }

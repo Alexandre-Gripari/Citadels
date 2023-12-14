@@ -1,15 +1,20 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Card;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+
+import java.util.List;
 
 public class Player implements Comparable<Player> {
     private int number;
     private int gold;
     private Hand hand;
     private City city;
+    private Character character;
 
     public Player(int number, Hand hand){
         this(number, 2, hand, new City());
@@ -21,6 +26,10 @@ public class Player implements Comparable<Player> {
         this.gold = gold;
         this.hand = hand;
         this.city = city;
+    }
+
+    public Character getCharacter() {
+        return character;
     }
 
     public int getNumber() {
@@ -39,10 +48,12 @@ public class Player implements Comparable<Player> {
         return city;
     }
 
-    public void play(Draw draw){
+    public void play(Draw draw, Player[] opponents) {
+        System.out.println("Le joueur " + number + " est le " + character.getName());
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
         buildConstruction();
+        useAbility(opponents);
     }
 
 
@@ -62,11 +73,6 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void takeGold(){
-        gold += 2;
-        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
-    }
-
     public void buildConstruction(){
         for (int i=0; i<hand.size(); i++){
             int valueOfConstruction = hand.get(i).getValue();
@@ -78,6 +84,33 @@ public class Player implements Comparable<Player> {
                 return;
             }
         }
+    }
+
+    public void useAbility(Player[] opponents) {
+        if (character.compareTo(Character.VOLEUR) < 0) character.ability(this);
+        else if (character.compareTo(Character.CONDOTTIERE) < 0) character.ability(this, opponents[0]); // choisie sans stratégie
+        // Le condottiere détruit la première carte qu'il peut
+        else {
+            for (Player opponent : opponents) { // choix sans stratégie
+                if (opponent.getCity().size() != 0) {
+                    for (int i = 0; i < opponent.getCity().size(); i++) {
+                        if (opponent.getCity().get(i).getValue() <= gold) {
+                            character.ability(i, this, opponent);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void takeGold(){
+        gold += 2;
+        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
+    }
+
+    public void addGold(int gold) {
+        this.gold += gold;
     }
 
     @Override
@@ -96,6 +129,15 @@ public class Player implements Comparable<Player> {
         }
     }
 
+    public void chooseCharacter(List<Character> characters){
+        character = characters.get(0);
+        characters.remove(0);
+        //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
+    }
+
+    public void addGold(int n) {
+        gold += n;
+    }
 
 }
 
