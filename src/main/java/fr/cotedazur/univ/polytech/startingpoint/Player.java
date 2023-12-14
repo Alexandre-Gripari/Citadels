@@ -15,8 +15,28 @@ public class Player implements Comparable<Player> {
     private City city;
     private Character character;
 
+    private boolean isDead=false;
+
+    public void kill() {
+        this.isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+
+
     public Player(int number, Hand hand){
         this(number, 2, hand, new City());
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     /* Constructeur utile aux tests */
@@ -27,9 +47,6 @@ public class Player implements Comparable<Player> {
         this.city = city;
     }
 
-    public Character getCharacter() {
-        return character;
-    }
 
     public int getNumber() {
         return number;
@@ -47,11 +64,13 @@ public class Player implements Comparable<Player> {
         return city;
     }
 
-    public void play(Draw draw){
+    public void play(Draw draw) {
         System.out.println("Le joueur " + number + " est le " + character.getName());
-        if (hand.isEmpty()) hand.add(takeConstruction(draw));
-        else takeGold();
-        buildConstruction();
+        if (!isDead) {
+            if (hand.isEmpty()) hand.add(takeConstruction(draw));
+            else takeGold();
+            buildConstruction();
+        }
     }
 
 
@@ -103,6 +122,10 @@ public class Player implements Comparable<Player> {
         character = characters.get(0);
         characters.remove(0);
         //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
+    }
+    //Pour les tests
+    public void setCharacter(Character character){
+        this.character=character;
     }
 
 }

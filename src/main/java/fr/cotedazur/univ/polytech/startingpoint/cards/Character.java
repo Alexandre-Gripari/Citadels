@@ -3,37 +3,54 @@ package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 
-public enum Character {
+public enum Character implements Ability{
 
     ASSASSIN("Assassin", Color.NEUTRE, 1){
-        public void ability(){return;}
+        @Override
+        public void ability(Player victim,Player useless){
+            victim.kill();
+        }
     },
 
     VOLEUR("Voleur", Color.NEUTRE, 2){
-        public void ability(){return;}
+        @Override
+        public void ability(Player thief,Player victim){
+            if(!victim.getCharacter().equals(ASSASSIN) && !victim.isDead()) {
+                int butin = victim.getGold();
+                victim.setGold(0);
+                thief.setGold(thief.getGold() + butin);
+                return;
+            }
+        }
     },
 
     MAGICIEN("Magicien", Color.NEUTRE, 3){
-        public void ability(){return;}
+        @Override
+        public void ability(Player thief,Player victim){return;}
     },
 
     ROI("Roi", Color.NEUTRE, 4){
-        public void ability(){return;}
+        @Override
+        public void ability(Player thief,Player victim){return;}
     },
 
     EVEQUE("Évêque", Color.RELIGIEUX, 5){
-        public void ability(){return;}
+        @Override
+        public void ability(Player thief,Player victim){return;}
     },
 
     MARCHAND("Marchand", Color.COMMERCIAL, 6){
-        public void ability(){return;}
+        @Override
+        public void ability(Player thief,Player victim){return;}
     },
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
-        public void ability(){return;}
+        @Override
+        public void ability(Player thief,Player victim){return;}
     },
 
     CONDOTIERE("Condotière", Color.SOLDATESQUE, 8){
-        public void ability(){return;}
+        @Override
+        public void ability(Player thief,Player victim){return;}
     };
 
     private String name;
@@ -51,7 +68,6 @@ public enum Character {
     public Color getColor() { return this.color; }
 
     public int getNumber() { return this.number; }
-
 }
 
 
