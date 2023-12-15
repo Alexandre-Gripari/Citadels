@@ -91,8 +91,7 @@ public class Game {
             choiceOfCharacter();
             sortPlayersByCharacter();
             for (Player player : players) {
-                Player[] opponents = getOpponents(player);
-                player.play(draw, opponents);
+                player.play(draw, getOpponents(player));
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
@@ -110,19 +109,21 @@ public class Game {
     }
 
     public Player[] getOpponents(Player player) {
-        Player[] opponents = new Player[players.length - 1];
-        int j = 0;
-        for (int i = 0; i < players.length - 1; i++) {
+        Player[] opponents = new Player[players.length];
+        int j = 1;
+        for (int i = 0; i < players.length; i++) {
             if (players[i].getNumber() != player.getNumber()) {
                 opponents[j] = players[i];
                 j++;
             }
         }
-        assert opponents.length == players.length - 1;
+        assert opponents.length == players.length;
+        opponents[0] = player;
         return opponents;
     }
 
     public void choiceOfCharacter(){
+        reorganizePlayers();
         for (Player player : players) {
             player.chooseCharacter(characters);
         }
@@ -130,7 +131,6 @@ public class Game {
             characters.add(player.getCharacter());
         }
         characters.addAll(Arrays.asList(charactersDiscarded));
-        reorganizePlayers();
     }
 
     public void discardCharacter(){
@@ -156,7 +156,14 @@ public class Game {
     }
 
     public void reorganizePlayers() {
-        if (players[0].getCharacter() != Character.ROI) {
+        boolean isKing = false;
+        for (Player player : players) {
+            if (player.getCharacter() == Character.ROI) {
+                isKing = true;
+                break;
+            }
+        }
+        if (players[0].getCharacter() != Character.ROI && isKing) {
             Player p = players[0];
             for(int i = 0; i < players.length-1; i++)
                 players[i] = players[i+1];

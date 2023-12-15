@@ -21,8 +21,8 @@ class PlayerTest {
     Player p1;
     Player p2;
     Draw draw;
-    Player[] opponentOfP1 = new Player[1];
-    Player[] opponentOfP2 = new Player[1];
+    Player[] opponentOfP1 = new Player[2];
+    Player[] opponentOfP2 = new Player[2];
 
     void init() {
         hand1 = new Hand();
@@ -45,7 +45,8 @@ class PlayerTest {
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
         p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
 
-        opponentOfP2[0] = p1;
+        opponentOfP2[0] = p2;
+        opponentOfP2[1] = p1;
     }
 
     @Test
@@ -129,7 +130,7 @@ class PlayerTest {
     }
 
     @Test
-    void testDraw(){
+    void testDraw() {
         init();
         p1.draw(draw, 1);
         assertEquals(3, p1.getHand().size());
@@ -140,14 +141,16 @@ class PlayerTest {
         p1.draw(draw, 3);
         assertEquals(8, p1.getHand().size());
         assertEquals(0, draw.size());
+    }
 
+    @Test
     void testChooseCharacter() {
         init();
         List<Character> CharacterList = new ArrayList<>(List.of(Character.values()));
         p1.chooseCharacter(CharacterList);
         assertEquals("Assassin", p1.getCharacter().getName());
         p2.chooseCharacter(CharacterList);
-        assertEquals("Roi", p2.getCharacter().getName());
+        assertEquals("Voleur", p2.getCharacter().getName());
 
         assertEquals(6,CharacterList.size());
 

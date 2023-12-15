@@ -16,8 +16,28 @@ public class Player implements Comparable<Player> {
     private City city;
     private Character character;
 
+    private boolean isDead=false;
+
+    public void kill() {
+        this.isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void resurrect(){this.isDead = false;}
+
     public Player(int number, Hand hand){
         this(number, 2, hand, new City());
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     /* Constructeur utile aux tests */
@@ -28,9 +48,6 @@ public class Player implements Comparable<Player> {
         this.city = city;
     }
 
-    public Character getCharacter() {
-        return character;
-    }
 
     public int getNumber() {
         return number;
@@ -48,12 +65,17 @@ public class Player implements Comparable<Player> {
         return city;
     }
 
-    public void play(Draw draw, Player[] opponents) {
+    public void play(Draw draw, Player[] players) {
+        if(isDead) {
+            resurrect();
+            return;
+        }
         System.out.println("Le joueur " + number + " est le " + character.getName());
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
         buildConstruction();
-        useAbility(opponents);
+        useAbility(draw, players);
+
     }
 
 
@@ -86,21 +108,28 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void useAbility(Player[] opponents) {
-        if (character.compareTo(Character.VOLEUR) < 0) character.ability(this);
-        else if (character.compareTo(Character.CONDOTTIERE) < 0) character.ability(this, opponents[0]); // choisie sans stratégie
-        // Le condottiere détruit la première carte qu'il peut
-        else {
-            for (Player opponent : opponents) { // choix sans stratégie
-                if (opponent.getCity().size() != 0) {
-                    for (int i = 0; i < opponent.getCity().size(); i++) {
-                        if (opponent.getCity().get(i).getValue() <= gold) {
-                            character.ability(i, this, opponent);
-                            return;
-                        }
-                    }
-                }
-            }
+    public void useAbility(Draw draw, Player ... players) {
+        /*if (players[0] != this) {
+            Player tmp = players[0];
+            players[0] = players[1];
+            players[1] = tmp;
+        }*/
+        switch (character.getNumber()){
+            case 1:
+                character.ability(players);
+                break;
+            case 2:
+                character.ability(players[0], players[1]);
+                break;
+            case 3, 7:
+                character.ability(draw, players);
+                break;
+            case 4, 5, 6:
+                character.ability(this);
+                break;
+            case 8:
+                character.ability(0, players);
+                break;
         }
     }
 
@@ -134,10 +163,11 @@ public class Player implements Comparable<Player> {
         characters.remove(0);
         //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
     }
-
-    public void addGold(int n) {
-        gold += n;
+    //Pour les tests
+    public void setCharacter(Character character){
+        this.character=character;
     }
+
 
 }
 
