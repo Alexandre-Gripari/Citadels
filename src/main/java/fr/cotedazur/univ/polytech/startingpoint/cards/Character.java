@@ -5,16 +5,25 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
-public enum Character {
+public enum Character implements Ability{
 
     ASSASSIN("Assassin", Color.NEUTRE, 1){
         @Override
-        public void ability(Player player){return;}
+        public void ability(Player victim,Player useless){
+            victim.kill();
+        }
     },
 
     VOLEUR("Voleur", Color.NEUTRE, 2){
         @Override
-        public void ability(Player seflPlayer, Player targetedPlayer){return;}
+        public void ability(Player thief,Player victim){
+            if(!victim.getCharacter().equals(ASSASSIN) && !victim.isDead()) {
+                int butin = victim.getGold();
+                victim.setGold(0);
+                thief.setGold(thief.getGold() + butin);
+                return;
+            }
+        }
     },
           
     MAGICIEN("Magicien", Color.NEUTRE, 3){
@@ -78,6 +87,7 @@ public enum Character {
     },
 
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
+        @Override
         public void ability(Draw draw,Player ... players){
             players = reorganizePlayers(ARCHITECTE, players);
             players[0].draw(draw,2);
