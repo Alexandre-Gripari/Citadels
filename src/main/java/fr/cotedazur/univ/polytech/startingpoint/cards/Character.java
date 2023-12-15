@@ -5,11 +5,11 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
-public enum Character implements Ability{
+public enum Character{
 
     ASSASSIN("Assassin", Color.NEUTRE, 1){
         @Override
-        public void ability(Player victim,Player useless){
+        public void ability(Player victim){
             victim.kill();
         }
     },

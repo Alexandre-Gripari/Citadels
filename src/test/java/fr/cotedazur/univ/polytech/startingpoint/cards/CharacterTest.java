@@ -23,8 +23,19 @@ class CharacterTest {
     Player p1;
     Player p2;
     Player p3;
+    Draw d = new Draw();
+    Player p = new Player(1, new Hand());
+    Constructions c1 = new Constructions("Temple", Color.RELIGIEUX, 1);
+    Constructions c2 = new Constructions("Forteresse", Color.SOLDATESQUE, 2);
+    Constructions c3 = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
+    Constructions c4 = new Constructions("Château", Color.NOBLE, 4);
+    Constructions c5 = new Constructions("Monastère", Color.RELIGIEUX, 3);
+    Constructions c6 = new Constructions("Marché", Color.COMMERCIAL, 2);
+    Constructions c7 = new Constructions("Tata", Color.RELIGIEUX, 1);
+    Constructions c8 = new Constructions("Toto", Color.SOLDATESQUE, 2);
+    Constructions c9 = new Constructions("Titi", Color.RELIGIEUX, 5);
     @BeforeEach
-    void init() {
+    void init1() {
         hand1 = new Hand();
         hand2 = new Hand();
         hand3 = new Hand();
@@ -41,31 +52,17 @@ class CharacterTest {
         assertEquals(true,p3.isDead());
     }
     @Test
-    void voleurability(){
+    void voleurability() {
         p1.setGold(10);
         p2.setGold(10);
         p3.setGold(10);
-        Character.VOLEUR.ability(p2,p3);
-        assertEquals(0,p3.getGold());
-        assertEquals(20,p2.getGold());
-        Character.VOLEUR.ability(p2,p1);
-        assertEquals(20,p2.getGold());
-        assertEquals(10,p1.getGold());
-
-    Draw d = new Draw();
-    Player p = new Player(1, new Hand());
-    Constructions c1 = new Constructions("Temple", Color.RELIGIEUX, 1);
-    Constructions c2 = new Constructions("Forteresse", Color.SOLDATESQUE, 2);
-    Constructions c3 = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
-    Constructions c4 = new Constructions("Château", Color.NOBLE, 4);
-    Constructions c5 = new Constructions("Monastère", Color.RELIGIEUX, 3);
-    Constructions c6 = new Constructions("Marché", Color.COMMERCIAL, 2);
-
-    Player p2 = new Player(1, new Hand());
-    Constructions c7 = new Constructions("Tata", Color.RELIGIEUX, 1);
-    Constructions c8 = new Constructions("Toto", Color.SOLDATESQUE, 2);
-    Constructions c9 = new Constructions("Titi", Color.RELIGIEUX, 5);
-
+        Character.VOLEUR.ability(p2, p3);
+        assertEquals(0, p3.getGold());
+        assertEquals(20, p2.getGold());
+        Character.VOLEUR.ability(p2, p1);
+        assertEquals(20, p2.getGold());
+        assertEquals(10, p1.getGold());
+    }
 
     @BeforeEach
     void setUp() {
@@ -220,10 +217,6 @@ class CharacterTest {
 
     }
 
-    @Test
-    void testAssassinAbility() {
-        return;
-    }
 
     @Test
     void testKingAbility() {
@@ -251,10 +244,6 @@ class CharacterTest {
         return;
     }
 
-    @Test
-    void testThiefAbility() {
-        return;
-    }
 
     @Test
     void testMagicianAbility() {
