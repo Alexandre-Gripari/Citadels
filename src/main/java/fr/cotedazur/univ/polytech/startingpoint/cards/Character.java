@@ -73,7 +73,7 @@ public enum Character{
             }
             player.addGold(nbOfReligiousConstructions);
             System.out.println("Le joueur " + player.getNumber() + " gagne " + nbOfReligiousConstructions +" d'or grâce à la capacité de l'évêque");
-        }
+        } 
     },
 
     MARCHAND("Marchand", Color.COMMERCIAL, 6){

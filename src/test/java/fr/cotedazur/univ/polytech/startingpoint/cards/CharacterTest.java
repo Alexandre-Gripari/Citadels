@@ -2,14 +2,11 @@ package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
-import fr.cotedazur.univ.polytech.startingpoint.Game;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +22,7 @@ class CharacterTest {
     Player p3;
 
     @BeforeEach
-    void init2() {
+    void init1() {
         hand1 = new Hand();
         hand2 = new Hand();
         hand3 = new Hand();
@@ -52,7 +49,6 @@ class CharacterTest {
         Character.VOLEUR.ability(p2, p1);
         assertEquals(20, p2.getGold());
         assertEquals(10, p1.getGold());
-
     }
 
     Draw d = new Draw();
@@ -241,7 +237,7 @@ class CharacterTest {
         init();
         assertEquals(3, condottiere.getGold());
         assertEquals(3, magician.getCity().size());
-        condottiere.useAbility(d, new Player[]{condottiere, magician});
+        condottiere.useAbility(d, condottiere, magician);
         assertEquals(1, condottiere.getGold());
         assertEquals(2, magician.getCity().size());
 
