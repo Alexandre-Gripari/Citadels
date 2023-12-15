@@ -91,7 +91,7 @@ public class Game {
             choiceOfCharacter();
             sortPlayersByCharacter();
             for (Player player : players) {
-                player.play(draw);
+                player.play(draw, players);
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
@@ -108,7 +108,21 @@ public class Game {
         Arrays.sort(players);
     }
 
+    /*public Player[] getOpponents(Player player) {
+        Player[] opponents = new Player[players.length - 1];
+        int j = 0;
+        for (int i = 0; i < players.length - 1; i++) {
+            if (players[i].getNumber() != player.getNumber()) {
+                opponents[j] = players[i];
+                j++;
+            }
+        }
+        assert opponents.length == players.length - 1;
+        return opponents;
+    }*/
+
     public void choiceOfCharacter(){
+        reorganizePlayers();
         for (Player player : players) {
             player.chooseCharacter(characters);
         }
@@ -138,6 +152,23 @@ public class Game {
     //tri selon le numéro du personnage du joueur
     public void sortPlayersByCharacter(){
         Arrays.sort(players, Comparator.comparingInt(p -> p.getCharacter().getNumber()));
+    }
+
+    public void reorganizePlayers() {
+        boolean isKing = false;
+        for (Player player : players) {
+            if (player.getCharacter() == Character.ROI) {
+                isKing = true;
+                break;
+            }
+        }
+        if (players[0].getCharacter() != Character.ROI && isKing) {
+            Player p = players[0];
+            for(int i = 0; i < players.length-1; i++)
+                players[i] = players[i+1];
+            players[players.length-1] = p;
+            reorganizePlayers();
+        }
     }
 
 

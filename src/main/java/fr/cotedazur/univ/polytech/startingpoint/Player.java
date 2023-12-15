@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Card;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
@@ -64,13 +65,14 @@ public class Player implements Comparable<Player> {
         return city;
     }
 
-    public void play(Draw draw) {
+    public void play(Draw draw, Player[] players) {
+        if(isDead) return;
         System.out.println("Le joueur " + number + " est le " + character.getName());
-        if (!isDead) {
-            if (hand.isEmpty()) hand.add(takeConstruction(draw));
-            else takeGold();
-            buildConstruction();
-        }
+        if (hand.isEmpty()) hand.add(takeConstruction(draw));
+        else takeGold();
+        buildConstruction();
+        useAbility(draw, players);
+
     }
 
 
@@ -90,11 +92,6 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void takeGold(){
-        gold += 2;
-        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
-    }
-
     public void buildConstruction(){
         for (int i=0; i<hand.size(); i++){
             int valueOfConstruction = hand.get(i).getValue();
@@ -108,6 +105,33 @@ public class Player implements Comparable<Player> {
         }
     }
 
+    public void useAbility(Draw draw, Player ... players) {
+        switch (character.getNumber()){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3, 7:
+                character.ability(draw, players);
+                break;
+            case 4, 5, 6:
+                character.ability(this);
+                break;
+            case 8:
+                character.ability(0, players);
+                break;
+        }
+    }
+
+    public void takeGold(){
+        gold += 2;
+        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
+    }
+
+    public void addGold(int gold) {
+        this.gold += gold;
+    }
+
     @Override
     public String toString(){
         return "Player " + this.getNumber();
@@ -116,6 +140,12 @@ public class Player implements Comparable<Player> {
     @Override
     public int compareTo(Player other){
         return this.getCity().compareTo(other.getCity());
+    }
+
+    public void draw(Draw d, int nb){
+        for(int i=0;i<nb;i++){
+            this.hand.add(d.draw());
+        }
     }
 
     public void chooseCharacter(List<Character> characters){
@@ -127,6 +157,7 @@ public class Player implements Comparable<Player> {
     public void setCharacter(Character character){
         this.character=character;
     }
+
 
 }
 
