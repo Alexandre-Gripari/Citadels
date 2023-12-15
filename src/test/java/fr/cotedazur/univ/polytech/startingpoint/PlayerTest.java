@@ -129,7 +129,7 @@ class PlayerTest {
     }
 
     @Test
-    void testDraw(){
+    void testDraw() {
         init();
         p1.draw(draw, 1);
         assertEquals(3, p1.getHand().size());
@@ -140,14 +140,16 @@ class PlayerTest {
         p1.draw(draw, 3);
         assertEquals(8, p1.getHand().size());
         assertEquals(0, draw.size());
+    }
 
+    @Test
     void testChooseCharacter() {
         init();
         List<Character> CharacterList = new ArrayList<>(List.of(Character.values()));
         p1.chooseCharacter(CharacterList);
         assertEquals("Assassin", p1.getCharacter().getName());
         p2.chooseCharacter(CharacterList);
-        assertEquals("Roi", p2.getCharacter().getName());
+        assertEquals("Voleur", p2.getCharacter().getName());
 
         assertEquals(6,CharacterList.size());
 

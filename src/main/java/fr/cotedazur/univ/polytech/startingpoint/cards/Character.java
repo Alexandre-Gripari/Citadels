@@ -12,12 +12,9 @@ public enum Character {
         public void ability(Player player){return;}
     },
 
-    ROI("Roi", Color.NOBLE, 4){
-        public void ability(Player player){
-            for (int i = 0; i < player.getCity().size(); i++) {
-                if (player.getCity().get(i).getColor() == Color.NOBLE) player.addGold(1);
-            }
-        }
+    VOLEUR("Voleur", Color.NEUTRE, 2){
+        @Override
+        public void ability(Player seflPlayer, Player targetedPlayer){return;}
     },
           
     MAGICIEN("Magicien", Color.NEUTRE, 3){
@@ -42,6 +39,18 @@ public enum Character {
             }
        }
     },
+
+    ROI("Roi", Color.NOBLE, 4){
+        @Override
+        public void ability(Player player){
+            int nbOfNoblessConstructions = 0;
+            for (int i = 0; i < player.getCity().size(); i++) {
+                if (player.getCity().get(i).getColor() == this.getColor()) nbOfNoblessConstructions++;
+            }
+            player.addGold(nbOfNoblessConstructions);
+            System.out.println("Le joueur " + player.getNumber() + " gagne " + nbOfNoblessConstructions +" d'or grâce à la capacité du Roi");
+        }
+    },
   
     EVEQUE("Évêque", Color.RELIGIEUX, 5){
         @Override
@@ -60,7 +69,7 @@ public enum Character {
         public void ability(Player player){
             int nbOfCommercialConstructions = 1;
             for (int i = 0; i < player.getCity().size(); i++) {
-                if (player.getCity().get(i).getColor() == this.getColor()) nbOfCommercialConstructions++;
+                if (player.getCity().get(i).getColor() == Color.COMMERCIAL) nbOfCommercialConstructions++;
             }
             player.addGold(nbOfCommercialConstructions);
             System.out.println("Le joueur " + player.getNumber() + " gagne " + nbOfCommercialConstructions +" d'or grâce à la capacité du marchand");
@@ -71,16 +80,6 @@ public enum Character {
         public void ability(Draw draw,Player ... players){
             players[0].draw(draw,2);
         }
-    },
-
-    VOLEUR("Voleur", Color.NEUTRE, 2){
-        @Override
-        public void ability(Player seflPlayer, Player targetedPlayer){return;}
-    },
-
-    MAGICIEN("Magicien", Color.NEUTRE, 3){
-        @Override
-        public void ability(Player seflPlayer, Player targetedPlayer){return;}
     },
 
     CONDOTTIERE("Condotière", Color.SOLDATESQUE, 8){
@@ -94,12 +93,14 @@ public enum Character {
             }
             selfPlayer.addGold(nbOfArmyConstructions);
             res += "Le joueur " + selfPlayer.getNumber() + " gagne " + nbOfArmyConstructions +" d'or grâce à la capacité du condottiere";
-            if (players.length == 2) {
+            if (players.length >= 2) {
                 Player targetedPlayer = players[1];
                 int cost = targetedPlayer.getCity().get(index).getValue() - 1;
-                res += " et il détruit la cité : " + targetedPlayer.getCity().get(index).toString() + " du joueur " + targetedPlayer.getNumber() +" et perd " + cost + " d'or";
-                targetedPlayer.getCity().remove(index);
-                selfPlayer.addGold(-cost);
+                if (selfPlayer.getGold() >= cost) {
+                    res += " et il détruit la cité : " + targetedPlayer.getCity().get(index).toString() + " du joueur " + targetedPlayer.getNumber() + " et perd " + cost + " d'or";
+                    targetedPlayer.getCity().remove(index);
+                    selfPlayer.addGold(-cost);
+                }
             }
             System.out.println(res);
         }

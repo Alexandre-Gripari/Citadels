@@ -131,6 +131,7 @@ public class Game {
         }
         characters.addAll(Arrays.asList(charactersDiscarded));
         reorganizePlayers();
+        charactersDiscarded = new Character[3];
     }
 
     public void discardCharacter(){
@@ -156,7 +157,14 @@ public class Game {
     }
 
     public void reorganizePlayers() {
-        if (players[0].getCharacter() != Character.ROI) {
+        boolean isKing = false;
+        for (Player player : players) {
+            if (player.getCharacter() == Character.ROI) {
+                isKing = true;
+                break;
+            }
+        }
+        if (players[0].getCharacter() != Character.ROI && isKing) {
             Player p = players[0];
             for(int i = 0; i < players.length-1; i++)
                 players[i] = players[i+1];

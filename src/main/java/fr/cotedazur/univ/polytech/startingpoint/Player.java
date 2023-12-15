@@ -53,7 +53,7 @@ public class Player implements Comparable<Player> {
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
         buildConstruction();
-        useAbility(opponents);
+        useAbility(draw, opponents);
     }
 
 
@@ -86,21 +86,21 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void useAbility(Player[] opponents) {
-        if (character.compareTo(Character.VOLEUR) < 0) character.ability(this);
-        else if (character.compareTo(Character.CONDOTTIERE) < 0) character.ability(this, opponents[0]); // choisie sans stratégie
-        // Le condottiere détruit la première carte qu'il peut
-        else {
-            for (Player opponent : opponents) { // choix sans stratégie
-                if (opponent.getCity().size() != 0) {
-                    for (int i = 0; i < opponent.getCity().size(); i++) {
-                        if (opponent.getCity().get(i).getValue() <= gold) {
-                            character.ability(i, this, opponent);
-                            return;
-                        }
-                    }
-                }
-            }
+    public void useAbility(Draw draw, Player ... players) {
+        switch (character.getNumber()){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3, 7:
+                character.ability(draw, players);
+                break;
+            case 4, 5, 6:
+                character.ability(this);
+                break;
+            case 8:
+                character.ability(0, players);
+                break;
         }
     }
 
@@ -135,9 +135,6 @@ public class Player implements Comparable<Player> {
         //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
     }
 
-    public void addGold(int n) {
-        gold += n;
-    }
 
 }
 
