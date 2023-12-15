@@ -1,18 +1,43 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Card;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+
+import java.util.List;
 
 public class Player implements Comparable<Player> {
     private int number;
     private int gold;
     private Hand hand;
     private City city;
+    private Character character;
+
+    private boolean isDead=false;
+
+    public void kill() {
+        this.isDead = true;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void resurrect(){this.isDead = false;}
 
     public Player(int number, Hand hand){
         this(number, 2, hand, new City());
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     /* Constructeur utile aux tests */
@@ -22,6 +47,7 @@ public class Player implements Comparable<Player> {
         this.hand = hand;
         this.city = city;
     }
+
 
     public int getNumber() {
         return number;
@@ -39,10 +65,17 @@ public class Player implements Comparable<Player> {
         return city;
     }
 
-    public void play(Draw draw){
+    public void play(Draw draw, Player[] players) {
+        if(isDead) {
+            resurrect();
+            return;
+        }
+        System.out.println("Le joueur " + number + " est le " + character.getName());
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
         buildConstruction();
+        useAbility(draw, players);
+
     }
 
 
@@ -62,11 +95,6 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void takeGold(){
-        gold += 2;
-        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
-    }
-
     public void buildConstruction(){
         for (int i=0; i<hand.size(); i++){
             int valueOfConstruction = hand.get(i).getValue();
@@ -80,6 +108,40 @@ public class Player implements Comparable<Player> {
         }
     }
 
+    public void useAbility(Draw draw, Player ... players) {
+        /*if (players[0] != this) {
+            Player tmp = players[0];
+            players[0] = players[1];
+            players[1] = tmp;
+        }*/
+        switch (character.getNumber()){
+            case 1:
+                character.ability(players);
+                break;
+            case 2:
+                character.ability(players[0], players[1]);
+                break;
+            case 3, 7:
+                character.ability(draw, players);
+                break;
+            case 4, 5, 6:
+                character.ability(this);
+                break;
+            case 8:
+                character.ability(0, players);
+                break;
+        }
+    }
+
+    public void takeGold(){
+        gold += 2;
+        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
+    }
+
+    public void addGold(int gold) {
+        this.gold += gold;
+    }
+
     @Override
     public String toString(){
         return "Player " + this.getNumber();
@@ -89,6 +151,23 @@ public class Player implements Comparable<Player> {
     public int compareTo(Player other){
         return this.getCity().compareTo(other.getCity());
     }
+
+    public void draw(Draw d, int nb){
+        for(int i=0;i<nb;i++){
+            this.hand.add(d.draw());
+        }
+    }
+
+    public void chooseCharacter(List<Character> characters){
+        character = characters.get(0);
+        characters.remove(0);
+        //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
+    }
+    //Pour les tests
+    public void setCharacter(Character character){
+        this.character=character;
+    }
+
 
 }
 

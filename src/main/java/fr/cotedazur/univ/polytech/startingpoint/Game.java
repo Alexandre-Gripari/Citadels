@@ -1,16 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Game {
 
     private Player[] players;
     private double nbTurn;
     private Draw draw;
+    private List<Character> characters;
+    private Character[] charactersDiscarded = new Character[3];
 
     public Game(Player[] players) {
         this.players = players;
@@ -50,6 +53,7 @@ public class Game {
             }
         }
 
+        characters = new ArrayList<>(List.of(Character.values()));
     }
 
     public Draw getDraw() {
@@ -58,7 +62,7 @@ public class Game {
 
     public boolean isFinished() {
         for (Player player : players)
-            if (player.getCity().size() >= 3) return true;
+            if (player.getCity().size() >= 8) return true;
         return false;
     }
 
@@ -70,16 +74,28 @@ public class Game {
         return nbTurn;
     }
 
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public Character[] getCharactersDiscarded() {
+        return charactersDiscarded;
+    }
+
+
     public void play() {
         while(!isFinished()) {
             nbTurn++;
-            System.out.println("Tour " + (int) nbTurn + " : ");
+            System.out.println("\nTour " + (int) nbTurn + " : ");
+            discardCharacter();
+            choiceOfCharacter();
+            sortPlayersByCharacter();
             for (Player player : players) {
-                player.play(draw);
+                player.play(draw, getOpponents(player));
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
-        sortPlayers();
+        sortPlayersByPoints();
         if (players[0].getCity().cityValue() == players[1].getCity().cityValue()) System.out.println("Egalité ! Les deux joueurs ont " + players[0].getCity().cityValue() + " points !");
         else {
             System.out.println("Le joueur " + players[1].getNumber() + " a gagné avec " + players[1].getCity().cityValue() + " points !");
@@ -88,8 +104,73 @@ public class Game {
 
     }
 
-    public void sortPlayers(){
+    public void sortPlayersByPoints(){
         Arrays.sort(players);
     }
+
+    public Player[] getOpponents(Player player) {
+        Player[] opponents = new Player[players.length];
+        int j = 1;
+        for (int i = 0; i < players.length; i++) {
+            if (players[i].getNumber() != player.getNumber()) {
+                opponents[j] = players[i];
+                j++;
+            }
+        }
+        assert opponents.length == players.length;
+        opponents[0] = player;
+        return opponents;
+    }
+
+    public void choiceOfCharacter(){
+        reorganizePlayers();
+        for (Player player : players) {
+            player.chooseCharacter(characters);
+        }
+        for (Player player : players) {
+            characters.add(player.getCharacter());
+        }
+        characters.addAll(Arrays.asList(charactersDiscarded));
+    }
+
+    public void discardCharacter(){
+        Random random = new Random();
+        for (int i = 0; i < 2; i++) {
+            int randoms = random.nextInt(characters.size());
+            Character characterDiscarded = characters.get(randoms);
+            System.out.println("Le personnage " + characterDiscarded + " a été défaussé.");
+            charactersDiscarded[i] = characterDiscarded;
+            characters.remove(characterDiscarded);
+        }
+
+        int randoms = random.nextInt(characters.size());
+        Character characterDiscarded = characters.get(randoms);
+        charactersDiscarded[2] = characterDiscarded;
+        characters.remove(characterDiscarded);
+        System.out.println("Un personnage a été défaussé face cachée.\n");
+    }
+
+    //tri selon le numéro du personnage du joueur
+    public void sortPlayersByCharacter(){
+        Arrays.sort(players, Comparator.comparingInt(p -> p.getCharacter().getNumber()));
+    }
+
+    public void reorganizePlayers() {
+        boolean isKing = false;
+        for (Player player : players) {
+            if (player.getCharacter() == Character.ROI) {
+                isKing = true;
+                break;
+            }
+        }
+        if (players[0].getCharacter() != Character.ROI && isKing) {
+            Player p = players[0];
+            for(int i = 0; i < players.length-1; i++)
+                players[i] = players[i+1];
+            players[players.length-1] = p;
+            reorganizePlayers();
+        }
+    }
+
 
 }

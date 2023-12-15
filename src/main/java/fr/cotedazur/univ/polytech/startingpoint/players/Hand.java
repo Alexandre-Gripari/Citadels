@@ -31,4 +31,11 @@ public class Hand{ // extends Arraylist ?
         return main;
     }
 
+    public boolean contains(Constructions x) {
+        return hand.contains(x);
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = (ArrayList<Constructions>) hand.getHand();
+    }
 }
