@@ -30,7 +30,7 @@ public class Player implements Comparable<Player> {
         return character;
     }
 
-
+    public void resurrect(){this.isDead = false;}
 
     public Player(int number, Hand hand){
         this(number, 2, hand, new City());
@@ -66,7 +66,10 @@ public class Player implements Comparable<Player> {
     }
 
     public void play(Draw draw, Player[] players) {
-        if(isDead) return;
+        if(isDead) {
+            resurrect();
+            return;
+        }
         System.out.println("Le joueur " + number + " est le " + character.getName());
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
@@ -106,10 +109,17 @@ public class Player implements Comparable<Player> {
     }
 
     public void useAbility(Draw draw, Player ... players) {
+        /*if (players[0] != this) {
+            Player tmp = players[0];
+            players[0] = players[1];
+            players[1] = tmp;
+        }*/
         switch (character.getNumber()){
             case 1:
+                character.ability(players);
                 break;
             case 2:
+                character.ability(players[0], players[1]);
                 break;
             case 3, 7:
                 character.ability(draw, players);

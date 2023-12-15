@@ -21,8 +21,8 @@ class PlayerTest {
     Player p1;
     Player p2;
     Draw draw;
-    Player[] opponentOfP1 = new Player[1];
-    Player[] opponentOfP2 = new Player[1];
+    Player[] opponentOfP1 = new Player[2];
+    Player[] opponentOfP2 = new Player[2];
 
     void init() {
         hand1 = new Hand();
@@ -45,7 +45,8 @@ class PlayerTest {
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
         p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
 
-        opponentOfP2[0] = p1;
+        opponentOfP2[0] = p2;
+        opponentOfP2[1] = p1;
     }
 
     @Test

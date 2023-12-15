@@ -5,23 +5,24 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
-public enum Character implements Ability{
+public enum Character{
 
     ASSASSIN("Assassin", Color.NEUTRE, 1){
         @Override
-        public void ability(Player victim,Player useless){
-            victim.kill();
+        public void ability(Player ... players){
+            System.out.println("Le joueur a assasiné " + players[1].getCharacter());
+            players[1].kill();
         }
     },
 
     VOLEUR("Voleur", Color.NEUTRE, 2){
         @Override
-        public void ability(Player thief,Player victim){
-            if(!victim.getCharacter().equals(ASSASSIN) && !victim.isDead()) {
-                int butin = victim.getGold();
-                victim.setGold(0);
-                thief.setGold(thief.getGold() + butin);
-                return;
+        public void ability(Player ... players){
+            if(!players[1].getCharacter().equals(ASSASSIN) && !players[1].isDead()) {
+                System.out.println("Le joueur a volé" + players[1].getCharacter());
+                int butin = players[1].getGold();
+                players[1].setGold(0);
+                players[0].addGold(butin);
             }
         }
     },
@@ -29,7 +30,7 @@ public enum Character implements Ability{
     MAGICIEN("Magicien", Color.NEUTRE, 3){
         @Override
         public void ability(Draw draw, Player ... players){
-            players = reorganizePlayers(MAGICIEN, players);
+            //players = reorganizePlayers(MAGICIEN, players);
             Hand hand = players[0].getHand();
             int size = hand.size();
             if (players.length == 1) {
@@ -38,7 +39,7 @@ public enum Character implements Ability{
                     hand.remove(0);
                 }
                 players[0].draw(draw, size);
-
+                System.out.println("Le joueur " + players[0].getNumber() + " a échangé sa main avec la pioche");
             }
             else {
                 Hand hand2 = players[1].getHand();
@@ -46,6 +47,7 @@ public enum Character implements Ability{
                 tmp.setHand(hand);
                 hand.setHand(hand2);
                 hand2.setHand(tmp);
+                System.out.println("Le joueur " + players[0].getNumber() + " a échangé sa main avec le joueur " + players[1].getNumber());
             }
        }
     },
@@ -89,15 +91,16 @@ public enum Character implements Ability{
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
         @Override
         public void ability(Draw draw,Player ... players){
-            players = reorganizePlayers(ARCHITECTE, players);
+            //players = reorganizePlayers(ARCHITECTE, players);
             players[0].draw(draw,2);
+            System.out.println("Le joueur " + players[0].getNumber() + " a pioché 2 cartes grace au pouvoir de l'architecte");
         }
     },
 
     CONDOTTIERE("Condotière", Color.SOLDATESQUE, 8){
         @Override
         public void ability(int index, Player ... players){
-            players = reorganizePlayers(CONDOTTIERE, players);
+            //players = reorganizePlayers(CONDOTTIERE, players);
             String res = "";
             int nbOfArmyConstructions = 0;
             Player selfPlayer = players[0];
@@ -119,19 +122,20 @@ public enum Character implements Ability{
         }
     };
 
-    private String name;
-    private Color color;
-    private int number;
+    private final String name;
+    private final Color color;
+    private final int number;
 
-    private Character(String n, Color c, int num) {
+    Character(String n, Color c, int num) {
         this.name = n;
         this.color = c;
         this.number = num;
     }
 
-    public void ability(Player player) {return;}
-    public void ability(Player selfPlayer, Player targetedPlayer){return;}
-    public void ability(int index, Player ... players) {return;}
+    public void ability(Player self) {/* abilité du joueur lui-même*/}
+    public void ability(Player ... players) {/* abilité du joueur sur les autres joueurs*/}
+    public void ability(int index, Player ... players) {/* abilité du joueur sur les autres joueurs et sur une construction*/}
+    public void ability(Draw d, Player ... players) {/* abilité du joueur sur les autres joueurs et sur la pioche*/}
 
     public String getName() { return this.name; }
 
@@ -139,10 +143,7 @@ public enum Character implements Ability{
 
     public int getNumber() { return this.number; }
 
-    public void ability(Draw d, Player ... players) {
-    }
-
-    public Player[] reorganizePlayers(Character c, Player ... players) {
+    /*public Player[] reorganizePlayers(Character c, Player ... players) {
         boolean isCharacter = false;
         for (Player player : players) {
             if (player.getCharacter() == Character.ROI) {
@@ -158,7 +159,7 @@ public enum Character implements Ability{
             players = reorganizePlayers(c, players);
         }
         return players;
-    }
+    }*/
 }
 
 

@@ -23,8 +23,9 @@ class CharacterTest {
     Player p1;
     Player p2;
     Player p3;
+
     @BeforeEach
-    void init() {
+    void init2() {
         hand1 = new Hand();
         hand2 = new Hand();
         hand3 = new Hand();
@@ -38,19 +39,21 @@ class CharacterTest {
     @Test
     void assassinability(){
         Character.ASSASSIN.ability(p3,p2);
-        assertEquals(true,p3.isDead());
+        assertTrue(p2.isDead());
     }
     @Test
-    void voleurability(){
+    void voleurability() {
         p1.setGold(10);
         p2.setGold(10);
         p3.setGold(10);
-        Character.VOLEUR.ability(p2,p3);
-        assertEquals(0,p3.getGold());
-        assertEquals(20,p2.getGold());
-        Character.VOLEUR.ability(p2,p1);
-        assertEquals(20,p2.getGold());
-        assertEquals(10,p1.getGold());
+        Character.VOLEUR.ability(p2, p3);
+        assertEquals(0, p3.getGold());
+        assertEquals(20, p2.getGold());
+        Character.VOLEUR.ability(p2, p1);
+        assertEquals(20, p2.getGold());
+        assertEquals(10, p1.getGold());
+
+    }
 
     Draw d = new Draw();
     Player p = new Player(1, new Hand());
@@ -61,11 +64,10 @@ class CharacterTest {
     Constructions c5 = new Constructions("Monastère", Color.RELIGIEUX, 3);
     Constructions c6 = new Constructions("Marché", Color.COMMERCIAL, 2);
 
-    Player p2 = new Player(1, new Hand());
+    Player p2_1 = new Player(1, new Hand());
     Constructions c7 = new Constructions("Tata", Color.RELIGIEUX, 1);
     Constructions c8 = new Constructions("Toto", Color.SOLDATESQUE, 2);
     Constructions c9 = new Constructions("Titi", Color.RELIGIEUX, 5);
-
 
     @BeforeEach
     void setUp() {
@@ -76,11 +78,9 @@ class CharacterTest {
         d.add(c5);
         d.add(c6);
         p.draw(d, 2);
-        p2.getHand().add(c7);
-        p2.getHand().add(c8);
-        p2.getHand().add(c9);
-
-
+        p2_1.getHand().add(c7);
+        p2_1.getHand().add(c8);
+        p2_1.getHand().add(c9);
     }
 
     @Test
@@ -101,18 +101,18 @@ class CharacterTest {
 
     @Test
     void testAbilityMag2() {
-        assertEquals(3, p2.getHand().size());
+        assertEquals(3, p2_1.getHand().size());
         assertEquals(2, p.getHand().size());
-        assertTrue(p2.getHand().contains(c7));
-        assertTrue(p2.getHand().contains(c8));
-        assertTrue(p2.getHand().contains(c9));
+        assertTrue(p2_1.getHand().contains(c7));
+        assertTrue(p2_1.getHand().contains(c8));
+        assertTrue(p2_1.getHand().contains(c9));
         assertTrue(p.getHand().contains(c1));
         assertTrue(p.getHand().contains(c2));
-        Character.MAGICIEN.ability(d,p,p2);
-        assertEquals(2, p2.getHand().size());
+        Character.MAGICIEN.ability(d,p,p2_1);
+        assertEquals(2, p2_1.getHand().size());
         assertEquals(3, p.getHand().size());
-        assertTrue(p2.getHand().contains(c1));
-        assertTrue(p2.getHand().contains(c2));
+        assertTrue(p2_1.getHand().contains(c1));
+        assertTrue(p2_1.getHand().contains(c2));
         assertTrue(p.getHand().contains(c7));
         assertTrue(p.getHand().contains(c8));
         assertTrue(p.getHand().contains(c9));
@@ -221,16 +221,6 @@ class CharacterTest {
     }
 
     @Test
-    void testAssassinAbility() {
-        return;
-    }
-
-    @Test
-    void testKingAbility() {
-        return;
-    }
-
-    @Test
     void testBishopAbility() { //EVEQUE
         init();
         assertEquals(2, bishop.getGold());
@@ -244,21 +234,6 @@ class CharacterTest {
         assertEquals(2, merchant.getGold());
         merchant.useAbility(d, merchant);
         assertEquals(5, merchant.getGold());
-    }
-
-    @Test
-    void testArchitectAbility() {
-        return;
-    }
-
-    @Test
-    void testThiefAbility() {
-        return;
-    }
-
-    @Test
-    void testMagicianAbility() {
-        return;
     }
 
     @Test

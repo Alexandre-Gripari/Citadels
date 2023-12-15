@@ -91,7 +91,7 @@ public class Game {
             choiceOfCharacter();
             sortPlayersByCharacter();
             for (Player player : players) {
-                player.play(draw, players);
+                player.play(draw, getOpponents(player));
                 System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
             }
         }
@@ -108,18 +108,19 @@ public class Game {
         Arrays.sort(players);
     }
 
-    /*public Player[] getOpponents(Player player) {
-        Player[] opponents = new Player[players.length - 1];
-        int j = 0;
-        for (int i = 0; i < players.length - 1; i++) {
+    public Player[] getOpponents(Player player) {
+        Player[] opponents = new Player[players.length];
+        int j = 1;
+        for (int i = 0; i < players.length; i++) {
             if (players[i].getNumber() != player.getNumber()) {
                 opponents[j] = players[i];
                 j++;
             }
         }
-        assert opponents.length == players.length - 1;
+        assert opponents.length == players.length;
+        opponents[0] = player;
         return opponents;
-    }*/
+    }
 
     public void choiceOfCharacter(){
         reorganizePlayers();
