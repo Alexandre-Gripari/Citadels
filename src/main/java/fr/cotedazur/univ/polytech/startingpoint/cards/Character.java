@@ -20,6 +20,7 @@ public enum Character {
     MAGICIEN("Magicien", Color.NEUTRE, 3){
         @Override
         public void ability(Draw draw, Player ... players){
+            players = reorganizePlayers(MAGICIEN, players);
             Hand hand = players[0].getHand();
             int size = hand.size();
             if (players.length == 1) {
@@ -78,6 +79,7 @@ public enum Character {
 
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
         public void ability(Draw draw,Player ... players){
+            players = reorganizePlayers(ARCHITECTE, players);
             players[0].draw(draw,2);
         }
     },
@@ -85,6 +87,7 @@ public enum Character {
     CONDOTTIERE("Condotière", Color.SOLDATESQUE, 8){
         @Override
         public void ability(int index, Player ... players){
+            players = reorganizePlayers(CONDOTTIERE, players);
             String res = "";
             int nbOfArmyConstructions = 0;
             Player selfPlayer = players[0];
@@ -127,6 +130,24 @@ public enum Character {
     public int getNumber() { return this.number; }
 
     public void ability(Draw d, Player ... players) {
+    }
+
+    public Player[] reorganizePlayers(Character c, Player ... players) {
+        boolean isCharacter = false;
+        for (Player player : players) {
+            if (player.getCharacter() == Character.ROI) {
+                isCharacter = true;
+                break;
+            }
+        }
+        if (players[0].getCharacter() != c && isCharacter) {
+            Player p = players[0];
+            for (int i = 0; i < players.length - 1; i++)
+                players[i] = players[i + 1];
+            players[players.length - 1] = p;
+            players = reorganizePlayers(c, players);
+        }
+        return players;
     }
 }
 

@@ -48,12 +48,12 @@ public class Player implements Comparable<Player> {
         return city;
     }
 
-    public void play(Draw draw, Player[] opponents) {
+    public void play(Draw draw, Player[] players) {
         System.out.println("Le joueur " + number + " est le " + character.getName());
         if (hand.isEmpty()) hand.add(takeConstruction(draw));
         else takeGold();
         buildConstruction();
-        useAbility(draw, opponents);
+        useAbility(draw, players);
     }
 
 
