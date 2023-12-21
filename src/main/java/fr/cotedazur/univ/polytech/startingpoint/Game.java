@@ -1,9 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
 import java.util.*;
 
@@ -44,6 +43,19 @@ public class Game {
         draw.addXConstructions(new Constructions("Comptoir", Color.COMMERCIAL, 3), 3);
         draw.addXConstructions(new Constructions("Port", Color.COMMERCIAL, 4), 3);
         draw.addXConstructions(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5), 2);
+
+        // Ajout des merveilles
+
+        draw.add(new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES));
+        draw.add(new Wonder("Donjon", 3, WondersPower.DONJON));
+        draw.add(new Wonder("Laboratoire", 5, WondersPower.LABORATOIRE));
+        draw.add(new Wonder("Manufacture", 5, WondersPower.MANUFACTURE));
+        draw.add(new Wonder("Observatoire", 5, WondersPower.OBSERVATOIRE));
+        draw.add(new Wonder("Cimetière", 5, WondersPower.CIMETIERE));
+        draw.add(new Wonder("Bibliothèque", 6, WondersPower.BIBLIOTHEQUE));
+        draw.add(new Wonder("Ecole de magie", 6, WondersPower.ECOLE_DE_MAGIE));
+        draw.add(new Wonder("Université", 6, WondersPower.UNIVERSITE));
+        draw.add(new Wonder("Dracoport", 6, WondersPower.DRACOPORT));
 
         draw.shuffle();
 
