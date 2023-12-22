@@ -96,10 +96,9 @@ public class Game {
             }
         }
         sortPlayersByPoints();
-        if (players[0].getCity().cityValue() == players[1].getCity().cityValue()) System.out.println("Egalité ! Les deux joueurs ont " + players[0].getCity().cityValue() + " points !");
-        else {
-            System.out.println("Le joueur " + players[1].getNumber() + " a gagné avec " + players[1].getCity().cityValue() + " points !");
-            System.out.println("Le joueur " + players[0].getNumber() + " a perdu lamentablement avec " + players[0].getCity().cityValue() + " points !");
+        for (int i= players.length-1,j=1;i>=0;i--,j++ ){
+            if(i<players.length-1 && players[i].getCity().cityValue() == players[i+1].getCity().cityValue()) j--;
+            System.out.println("Le joueur " + players[i].getNumber() + " termine à la " + j + "ème place avec " + players[i].getCity().cityValue() + " points.");
         }
 
     }
@@ -111,9 +110,9 @@ public class Game {
     public Player[] getOpponents(Player player) {
         Player[] opponents = new Player[players.length];
         int j = 1;
-        for (int i = 0; i < players.length; i++) {
-            if (players[i].getNumber() != player.getNumber()) {
-                opponents[j] = players[i];
+        for (Player value : players) {
+            if (value.getNumber() != player.getNumber()) {
+                opponents[j] = value;
                 j++;
             }
         }

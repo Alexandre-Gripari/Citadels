@@ -115,6 +115,7 @@ public enum Character{
                 if (selfPlayer.getGold() >= cost) {
                     res += " et il détruit la cité : " + targetedPlayer.getCity().get(index).toString() + " du joueur " + targetedPlayer.getNumber() + " et perd " + cost + " d'or";
                     targetedPlayer.getCity().remove(index);
+                    targetedPlayer.getCity().get(index).destruct();
                     selfPlayer.addGold(-cost);
                 }
             }

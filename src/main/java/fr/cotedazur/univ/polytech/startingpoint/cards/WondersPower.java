@@ -42,5 +42,5 @@ public enum WondersPower {
         public void power(){return;}
     };
 
-    public void power(){};
+    public void power(){}
 }

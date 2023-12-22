@@ -1,14 +1,20 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
-public class Wonder extends Card {
+public class Wonder extends Constructions {
 
     private WondersPower power;
-    private String name;
-    private Color color;
 
-    public Wonder (String name, WondersPower power) {
-        super(name, Color.MERVEILLEUX);
+    public Wonder (String name, WondersPower power, int value) {
+        super(name, Color.MERVEILLEUX, value);
         this.power = power;
+    }
+
+    public void power(){
+        this.power.power();
+    }
+
+    public WondersPower getWondersPower(){
+        return this.power;
     }
 
 }
