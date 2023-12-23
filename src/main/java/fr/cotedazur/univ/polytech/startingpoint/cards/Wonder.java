@@ -17,4 +17,21 @@ public class Wonder extends Constructions {
         return this.power;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Wonder)) return false;
+        return this.getWondersPower().equals(((Wonder) o).getWondersPower());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getWondersPower().hashCode();
+    }
+
+
+
+
+
+
 }

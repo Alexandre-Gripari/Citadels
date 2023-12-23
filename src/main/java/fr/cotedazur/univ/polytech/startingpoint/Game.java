@@ -1,11 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
 import java.util.*;
+
+import static fr.cotedazur.univ.polytech.startingpoint.Draw.*;
 
 public class Game {
 
@@ -44,6 +45,18 @@ public class Game {
         draw.addXConstructions(new Constructions("Comptoir", Color.COMMERCIAL, 3), 3);
         draw.addXConstructions(new Constructions("Port", Color.COMMERCIAL, 4), 3);
         draw.addXConstructions(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5), 2);
+
+        draw.addXConstructions(new Wonder("Cour des miracles", WondersPower.COUR_DES_MIRACLES, 2 ), 1);
+        draw.addXConstructions(new Wonder("Donjon", WondersPower.DONJON, 3 ), 1);
+        draw.addXConstructions(new Wonder("Laboratoire", WondersPower.LABORATOIRE, 5 ), 1);
+        draw.addXConstructions(new Wonder("Manufacture", WondersPower.MANUFACTURE, 5 ), 1);
+        draw.addXConstructions(new Wonder("Observatoire", WondersPower.OBSERVATOIRE, 5 ), 1);
+
+        draw.addXConstructions(new Wonder("Cimetière", WondersPower.CIMETIERE, 1 ), 1);
+        draw.addXConstructions(new Wonder("Bibliothèque", WondersPower.BIBLIOTHEQUE, 6 ), 1);
+        draw.addXConstructions(new Wonder("Ecole de magie", WondersPower.ECOLE_DE_MAGIE, 6 ), 1);
+        draw.addXConstructions(new Wonder("Université", WondersPower.UNIVERSITE, 8 ), 1);
+        draw.addXConstructions(new Wonder("Dracoport", WondersPower.DRACOPORT, 8 ), 1);
 
         draw.shuffle();
 

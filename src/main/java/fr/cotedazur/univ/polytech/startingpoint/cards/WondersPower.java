@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
+import fr.cotedazur.univ.polytech.startingpoint.Player;
+
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -23,7 +25,15 @@ public enum WondersPower {
     },
 
     CIMETIERE {
-        public void power(){return;}
+        @Override
+        public void power(Constructions c, Player ... players){
+            Wonder associatedWonder = this.getWonder();
+            for (Player player : players) {
+                if (player.getWonders().contains(associatedWonder)) {
+                    player.useCimetiery(c);
+                }
+            }
+        }
     },
 
     BIBLIOTHEQUE {
@@ -43,4 +53,11 @@ public enum WondersPower {
     };
 
     public void power(){}
+    public void power(Constructions c, Player ... players){}
+
+    public Wonder getWonder(){
+        return new Wonder(this.name(), this, 0);
+    }
+
+
 }

@@ -16,7 +16,7 @@ class GameTest {
         Game game = new Game(new Player[]{new Player(1, new Hand()), new Player(2, new Hand())});
         game.init();
         assertEquals(2, game.getPlayers().length);
-        assertEquals(46, game.getDraw().size());
+        assertEquals(56, game.getDraw().size());
     }
 
     @Test
@@ -96,5 +96,27 @@ class GameTest {
         p4.chooseCharacter(game.getCharacters());
         game.reorganizePlayers();
         assertEquals(ROI, game.getPlayers()[0].getCharacter());
+    }
+
+    @Test
+    void testgetOpponents() {
+        Player p1 = new Player(1, new Hand());
+        Player p2 = new Player(2, new Hand());
+        Player p3 = new Player(3, new Hand());
+        Player p4 = new Player(4, new Hand());
+        Game game = new Game(new Player[]{p1, p2, p3, p4});
+        game.init();
+        Player[] opponents = game.getOpponents(p1);
+        assertEquals(4, opponents.length);
+        assertEquals(p1, opponents[0]);
+        assertEquals(p2, opponents[1]);
+        assertEquals(p3, opponents[2]);
+        assertEquals(p4, opponents[3]);
+        Player[] opponents2 = game.getOpponents(p2);
+        assertEquals(4, opponents2.length);
+        assertEquals(p2, opponents2[0]);
+        assertEquals(p1, opponents2[1]);
+        assertEquals(p3, opponents2[2]);
+        assertEquals(p4, opponents2[3]);
     }
 }

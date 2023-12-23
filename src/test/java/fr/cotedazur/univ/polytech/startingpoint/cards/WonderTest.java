@@ -38,4 +38,13 @@ class WonderTest {
     void getWondersPower() {
         assertEquals(WondersPower.COUR_DES_MIRACLES, wonder.getWondersPower());
     }
+
+    @Test
+    void testEquals() {
+        Wonder wonder3 = new Wonder("Cour des miracles", WondersPower.COUR_DES_MIRACLES, 3);
+        Wonder wonder4 = new Wonder("JE TEST OK ?", WondersPower.COUR_DES_MIRACLES, 3);
+        assertEquals(wonder, wonder3);
+        assertNotEquals(wonder, wonder2);
+        assertEquals(wonder, wonder4);
+    }
 }
