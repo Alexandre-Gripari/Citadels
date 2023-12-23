@@ -2,9 +2,10 @@ package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 public class Wonder extends Constructions {
 
-    private WondersPower power;
+    private final WondersPower power;
 
-    public Wonder (String name, WondersPower power, int value) {
+    public Wonder (String name, int value, WondersPower power) {
+
         super(name, Color.MERVEILLEUX, value);
         this.power = power;
     }
@@ -28,10 +29,5 @@ public class Wonder extends Constructions {
     public int hashCode() {
         return this.getWondersPower().hashCode();
     }
-
-
-
-
-
 
 }

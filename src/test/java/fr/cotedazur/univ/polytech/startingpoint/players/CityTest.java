@@ -3,6 +3,8 @@ package fr.cotedazur.univ.polytech.startingpoint.players;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.*;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +20,12 @@ class CityTest {
     Constructions r1 = new Constructions("testr1", Color.RELIGIEUX, 1);
     Constructions r2 = new Constructions("testr2", Color.RELIGIEUX, 2);
     Constructions r3 = new Constructions("testr3", Color.RELIGIEUX, 3);
+    Constructions m1 = new Wonder("Dracoport", 6, WondersPower.DRACOPORT); // Pour tester le Dracoport
 
     City city1 = new City();
     City city2 = new City();
-
     City city3 = new City();
+
     @BeforeEach
     void init() {
         city1.add(c1);
@@ -34,6 +37,7 @@ class CityTest {
         city3.add(r1);
         city3.add(r2);
         city3.add(r3);
+        city3.add(m1);
     }
 
 
@@ -42,6 +46,7 @@ class CityTest {
     void cityValue(){
         assertEquals(6,city1.cityValue());
         assertEquals(15,city2.cityValue());
+        assertEquals(14, city3.cityValue());
     }
 
     @Test
@@ -54,7 +59,7 @@ class CityTest {
         assertEquals(0,city2.compareTo(city2));
         assertEquals(0,city3.compareTo(city3));
 
-        assertEquals(0,city1.compareTo(city3));
-        assertEquals(0,city3.compareTo(city1));
+        assertEquals(-8,city1.compareTo(city3));
+        assertEquals(8,city3.compareTo(city1));
     }
 }

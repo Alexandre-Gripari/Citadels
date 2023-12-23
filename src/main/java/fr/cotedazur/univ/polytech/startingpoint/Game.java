@@ -46,17 +46,16 @@ public class Game {
         draw.addXConstructions(new Constructions("Port", Color.COMMERCIAL, 4), 3);
         draw.addXConstructions(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5), 2);
 
-        draw.addXConstructions(new Wonder("Cour des miracles", WondersPower.COUR_DES_MIRACLES, 2 ), 1);
-        draw.addXConstructions(new Wonder("Donjon", WondersPower.DONJON, 3 ), 1);
-        draw.addXConstructions(new Wonder("Laboratoire", WondersPower.LABORATOIRE, 5 ), 1);
-        draw.addXConstructions(new Wonder("Manufacture", WondersPower.MANUFACTURE, 5 ), 1);
-        draw.addXConstructions(new Wonder("Observatoire", WondersPower.OBSERVATOIRE, 5 ), 1);
-
-        draw.addXConstructions(new Wonder("Cimetière", WondersPower.CIMETIERE, 1 ), 1);
-        draw.addXConstructions(new Wonder("Bibliothèque", WondersPower.BIBLIOTHEQUE, 6 ), 1);
-        draw.addXConstructions(new Wonder("Ecole de magie", WondersPower.ECOLE_DE_MAGIE, 6 ), 1);
-        draw.addXConstructions(new Wonder("Université", WondersPower.UNIVERSITE, 8 ), 1);
-        draw.addXConstructions(new Wonder("Dracoport", WondersPower.DRACOPORT, 8 ), 1);
+        draw.add(new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES));
+        draw.add(new Wonder("Donjon", 3, WondersPower.DONJON));
+        draw.add(new Wonder("Laboratoire", 5, WondersPower.LABORATOIRE));
+        draw.add(new Wonder("Manufacture", 5, WondersPower.MANUFACTURE));
+        draw.add(new Wonder("Observatoire", 5, WondersPower.OBSERVATOIRE));
+        draw.add(new Wonder("Cimetière", 5, WondersPower.CIMETIERE));
+        draw.add(new Wonder("Bibliothèque", 6, WondersPower.BIBLIOTHEQUE));
+        draw.add(new Wonder("Ecole de magie", 6, WondersPower.ECOLE_DE_MAGIE));
+        draw.add(new Wonder("Université", 6, WondersPower.UNIVERSITE));
+        draw.add(new Wonder("Dracoport", 6, WondersPower.DRACOPORT));
 
         draw.shuffle();
 
