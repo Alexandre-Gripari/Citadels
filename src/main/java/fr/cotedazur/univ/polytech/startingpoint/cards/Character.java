@@ -111,9 +111,12 @@ public enum Character{
             res += "Le joueur " + selfPlayer.getNumber() + " gagne " + nbOfArmyConstructions +" d'or grâce à la capacité du condottiere";
             if (players.length >= 2) {
                 Player targetedPlayer = players[1];
+                // sera remplacé par un assert, les joeurs intelligents ne vont pas choisir le donjon
+                if (targetedPlayer.getCity().get(index).equals(new Wonder("Donjon",WondersPower.DONJON,3))) return;
                 int cost = targetedPlayer.getCity().get(index).getValue() - 1;
                 if (selfPlayer.getGold() >= cost) {
                     res += " et il détruit la cité : " + targetedPlayer.getCity().get(index).toString() + " du joueur " + targetedPlayer.getNumber() + " et perd " + cost + " d'or";
+                    WondersPower.CIMETIERE.power(targetedPlayer.getCity().get(index), players);
                     targetedPlayer.getCity().remove(index);
                     selfPlayer.addGold(-cost);
                 }

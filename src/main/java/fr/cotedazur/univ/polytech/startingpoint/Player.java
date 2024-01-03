@@ -1,12 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Card;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player implements Comparable<Player> {
@@ -15,6 +16,7 @@ public class Player implements Comparable<Player> {
     private Hand hand;
     private City city;
     private Character character;
+    private List<Wonder> wonders = new ArrayList<>();
 
     private boolean isDead=false;
 
@@ -65,6 +67,14 @@ public class Player implements Comparable<Player> {
         return city;
     }
 
+    public List<Wonder> getWonders() {
+        return wonders;
+    }
+
+    public void setWonders(List<Wonder> wonders) {
+        this.wonders = wonders;
+    }
+
     public void play(Draw draw, Player[] players) {
         if(isDead) {
             resurrect();
@@ -101,6 +111,7 @@ public class Player implements Comparable<Player> {
             if (gold >= valueOfConstruction){
                 System.out.println("Le joueur " + number + " construit " + hand.get(i));
                 gold -= valueOfConstruction;
+                if (hand.get(i) instanceof Wonder) wonders.add((Wonder) hand.get(i));
                 city.add(hand.get(i));
                 hand.remove(i);
                 return;
@@ -109,11 +120,6 @@ public class Player implements Comparable<Player> {
     }
 
     public void useAbility(Draw draw, Player ... players) {
-        /*if (players[0] != this) {
-            Player tmp = players[0];
-            players[0] = players[1];
-            players[1] = tmp;
-        }*/
         switch (character.getNumber()){
             case 1:
                 character.ability(players);
@@ -169,5 +175,12 @@ public class Player implements Comparable<Player> {
     }
 
 
+    public void useCimetiery(Constructions c) {
+        if (c.getValue() <= gold) {
+            gold -= c.getValue();
+            System.out.println("Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
+            hand.add(c);
+        }
+    }
 }
 

@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.cards;
 public class Constructions extends Card {
 
     private int value;
+    private boolean constructed=false;
 
     public Constructions(String name, Color color, int value) {
         super(name, color);
@@ -16,4 +17,6 @@ public class Constructions extends Card {
     public boolean equals(Constructions c){
         return this.name.equals(c.getName());
     }
+
+
 }

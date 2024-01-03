@@ -25,7 +25,15 @@ public enum WondersPower {
     },
 
     CIMETIERE {
-        public void power(){return;}
+        @Override
+        public void power(Constructions c, Player ... players){
+            Wonder associatedWonder = this.getWonder();
+            for (Player player : players) {
+                if (player.getWonders().contains(associatedWonder)) {
+                    player.useCimetiery(c);
+                }
+            }
+        }
     },
 
     BIBLIOTHEQUE {
@@ -47,8 +55,16 @@ public enum WondersPower {
         public void power(){return;} // effet de la merveille effectif dans le calcul de la valeur d'une cité
     };
 
-    public void power(){};
-    public void power(Player player){return;};
+    public void power(){}
+    public void power(Constructions c, Player ... players){}
+     public void power(Player player){return;};
+  
+  
+    public Wonder getWonder(){
+        return new Wonder(this.name(), this, 0);
+    }
+   
+
 }
 
 
