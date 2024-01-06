@@ -1,11 +1,19 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.players.City;
 
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
-        public void power(){return;}
+        @Override
+        public void power(Player player, Wonder wonder){
+            // la couleur devient celle qui n'est pas dans la cité
+            City city = player.getCity();
+            Color missingColor = city.missingColor();
+            wonder.setColor(missingColor);
+        }
     },
 
     DONJON {
@@ -13,7 +21,11 @@ public enum WondersPower {
     },
 
     LABORATOIRE {
-        public void power(){return;}
+        @Override
+        public void power(Constructions c, Player player, Draw d) {
+            player.discardConstruction(c,d);
+            player.addGold(1);
+        }
     },
 
     MANUFACTURE {
@@ -57,11 +69,14 @@ public enum WondersPower {
 
     public void power(){}
     public void power(Constructions c, Player ... players){}
-     public void power(Player player){return;};
+    public void power(Player player){}
+    public void power(Constructions c, Player player, Draw d){}
+    public void power(Player player, Wonder wonder){}
+
   
   
     public Wonder getWonder(){
-        return new Wonder(this.name(), this, 0);
+        return new Wonder(this.name(), 0, this);
     }
    
 

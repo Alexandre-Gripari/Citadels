@@ -164,6 +164,14 @@ class PlayerTest {
         assertEquals("Magicien", p2.getCharacter().getName());
 
         assertEquals(0,CharacterList2.size());
+    }
 
+    @Test
+    void testDiscardConstruction(){
+        init();
+        p1.discardConstruction(p1.getHand().get(0), draw);
+        assertEquals(1, p1.getHand().size());
+        assertEquals(6, draw.size());
+        assertEquals("Forteresse", p1.getHand().get(0).getName());
     }
 }

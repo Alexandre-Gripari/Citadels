@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.*;
 
@@ -11,7 +12,7 @@ class WondersPowerTest {
 
     Draw draw = new Draw();
     Player player1 = new Player(1, new Hand());
-    Wonder wonder = new Wonder("Cimetière", WondersPower.CIMETIERE, 3);
+    Wonder wonder = new Wonder("Cimetière", 3, WondersPower.CIMETIERE);
     Constructions construction = new Constructions("Test", Color.COMMERCIAL, 1);
     Constructions construction2 = new Constructions("Test2", Color.COMMERCIAL, 1);
     Player player2 = new Player(2, new Hand());
@@ -44,7 +45,7 @@ class WondersPowerTest {
     @Test
     void testPowerDonjon(){
         Player player4 = new Player(4, new Hand());
-        player4.getCity().add(new Wonder("Donjon", WondersPower.DONJON, 3));
+        player4.getCity().add(new Wonder("Donjon", 3, WondersPower.DONJON));
         Player[] players = {player2, player4, player1};
         player2.setCharacter(Character.CONDOTTIERE);
         player2.addGold(10);
@@ -63,23 +64,75 @@ class WondersPowerTest {
     void ecoleDeMagieTest() {
         assertEquals(2, playerWithEcoleDeMagie.getGold());
         playerWithEcoleDeMagie.setCharacter(Character.ROI);
-        edm.getPower().power(playerWithEcoleDeMagie);
+        edm.getWondersPower().power(playerWithEcoleDeMagie);
         assertEquals(3, playerWithEcoleDeMagie.getGold());
         playerWithEcoleDeMagie.setCharacter(Character.EVEQUE);
-        edm.getPower().power(playerWithEcoleDeMagie);
+        edm.getWondersPower().power(playerWithEcoleDeMagie);
         assertEquals(4, playerWithEcoleDeMagie.getGold());
         playerWithEcoleDeMagie.setCharacter(Character.MARCHAND);
-        edm.getPower().power(playerWithEcoleDeMagie);
+        edm.getWondersPower().power(playerWithEcoleDeMagie);
         assertEquals(5, playerWithEcoleDeMagie.getGold());
         playerWithEcoleDeMagie.setCharacter(Character.CONDOTTIERE);
-        edm.getPower().power(playerWithEcoleDeMagie);
+        edm.getWondersPower().power(playerWithEcoleDeMagie);
         assertEquals(6, playerWithEcoleDeMagie.getGold());
         playerWithEcoleDeMagie.setCharacter(Character.VOLEUR);
-        edm.getPower().power(playerWithEcoleDeMagie);
+        edm.getWondersPower().power(playerWithEcoleDeMagie);
         assertEquals(6, playerWithEcoleDeMagie.getGold());
         playerWithEcoleDeMagie.setCharacter(Character.MAGICIEN);
-        edm.getPower().power(playerWithEcoleDeMagie);
+        edm.getWondersPower().power(playerWithEcoleDeMagie);
         assertEquals(6, playerWithEcoleDeMagie.getGold());
+    }
+
+    @Test
+    void testPowerCourDesMiracles(){
+        Player player4 = new Player(4, new Hand());
+        Wonder wonder = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
+        Constructions c1 = new Constructions("test1", Color.NOBLE, 1);
+        Constructions c2 = new Constructions("test2", Color.SOLDATESQUE, 2);
+        Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
+        Constructions c5 = new Constructions("test5", Color.RELIGIEUX, 5);
+        player4.getCity().add(wonder);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.RELIGIEUX, wonder.getColor());
+        player4.getCity().add(c1);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.RELIGIEUX, wonder.getColor());
+        player4.getCity().add(c5);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.SOLDATESQUE, wonder.getColor());
+        player4.getCity().add(c2);
+        player4.getCity().add(c3);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.MERVEILLEUX, wonder.getColor());
+    }
+
+    @Test
+    void testPowerLaboratoire(){
+        Draw d = new Draw();
+        Player player4 = new Player(4, new Hand());
+        Wonder wonder = new Wonder("Laboratoire", 5, WondersPower.LABORATOIRE);
+        Constructions c1 = new Constructions("test1", Color.NOBLE, 1);
+        Constructions c2 = new Constructions("test2", Color.SOLDATESQUE, 2);
+        Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
+        Constructions c5 = new Constructions("test5", Color.RELIGIEUX, 5);
+        player1.getHand().add(c1);
+        player1.getHand().add(c2);
+        player1.getHand().add(c3);
+        player1.getHand().add(c5);
+        player4.getCity().add(wonder);
+        wonder.getWondersPower().power(c1, player4, d);
+        assertEquals(3, player4.getGold());
+        assertFalse(player4.getHand().contains(c1));
+        wonder.getWondersPower().power(c2, player4, d);
+        assertEquals(4, player4.getGold());
+        assertFalse(player4.getHand().contains(c2));
+        wonder.getWondersPower().power(c5, player4, d);
+        assertEquals(5, player4.getGold());
+
+        assertTrue(d.contains(c1));
+        assertTrue(d.contains(c2));
+        assertTrue(d.contains(c5));
+
     }
 
 

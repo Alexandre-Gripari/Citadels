@@ -6,5 +6,5 @@ public enum Color {
     SOLDATESQUE,
     COMMERCIAL,
     MERVEILLEUX,
-    NEUTRE;
+    NEUTRE
 }

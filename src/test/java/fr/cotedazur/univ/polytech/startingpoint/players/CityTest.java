@@ -22,6 +22,7 @@ class CityTest {
     Constructions r3 = new Constructions("testr3", Color.RELIGIEUX, 3);
     Constructions m1 = new Wonder("Dracoport", 6, WondersPower.DRACOPORT); // Pour tester le Dracoport
 
+
     City city1 = new City();
     City city2 = new City();
     City city3 = new City();
@@ -61,5 +62,45 @@ class CityTest {
 
         assertEquals(-8,city1.compareTo(city3));
         assertEquals(8,city3.compareTo(city1));
+    }
+
+    @Test
+    void missingColor(){
+        assertEquals(Color.RELIGIEUX, city1.missingColor());
+        assertEquals(Color.RELIGIEUX, city2.missingColor());
+        assertEquals(Color.NOBLE, city3.missingColor());
+        City city4 = new City();
+        Constructions c7 = new Constructions("test7", Color.RELIGIEUX, 7);
+        Constructions c8 = new Constructions("test8", Color.NOBLE, 8);
+        Constructions c9 = new Constructions("test9", Color.SOLDATESQUE, 9);
+        Constructions c10 = new Constructions("test10", Color.COMMERCIAL, 10);
+        Constructions c11 = new Constructions("test11", Color.MERVEILLEUX, 11);
+        Wonder w1 = new Wonder("Cour des miracles", 1, WondersPower.COUR_DES_MIRACLES);
+        Wonder w2 = new Wonder("testw2", 2, WondersPower.DONJON);
+        city4.add(c7);
+        city4.add(c8);
+        city4.add(c9);
+        city4.add(c10);
+        city4.add(c11);
+        assertEquals(Color.NEUTRE, city4.missingColor());
+        city4.remove(0);
+        assertEquals(Color.RELIGIEUX, city4.missingColor());
+        city4.add(c7);
+        city4.remove(0);
+        assertEquals(Color.NOBLE, city4.missingColor());
+        city4.add(c8);
+        city4.remove(0);
+        assertEquals(Color.SOLDATESQUE, city4.missingColor());
+        city4.add(c9);
+        city4.remove(0);
+        assertEquals(Color.COMMERCIAL, city4.missingColor());
+        city4.add(c10);
+        city4.remove(0);
+        assertEquals(Color.MERVEILLEUX, city4.missingColor());
+        city4.add(w2);
+        assertEquals(Color.NEUTRE, city4.missingColor());
+        city4.remove(4);
+        city4.add(w1);
+        assertEquals(Color.MERVEILLEUX, city4.missingColor());
     }
 }

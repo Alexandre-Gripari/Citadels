@@ -38,4 +38,8 @@ public class Hand{ // extends Arraylist ?
     public void setHand(Hand hand) {
         this.hand = (ArrayList<Constructions>) hand.getHand();
     }
+
+    public void remove(Constructions c) {
+        hand.remove(c);
+    }
 }

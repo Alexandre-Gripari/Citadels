@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+
 import java.util.ArrayList;
 
 public class City{
@@ -36,5 +39,20 @@ public class City{
         for (Constructions constructions : city)
             ville += constructions + ", ";
         return ville;
+    }
+
+    public Color missingColor() {
+        boolean color = false;
+        for (Color c : Color.values()) {
+            for (Constructions con : city) {
+                color = false;
+                if (con.getColor() == c && !con.equals(new Wonder("Cour des miracles", 0, null)) && !c.equals(Color.NEUTRE)) {
+                    color = true;
+                    break;
+                }
+            }
+            if (!color) return c;
+        }
+        return Color.NEUTRE;
     }
 }
