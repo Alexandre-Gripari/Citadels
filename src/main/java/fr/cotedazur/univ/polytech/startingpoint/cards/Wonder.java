@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.Player;
+
 public class Wonder extends Constructions {
 
     private WondersPower power;
@@ -11,6 +14,9 @@ public class Wonder extends Constructions {
 
     public void power(){
         this.power.power();
+    }
+    public void power(Player player, Draw d) {
+        this.power.power(player, d);
     }
 
     public WondersPower getWondersPower(){

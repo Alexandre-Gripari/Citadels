@@ -52,4 +52,8 @@ public class Draw {
     public boolean contains(Constructions x) {
         return drawDeck.contains(x);
     }
+
+    public Constructions peek() {
+        return drawDeck.peek();
+    }
 }
