@@ -38,4 +38,12 @@ class WonderTest {
     void getWondersPower() {
         assertEquals(WondersPower.COUR_DES_MIRACLES, wonder.getWondersPower());
     }
+
+    @Test
+    void universityTest() {
+        Wonder university = new Wonder("Université",WondersPower.UNIVERSITE, 6);
+
+        university.power(university);
+        assertEquals(8, university.getValue());
+    }
 }

@@ -13,6 +13,10 @@ public class Wonder extends Constructions {
         this.power.power();
     }
 
+    public void power(Constructions c){
+        this.power.power(c);
+    }
+
     public WondersPower getWondersPower(){
         return this.power;
     }

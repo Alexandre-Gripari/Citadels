@@ -35,7 +35,9 @@ public enum WondersPower {
     },
 
     UNIVERSITE {
-        public void power(){return;}
+        public void power(Constructions c){
+            c.setValue(8);
+        }
     },
 
     DRACOPORT {
@@ -43,4 +45,6 @@ public enum WondersPower {
     };
 
     public void power(){}
+
+    public void power(Constructions c){}
 }
