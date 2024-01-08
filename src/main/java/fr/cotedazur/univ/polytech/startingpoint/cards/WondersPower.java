@@ -1,5 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.Player;
+
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -27,7 +30,10 @@ public enum WondersPower {
     },
 
     BIBLIOTHEQUE {
-        public void power(){return;}
+        public void power(Player p, Draw d){
+            p.getHand().add(d.draw());
+            p.getHand().add(d.draw());
+        }
     },
 
     ECOLE_DE_MAGIE {
@@ -47,4 +53,6 @@ public enum WondersPower {
     public void power(){}
 
     public void power(Constructions c){}
+
+    public void power(Player p, Draw d) {}
 }

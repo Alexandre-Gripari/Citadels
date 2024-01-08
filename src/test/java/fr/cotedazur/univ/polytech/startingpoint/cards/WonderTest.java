@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,5 +46,24 @@ class WonderTest {
 
         university.power(university);
         assertEquals(8, university.getValue());
+    }
+
+    @Test
+    void libraryTest() {
+        Player player = new Player(0,new Hand());
+        Wonder library = new Wonder("Biblioothèque", WondersPower.BIBLIOTHEQUE, 6);
+        player.getCity().add(library);
+
+        Draw d = new Draw();
+        d.addXConstructions(new Constructions("Temple", Color.RELIGIEUX, 1), 1);
+        d.addXConstructions(new Constructions("Eglise", Color.RELIGIEUX, 2), 1);
+        d.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
+        d.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
+
+        assertEquals(0, player.getHand().size());
+        assertEquals(4,d.size());
+        library.power(player, d);
+        assertEquals(2, player.getHand().size());
+        assertEquals(2, d.size());
     }
 }
