@@ -1,7 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Card;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
@@ -112,7 +111,6 @@ public class Player implements Comparable<Player> {
             if (gold >= valueOfConstruction){
                 System.out.println("Le joueur " + number + " construit " + hand.get(i));
                 gold -= valueOfConstruction;
-                hand.get(i).construct();
                 if (hand.get(i) instanceof Wonder) wonders.add((Wonder) hand.get(i));
                 city.add(hand.get(i));
                 hand.remove(i);
@@ -177,6 +175,17 @@ public class Player implements Comparable<Player> {
     }
 
 
+    public void useCimetiery(Constructions c) {
+        if (c.getValue() <= gold) {
+            gold -= c.getValue();
+            System.out.println("Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
+            hand.add(c);
+        }
+    }
 
+    public void discardConstruction(Constructions c, Draw d){
+        d.add(c);
+        hand.remove(c);
+    }
 }
 
