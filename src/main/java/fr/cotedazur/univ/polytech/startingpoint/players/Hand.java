@@ -41,5 +41,9 @@ public class Hand{ // extends Arraylist ?
 
     public void set(int i, Constructions c) {
         hand.set(i, c);
+
+    public void remove(Constructions c) {
+        hand.remove(c);
+
     }
 }

@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class WonderTest {
 
     Player player1 = new Player(1, new Hand());
-    Wonder wonder = new Wonder("Cour des miracles", WondersPower.COUR_DES_MIRACLES, 3);
-    Wonder wonder2 = new Wonder("Donjon", WondersPower.DONJON, 3);
+    Wonder wonder = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
+    Wonder wonder2 = new Wonder("Donjon", 3, WondersPower.DONJON);
 
 
     @BeforeEach
@@ -79,4 +79,22 @@ class WonderTest {
         assertEquals("Cathédrale", d.peek().getName());
         assertEquals(3,d.size());
     }
+
+    @Test
+    void testEquals() {
+        Wonder wonder3 = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
+        Wonder wonder4 = new Wonder("JE TEST OK ?", 3, WondersPower.COUR_DES_MIRACLES);
+        assertEquals(wonder, wonder3);
+        assertNotEquals(wonder, wonder2);
+        assertEquals(wonder, wonder4);
+    }
+
+    @Test
+    void testSetColor(){
+        Wonder wonder5 = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
+        wonder5.setColor(Color.SOLDATESQUE);
+        assertEquals(Color.SOLDATESQUE, wonder5.getColor());
+    }
+
+
 }

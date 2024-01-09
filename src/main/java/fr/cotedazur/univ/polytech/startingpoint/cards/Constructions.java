@@ -18,16 +18,5 @@ public class Constructions extends Card {
         return this.name.equals(c.getName());
     }
 
-    public boolean isConstructed(){
-        return this.constructed;
-    }
-
-    public void construct(){
-        this.constructed=true;
-    }
-
-    public void destruct(){
-        this.constructed=false;
-    }
 
 }
