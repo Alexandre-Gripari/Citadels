@@ -20,6 +20,11 @@ public class Wonder extends Constructions {
         this.power.power(player, d);
     }
 
+    public void power(Constructions c){
+        this.power.power(c);
+    }
+
+    public void power(Player p, Draw d) {this.power.power(p,d);}
     public WondersPower getWondersPower(){
         return this.power;
     }

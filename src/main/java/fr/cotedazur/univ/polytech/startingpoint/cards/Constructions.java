@@ -14,6 +14,10 @@ public class Constructions extends Card {
         return this.value;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
+
     public boolean equals(Constructions c){
         return this.name.equals(c.getName());
     }

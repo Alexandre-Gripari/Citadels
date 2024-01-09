@@ -41,6 +41,20 @@ class WonderTest {
     }
 
     @Test
+    void universityTest() {
+        Wonder university = new Wonder("Université",WondersPower.UNIVERSITE, 6);
+
+        university.power(university);
+        assertEquals(8, university.getValue());
+    }
+
+    @Test
+    void libraryTest() {
+        Player player = new Player(0,new Hand());
+        Wonder library = new Wonder("Biblioothèque", WondersPower.BIBLIOTHEQUE, 6);
+        player.getCity().add(library);
+
+    @Test
     void manufactureTest() {
         Player player = new Player(0, new Hand());
         Wonder manufacture = new Wonder("Manufacture", WondersPower.MANUFACTURE,5);
@@ -73,6 +87,13 @@ class WonderTest {
         d.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
         d.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
 
+
+        assertEquals(0, player.getHand().size());
+        assertEquals(4,d.size());
+        library.power(player, d);
+        assertEquals(2, player.getHand().size());
+        assertEquals(2, d.size());
+ 
         player.getHand().add(player.takeConstruction(d));
         observatoire.power(player, d);
         assertEquals(1,player.getHand().size());

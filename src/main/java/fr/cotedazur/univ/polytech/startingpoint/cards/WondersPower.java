@@ -4,7 +4,6 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 
-
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -69,7 +68,10 @@ public enum WondersPower {
     },
 
     BIBLIOTHEQUE {
-        public void power(){return;}
+        public void power(Player p, Draw d){
+            p.getHand().add(d.draw());
+            p.getHand().add(d.draw());
+        }
     },
 
     ECOLE_DE_MAGIE {
@@ -80,7 +82,9 @@ public enum WondersPower {
     },
 
     UNIVERSITE {
-        public void power(){return;}
+        public void power(Constructions c){
+            c.setValue(8);
+        }
     },
 
     DRACOPORT {
@@ -88,6 +92,8 @@ public enum WondersPower {
     };
 
     public void power(){}
+    public void power(Constructions c){}
+    public void power(Player p, Draw d) {}
     public void power(Player p, Draw d){}
     public void power(Constructions c, Player ... players){}
     public void power(Player player){}
