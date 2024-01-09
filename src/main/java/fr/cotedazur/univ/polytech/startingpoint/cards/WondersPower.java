@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 
+
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -29,11 +30,30 @@ public enum WondersPower {
     },
 
     MANUFACTURE {
-        public void power(){return;}
+        public void power(Player player, Draw d){
+            if (player.getGold() >= 3) {
+                player.getHand().add(d.draw());
+                player.getHand().add(d.draw());
+                player.getHand().add(d.draw());
+                player.addGold(-3);
+            }
+        }
     },
 
     OBSERVATOIRE {
-        public void power(){return;}
+        public void power(Player player, Draw d){
+            Constructions c1 = d.draw();
+            Constructions c2 = player.getHand().get(player.getHand().size()-1);
+            if (c1.getValue() <= c2.getValue()){
+                d.add(c2);
+                System.out.println("Le joueur " + player.getNumber() + " a pioché " + c1);
+                player.getHand().set(player.getHand().size()-1, c1);
+            }
+            else {
+                d.add(c1);
+                System.out.println("Le joueur " + player.getNumber() + " a pioché " + c2);
+            }
+        }
     },
 
     CIMETIERE {
@@ -68,18 +88,18 @@ public enum WondersPower {
     };
 
     public void power(){}
+    public void power(Player p, Draw d){}
     public void power(Constructions c, Player ... players){}
     public void power(Player player){}
     public void power(Constructions c, Player player, Draw d){}
     public void power(Player player, Wonder wonder){}
 
   
-  
+
     public Wonder getWonder(){
         return new Wonder(this.name(), 0, this);
     }
    
-
 }
 
 
