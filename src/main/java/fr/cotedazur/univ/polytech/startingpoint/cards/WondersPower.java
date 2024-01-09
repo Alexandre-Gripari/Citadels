@@ -61,7 +61,7 @@ public enum WondersPower {
   
   
     public Wonder getWonder(){
-        return new Wonder(this.name(), this, 0);
+        return new Wonder(this.name(), 0, this);
     }
    
 
