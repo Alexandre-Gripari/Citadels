@@ -115,7 +115,7 @@ public enum Character{
                 if (targetedPlayer.getCity().get(index).equals(new Wonder("Donjon", 3, WondersPower.DONJON))) return;
                 int cost = targetedPlayer.getCity().get(index).getValue() - 1;
                 if (selfPlayer.getGold() >= cost) {
-                    res += " et il détruit la cité : " + targetedPlayer.getCity().get(index).toString() + " du joueur " + targetedPlayer.getNumber() + " et perd " + cost + " d'or";
+                    res += " et il détruit la construction : " + targetedPlayer.getCity().get(index).toString() + " du joueur " + targetedPlayer.getNumber() + " et perd " + cost + " d'or";
                     WondersPower.CIMETIERE.power(targetedPlayer.getCity().get(index), players);
                     targetedPlayer.getCity().remove(index);
                     selfPlayer.addGold(-cost);

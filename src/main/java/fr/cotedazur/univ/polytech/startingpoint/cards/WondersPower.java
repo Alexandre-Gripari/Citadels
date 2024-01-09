@@ -17,6 +17,7 @@ public enum WondersPower {
     },
 
     DONJON {
+        @Override
         public void power(){return;}
     },
 
@@ -29,6 +30,7 @@ public enum WondersPower {
     },
 
     MANUFACTURE {
+        @Override
         public void power(Player player, Draw d){
             if (player.getGold() >= 3) {
                 player.getHand().add(d.draw());
@@ -40,6 +42,7 @@ public enum WondersPower {
     },
 
     OBSERVATOIRE {
+        @Override
         public void power(Player player, Draw d){
             Constructions c1 = d.draw();
             Constructions c2 = player.getHand().get(player.getHand().size()-1);
@@ -68,6 +71,7 @@ public enum WondersPower {
     },
 
     BIBLIOTHEQUE {
+        @Override
         public void power(Player p, Draw d){
             p.getHand().add(d.draw());
             p.getHand().add(d.draw());
@@ -75,6 +79,7 @@ public enum WondersPower {
     },
 
     ECOLE_DE_MAGIE {
+        @Override
         public void power(Player player) {
             int numberOfCharacter = player.getCharacter().getNumber();
             if (numberOfCharacter == 4 || numberOfCharacter == 5 || numberOfCharacter == 6 || numberOfCharacter == 8) player.addGold(1);
@@ -82,9 +87,8 @@ public enum WondersPower {
     },
 
     UNIVERSITE {
-        public void power(Constructions c){
-            c.setValue(8);
-        }
+        @Override
+        public void power(){return;} // effet de la merveille effectif dans le calcul de la valeur d'une cité
     },
 
     DRACOPORT {
@@ -92,9 +96,7 @@ public enum WondersPower {
     };
 
     public void power(){}
-    public void power(Constructions c){}
     public void power(Player p, Draw d) {}
-    public void power(Player p, Draw d){}
     public void power(Constructions c, Player ... players){}
     public void power(Player player){}
     public void power(Constructions c, Player player, Draw d){}

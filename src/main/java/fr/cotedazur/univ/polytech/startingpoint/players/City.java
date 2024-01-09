@@ -24,7 +24,7 @@ public class City{
     public int cityValue(){
         int value=0;
         for(int i=0;i<this.size();i++){
-            if (this.get(i).getName().equals("Dracoport")) value+=2;
+            if (this.get(i).getName().equals("Dracoport") || this.get(i).getName().equals("Université")) value+=2;
             value+=this.get(i).getValue();
         }
         return value;

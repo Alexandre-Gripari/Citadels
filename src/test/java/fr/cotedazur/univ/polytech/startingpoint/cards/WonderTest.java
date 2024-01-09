@@ -40,24 +40,30 @@ class WonderTest {
         assertEquals(WondersPower.COUR_DES_MIRACLES, wonder.getWondersPower());
     }
 
-    @Test
-    void universityTest() {
-        Wonder university = new Wonder("Université",WondersPower.UNIVERSITE, 6);
-
-        university.power(university);
-        assertEquals(8, university.getValue());
-    }
 
     @Test
     void libraryTest() {
-        Player player = new Player(0,new Hand());
-        Wonder library = new Wonder("Biblioothèque", WondersPower.BIBLIOTHEQUE, 6);
+        Player player = new Player(0, new Hand());
+        Wonder library = new Wonder("Biblioothèque", 6, WondersPower.BIBLIOTHEQUE);
         player.getCity().add(library);
+
+        Draw d = new Draw();
+        d.addXConstructions(new Constructions("Temple", Color.RELIGIEUX, 1), 1);
+        d.addXConstructions(new Constructions("Eglise", Color.RELIGIEUX, 2), 1);
+        d.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
+        d.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
+
+        assertEquals(0, player.getHand().size());
+        assertEquals(4,d.size());
+        library.power(player, d);
+        assertEquals(2, player.getHand().size());
+        assertEquals(2, d.size());
+    }
 
     @Test
     void manufactureTest() {
         Player player = new Player(0, new Hand());
-        Wonder manufacture = new Wonder("Manufacture", WondersPower.MANUFACTURE,5);
+        Wonder manufacture = new Wonder("Manufacture", 5, WondersPower.MANUFACTURE);
         player.getCity().add(manufacture);
 
         Draw d = new Draw();
@@ -78,7 +84,7 @@ class WonderTest {
     @Test
     void observatoireTest() {
         Player player = new Player(0, new Hand());
-        Wonder observatoire = new Wonder("Observatoire", WondersPower.OBSERVATOIRE,5);
+        Wonder observatoire = new Wonder("Observatoire", 5, WondersPower.OBSERVATOIRE);
         player.getCity().add(observatoire);
 
         Draw d = new Draw();
@@ -86,13 +92,6 @@ class WonderTest {
         d.addXConstructions(new Constructions("Eglise", Color.RELIGIEUX, 2), 1);
         d.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
         d.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
-
-
-        assertEquals(0, player.getHand().size());
-        assertEquals(4,d.size());
-        library.power(player, d);
-        assertEquals(2, player.getHand().size());
-        assertEquals(2, d.size());
  
         player.getHand().add(player.takeConstruction(d));
         observatoire.power(player, d);
