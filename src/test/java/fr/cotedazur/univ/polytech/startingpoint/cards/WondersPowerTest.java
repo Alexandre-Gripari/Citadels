@@ -83,5 +83,57 @@ class WondersPowerTest {
         assertEquals(6, playerWithEcoleDeMagie.getGold());
     }
 
+    @Test
+    void testPowerCourDesMiracles(){
+        Player player4 = new Player(4, new Hand());
+        Wonder wonder = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
+        Constructions c1 = new Constructions("test1", Color.NOBLE, 1);
+        Constructions c2 = new Constructions("test2", Color.SOLDATESQUE, 2);
+        Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
+        Constructions c5 = new Constructions("test5", Color.RELIGIEUX, 5);
+        player4.getCity().add(wonder);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.RELIGIEUX, wonder.getColor());
+        player4.getCity().add(c1);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.RELIGIEUX, wonder.getColor());
+        player4.getCity().add(c5);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.SOLDATESQUE, wonder.getColor());
+        player4.getCity().add(c2);
+        player4.getCity().add(c3);
+        wonder.getWondersPower().power(player4, wonder);
+        assertEquals(Color.MERVEILLEUX, wonder.getColor());
+    }
+
+    @Test
+    void testPowerLaboratoire(){
+        Draw d = new Draw();
+        Player player4 = new Player(4, new Hand());
+        Wonder wonder = new Wonder("Laboratoire", 5, WondersPower.LABORATOIRE);
+        Constructions c1 = new Constructions("test1", Color.NOBLE, 1);
+        Constructions c2 = new Constructions("test2", Color.SOLDATESQUE, 2);
+        Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
+        Constructions c5 = new Constructions("test5", Color.RELIGIEUX, 5);
+        player1.getHand().add(c1);
+        player1.getHand().add(c2);
+        player1.getHand().add(c3);
+        player1.getHand().add(c5);
+        player4.getCity().add(wonder);
+        wonder.getWondersPower().power(c1, player4, d);
+        assertEquals(3, player4.getGold());
+        assertFalse(player4.getHand().contains(c1));
+        wonder.getWondersPower().power(c2, player4, d);
+        assertEquals(4, player4.getGold());
+        assertFalse(player4.getHand().contains(c2));
+        wonder.getWondersPower().power(c5, player4, d);
+        assertEquals(5, player4.getGold());
+
+        assertTrue(d.contains(c1));
+        assertTrue(d.contains(c2));
+        assertTrue(d.contains(c5));
+
+    }
+
 
 }

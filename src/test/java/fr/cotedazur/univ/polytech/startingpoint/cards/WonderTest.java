@@ -47,4 +47,13 @@ class WonderTest {
         assertNotEquals(wonder, wonder2);
         assertEquals(wonder, wonder4);
     }
+
+    @Test
+    void testSetColor(){
+        Wonder wonder5 = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
+        wonder5.setColor(Color.SOLDATESQUE);
+        assertEquals(Color.SOLDATESQUE, wonder5.getColor());
+    }
+
+
 }

@@ -30,4 +30,8 @@ public class Wonder extends Constructions {
         return this.getWondersPower().hashCode();
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
 }

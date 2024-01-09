@@ -182,5 +182,10 @@ public class Player implements Comparable<Player> {
             hand.add(c);
         }
     }
+
+    public void discardConstruction(Constructions c, Draw d){
+        d.add(c);
+        hand.remove(c);
+    }
 }
 
