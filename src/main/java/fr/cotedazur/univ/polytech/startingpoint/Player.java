@@ -10,7 +10,6 @@ import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Player implements Comparable<Player> {
     private int number;
@@ -86,12 +85,12 @@ public class Player implements Comparable<Player> {
         if (hand.isEmpty()) {
             hand.add(takeConstruction(draw));
             for (Wonder w : getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(draw, w.getWondersPower(), players);
+                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(draw, w.getWondersPower());
             }
         }
         else takeGold();
         for (Wonder w : getWonders()) {
-            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(draw, w.getWondersPower(), players);
+            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(draw, w.getWondersPower());
         }
         buildConstruction();
         useAbility(draw, players);
@@ -149,7 +148,7 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void useWonder(Draw draw, WondersPower wonderPower, Player ... players) {
+    public void useWonder(Draw draw, WondersPower wonderPower) {
         switch (wonderPower.name()) {
             case "LABORATOIRE":
                 if (!this.getHand().isEmpty()) wonderPower.power(this.getHand().get(0), this, draw);

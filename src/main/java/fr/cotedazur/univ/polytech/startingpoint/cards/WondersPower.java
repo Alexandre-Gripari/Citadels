@@ -81,7 +81,10 @@ public enum WondersPower {
         @Override
         public void power(Player player) {
             int numberOfCharacter = player.getCharacter().getNumber();
-            if (numberOfCharacter == 4 || numberOfCharacter == 5 || numberOfCharacter == 6 || numberOfCharacter == 8) player.addGold(1);
+            if (numberOfCharacter == 4 || numberOfCharacter == 5 || numberOfCharacter == 6 || numberOfCharacter == 8) {
+                player.addGold(1);
+                System.out.println("Le joueur " + player +" à gagné une pièce grâce à l'école de magie");
+            }
         }
     },
 
