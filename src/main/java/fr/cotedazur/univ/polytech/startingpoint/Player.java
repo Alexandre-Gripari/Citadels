@@ -1,10 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Card;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
@@ -82,11 +82,18 @@ public class Player implements Comparable<Player> {
             return;
         }
         System.out.println("Le joueur " + number + " est le " + character.getName());
-        if (hand.isEmpty()) hand.add(takeConstruction(draw));
+        if (hand.isEmpty()) {
+            hand.add(takeConstruction(draw));
+            for (Wonder w : getWonders()) {
+                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(draw, w.getWondersPower());
+            }
+        }
         else takeGold();
+        for (Wonder w : getWonders()) {
+            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(draw, w.getWondersPower());
+        }
         buildConstruction();
         useAbility(draw, players);
-
     }
 
 
@@ -112,7 +119,6 @@ public class Player implements Comparable<Player> {
             if (gold >= valueOfConstruction){
                 System.out.println("Le joueur " + number + " construit " + hand.get(i));
                 gold -= valueOfConstruction;
-                hand.get(i).construct();
                 if (hand.get(i) instanceof Wonder) wonders.add((Wonder) hand.get(i));
                 city.add(hand.get(i));
                 hand.remove(i);
@@ -136,7 +142,22 @@ public class Player implements Comparable<Player> {
                 character.ability(this);
                 break;
             case 8:
-                character.ability(0, players);
+                Constructions destroyedCons = character.ability(0, players);
+                if (destroyedCons != null) WondersPower.CIMETIERE.power(destroyedCons, players);
+                break;
+        }
+    }
+
+    public void useWonder(Draw draw, WondersPower wonderPower) {
+        switch (wonderPower.name()) {
+            case "LABORATOIRE":
+                if (!this.getHand().isEmpty()) wonderPower.power(this.getHand().get(0), this, draw);
+                break;
+            case "MANUFACTURE", "OBSERVATOIRE", "BIBLIOTHEQUE":
+                wonderPower.power(this, draw);
+                break;
+            case "ECOLE_DE_MAGIE":
+                wonderPower.power(this);
                 break;
         }
     }
@@ -177,6 +198,17 @@ public class Player implements Comparable<Player> {
     }
 
 
+    public void useCimetiery(Constructions c) {
+        if (c.getValue() <= gold) {
+            gold -= c.getValue();
+            System.out.println("Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
+            hand.add(c);
+        }
+    }
 
+    public void discardConstruction(Constructions c, Draw d){
+        d.add(c);
+        hand.remove(c);
+    }
 }
 

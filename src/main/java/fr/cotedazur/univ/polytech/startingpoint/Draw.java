@@ -1,12 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 
 import java.util.*;
 
 public class Draw {
-
-    // deck de construction (queue)
 
     private Queue<Constructions> drawDeck;
 
@@ -51,5 +51,9 @@ public class Draw {
 
     public boolean contains(Constructions x) {
         return drawDeck.contains(x);
+    }
+
+    public Constructions peek() {
+        return drawDeck.peek();
     }
 }

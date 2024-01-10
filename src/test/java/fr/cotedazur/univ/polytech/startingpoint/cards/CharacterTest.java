@@ -220,7 +220,7 @@ class CharacterTest {
     void testBishopAbility() { //EVEQUE
         init();
         assertEquals(2, bishop.getGold());
-        bishop.useAbility(d, bishop);
+        Character.EVEQUE.ability(bishop);
         assertEquals(4, bishop.getGold());
     }
 
@@ -228,7 +228,7 @@ class CharacterTest {
     void testMerchantAbility() {
         init();
         assertEquals(2, merchant.getGold());
-        merchant.useAbility(d, merchant);
+        Character.MARCHAND.ability(merchant);
         assertEquals(5, merchant.getGold());
     }
 
@@ -237,8 +237,8 @@ class CharacterTest {
         init();
         assertEquals(3, condottiere.getGold());
         assertEquals(3, magician.getCity().size());
-        condottiere.useAbility(d, condottiere, magician);
-        assertEquals(1, condottiere.getGold());
+        assertEquals("Prison",Character.CONDOTTIERE.ability(1, condottiere, magician).getName());
+        assertEquals(2, condottiere.getGold());
         assertEquals(2, magician.getCity().size());
 
     }
