@@ -4,11 +4,13 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Player implements Comparable<Player> {
     private int number;
@@ -81,11 +83,18 @@ public class Player implements Comparable<Player> {
             return;
         }
         System.out.println("Le joueur " + number + " est le " + character.getName());
-        if (hand.isEmpty()) hand.add(takeConstruction(draw));
+        if (hand.isEmpty()) {
+            hand.add(takeConstruction(draw));
+            for (Wonder w : getWonders()) {
+                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(draw, w.getWondersPower(), players);
+            }
+        }
         else takeGold();
+        for (Wonder w : getWonders()) {
+            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(draw, w.getWondersPower(), players);
+        }
         buildConstruction();
         useAbility(draw, players);
-
     }
 
 
@@ -134,7 +143,22 @@ public class Player implements Comparable<Player> {
                 character.ability(this);
                 break;
             case 8:
-                character.ability(0, players);
+                Constructions destroyedCons = character.ability(0, players);
+                if (destroyedCons != null) WondersPower.CIMETIERE.power(destroyedCons, players);
+                break;
+        }
+    }
+
+    public void useWonder(Draw draw, WondersPower wonderPower, Player ... players) {
+        switch (wonderPower.name()) {
+            case "LABORATOIRE":
+                if (!this.getHand().isEmpty()) wonderPower.power(this.getHand().get(0), this, draw);
+                break;
+            case "MANUFACTURE", "OBSERVATOIRE", "BIBLIOTHEQUE":
+                wonderPower.power(this, draw);
+                break;
+            case "ECOLE_DE_MAGIE":
+                wonderPower.power(this);
                 break;
         }
     }

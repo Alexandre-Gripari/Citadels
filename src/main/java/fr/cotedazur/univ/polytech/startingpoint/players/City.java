@@ -24,6 +24,10 @@ public class City{
     public int cityValue(){
         int value=0;
         for(int i=0;i<this.size();i++){
+            if (this.get(i).getName().equals("Cour des miracles")) {
+                Wonder temp = (Wonder) this.get(i);
+                temp.getWondersPower().power(this, temp);
+            }
             if (this.get(i).getName().equals("Dracoport") || this.get(i).getName().equals("Université")) value+=2;
             value+=this.get(i).getValue();
         }

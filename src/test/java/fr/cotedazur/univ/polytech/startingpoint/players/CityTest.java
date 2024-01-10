@@ -22,10 +22,16 @@ class CityTest {
     Constructions r3 = new Constructions("testr3", Color.RELIGIEUX, 3);
     Constructions m1 = new Wonder("Dracoport", 6, WondersPower.DRACOPORT); // Pour tester le Dracoport
 
+    //Test cour des miracles
+    Constructions m2 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
+    Constructions c7 = new Constructions("religieux", Color.RELIGIEUX, 1);
+    Constructions c8 = new Constructions("noble", Color.NOBLE, 1);
+    Constructions c9 = new Constructions("soldatesque", Color.SOLDATESQUE, 1);
 
     City city1 = new City();
     City city2 = new City();
     City city3 = new City();
+    City city4 = new City();
 
     @BeforeEach
     void init() {
@@ -39,6 +45,10 @@ class CityTest {
         city3.add(r2);
         city3.add(r3);
         city3.add(m1);
+        city4.add(m2);
+        city4.add(c7);
+        city4.add(c8);
+        city4.add(c9);
     }
 
 
@@ -48,6 +58,8 @@ class CityTest {
         assertEquals(6,city1.cityValue());
         assertEquals(15,city2.cityValue());
         assertEquals(14, city3.cityValue());
+        city4.cityValue();
+        assertEquals(Color.COMMERCIAL, city4.get(0).getColor());
     }
 
     @Test

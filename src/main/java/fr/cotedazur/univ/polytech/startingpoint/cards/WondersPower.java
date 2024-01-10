@@ -8,9 +8,8 @@ public enum WondersPower {
 
     COUR_DES_MIRACLES {
         @Override
-        public void power(Player player, Wonder wonder){
+        public void power(City city, Wonder wonder){
             // la couleur devient celle qui n'est pas dans la cité
-            City city = player.getCity();
             Color missingColor = city.missingColor();
             wonder.setColor(missingColor);
         }
@@ -63,7 +62,7 @@ public enum WondersPower {
         public void power(Constructions c, Player ... players){
             Wonder associatedWonder = this.getWonder();
             for (Player player : players) {
-                if (player.getWonders().contains(associatedWonder)) {
+                if (player.getWonders().contains(associatedWonder) && player.getCharacter() != Character.CONDOTTIERE) {
                     player.useCimetiery(c);
                 }
             }
@@ -100,7 +99,7 @@ public enum WondersPower {
     public void power(Constructions c, Player ... players){}
     public void power(Player player){}
     public void power(Constructions c, Player player, Draw d){}
-    public void power(Player player, Wonder wonder){}
+    public void power(City city, Wonder wonder){}
 
   
 
