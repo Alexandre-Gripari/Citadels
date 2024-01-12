@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
@@ -18,12 +19,17 @@ public class Strategy2 extends Strategy{
 
     public void useWonder(List<Wonder> wonders) {return;}
 
-    public void assassin(Player[] players) {return;}
-    public void thief(Player[] players) {return;}
-    public void magician(Player[] players) {return;}
-    public void king(Player[] players) {return;}
-    public void bishop(Player[] players) {return;}
-    public void merchant(Player[] players) {return;}
-    public void architect(Player[] players) {return;}
-    public void condottiere(Player[] players) {return;}
+    @Override
+    public void play(Player[] players, Draw draw) {
+        super.play(players, draw);
+    }
+
+    public void assassin(Player[] players, Draw draw) {return;}
+    public void thief(Player[] players, Draw draw) {return;}
+    public void magician(Player[] players, Draw draw) {return;}
+    public void king(Player[] players, Draw draw) {return;}
+    public void bishop(Player[] players, Draw draw) {return;}
+    public void merchant(Player[] players, Draw draw) {return;}
+    public void architect(Player[] players, Draw draw) {return;}
+    public void condottiere(Player[] players, Draw draw) {return;}
 }

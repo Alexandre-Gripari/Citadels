@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
+import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
@@ -24,26 +25,26 @@ public abstract class Strategy {
 
     abstract void useWonder(List<Wonder> wonders);
 
-    public void play(Player[] players) {
+    public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()){
-            case ASSASSIN : assassin(players); break;
-            case VOLEUR : thief(players); break;
-            case MAGICIEN : magician(players); break;
-            case ROI : king(players); break;
-            case EVEQUE : bishop(players); break;
-            case MARCHAND : merchant(players); break;
-            case ARCHITECTE : architect(players); break;
-            case CONDOTTIERE: condottiere(players); break;
+            case ASSASSIN : assassin(players, draw); break;
+            case VOLEUR : thief(players, draw); break;
+            case MAGICIEN : magician(players, draw); break;
+            case ROI : king(players, draw); break;
+            case EVEQUE : bishop(players, draw); break;
+            case MARCHAND : merchant(players, draw); break;
+            case ARCHITECTE : architect(players, draw); break;
+            case CONDOTTIERE: condottiere(players, draw); break;
         }
     }
 
-    abstract void assassin(Player[] players);
-    abstract void thief(Player[] players);
-    abstract void magician(Player[] players);
-    abstract void king(Player[] players);
-    abstract void bishop(Player[] players);
-    abstract void merchant(Player[] players);
-    abstract void architect(Player[] players);
-    abstract void condottiere(Player[] players);
+    abstract void assassin(Player[] players, Draw draw);
+    abstract void thief(Player[] players, Draw draw);
+    abstract void magician(Player[] players, Draw draw);
+    abstract void king(Player[] players, Draw draw);
+    abstract void bishop(Player[] players, Draw draw);
+    abstract void merchant(Player[] players, Draw draw);
+    abstract void architect(Player[] players, Draw draw);
+    abstract void condottiere(Player[] players, Draw draw);
 
 }
