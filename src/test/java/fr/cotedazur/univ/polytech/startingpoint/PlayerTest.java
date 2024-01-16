@@ -5,7 +5,6 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,6 +23,14 @@ class PlayerTest {
     Player[] opponentOfP1 = new Player[2];
     Player[] opponentOfP2 = new Player[2];
 
+
+    Constructions cathédrale = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
+    Constructions chateau = new Constructions("Château", Color.NOBLE, 4);
+    Constructions monastère = new Constructions("Monastère", Color.RELIGIEUX, 3);
+    Constructions marché = new Constructions("Marché", Color.COMMERCIAL, 2);
+    Constructions comptoir = new Constructions("Comptoir", Color.COMMERCIAL, 3);
+
+
     void init() {
         hand1 = new Hand();
 
@@ -32,11 +39,11 @@ class PlayerTest {
         p1.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         draw = new Draw();
-        draw.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
-        draw.addXConstructions(new Constructions("Château", Color.NOBLE, 4), 1);
-        draw.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
-        draw.addXConstructions(new Constructions("Marché", Color.COMMERCIAL, 2), 1);
-        draw.addXConstructions(new Constructions("Comptoir", Color.COMMERCIAL, 3), 1);
+        draw.addXConstructions(cathédrale, 1);
+        draw.addXConstructions(chateau, 1);
+        draw.addXConstructions(monastère, 1);
+        draw.addXConstructions(marché, 1);
+        draw.addXConstructions(comptoir, 1);
 
         hand2 = new Hand();
 
@@ -79,9 +86,17 @@ class PlayerTest {
     @Test
     void takeConstruction() {
         init();
-        assertEquals("Château", p1.takeConstruction(draw).getName());
-        assertEquals("Marché", p1.takeConstruction(draw).getName());
-        assertEquals("Comptoir", p1.takeConstruction(draw).getName());
+        assertEquals(new ArrayList<Constructions>(Arrays.asList(cathédrale,chateau)), p1.takeConstructions(draw,2));
+        assertEquals(new ArrayList<Constructions>(Arrays.asList(monastère,marché, comptoir)), p1.takeConstructions(draw,3));
+    }
+
+    @Test
+    void testPutBack() {
+        init();
+        ArrayList<Constructions> constructions = p1.takeConstructions(draw, 2);
+        assertEquals(3, draw.size());
+        p1.putBack(draw, constructions);
+        assertEquals(5, draw.size());
     }
 
     @Test

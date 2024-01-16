@@ -7,6 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,49 +83,31 @@ public class Player implements Comparable<Player> {
             return;
         }
         System.out.println("Le joueur " + number + " est le " + character.getName());
-        if (hand.isEmpty()) {
-            hand.add(takeConstruction(draw));
-            for (Wonder w : getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(draw, w.getWondersPower());
-            }
-        }
-        else takeGold();
-        for (Wonder w : getWonders()) {
-            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(draw, w.getWondersPower());
-        }
-        buildConstruction();
-        useAbility(draw, players);
+        strategy.play(draw, players);
     }
 
+    public void drawConstruction(Draw d, int n) {
+        ArrayList<Constructions> temp = takeConstructions(d, n);
+        hand.add(strategy.chooseCard(temp));
+        putBack(d, temp);
+    }
 
     /* Renvoie la construction (quartier) la moins chère entre les 2 en haut de la pioche */
-    public Constructions takeConstruction(Draw d){
-        Constructions c1 = d.draw();
-        Constructions c2 = d.draw();
-        if (c1.getValue() <= c2.getValue()){
-            d.add(c2);
-            System.out.println("Le joueur " + number + " a pioché " + c1);
-            return c1;
-        }
-        else {
-            d.add(c1);
-            System.out.println("Le joueur " + number + " a pioché " + c2);
-            return c2;
-        }
+    public ArrayList<Constructions> takeConstructions(Draw d, int n){
+        ArrayList<Constructions> tab = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            tab.add(d.draw());
+        return tab;
     }
 
-    public void buildConstruction(){
-        for (int i=0; i<hand.size(); i++){
-            int valueOfConstruction = hand.get(i).getValue();
-            if (gold >= valueOfConstruction){
-                System.out.println("Le joueur " + number + " construit " + hand.get(i));
-                gold -= valueOfConstruction;
-                if (hand.get(i) instanceof Wonder) wonders.add((Wonder) hand.get(i));
-                city.add(hand.get(i));
-                hand.remove(i);
-                return;
-            }
-        }
+    public void putBack(Draw d, ArrayList<Constructions> constructions) {
+        for (Constructions construction : constructions)
+            d.add(construction);
+    }
+
+    public void buildConstruction(Constructions c){
+        getCity().add(c);
+        getHand().remove(c);
     }
 
     public void useAbility(Draw draw, Player ... players) {
