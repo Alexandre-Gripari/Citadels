@@ -1,12 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
+import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 
 import java.util.*;
-
-import static fr.cotedazur.univ.polytech.startingpoint.Draw.*;
 
 public class Game {
 

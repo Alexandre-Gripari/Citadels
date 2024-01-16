@@ -13,8 +13,8 @@ public class Strategy1 extends Strategy{
         super(description);
     }
 
-    public Character choiceOfCharacter(Player player, List<Character> characters){
-        return null;
+    public Character chooseCharacter(Player player,List<Character> characters){
+        return characters.get(0);
     }
 
     public void useWonder(List<Wonder> wonders) {return;}

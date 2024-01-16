@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Hand{ // extends Arraylist ?
 
-    private ArrayList<Constructions> hand;
+    private List<Constructions> hand;
 
     public Hand(){
         this.hand = new ArrayList<>();

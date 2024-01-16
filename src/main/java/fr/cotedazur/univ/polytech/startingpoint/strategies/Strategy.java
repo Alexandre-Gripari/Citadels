@@ -3,9 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
-import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 
 import java.util.List;
 
@@ -21,7 +19,7 @@ public abstract class Strategy {
         return description;
     }
 
-    abstract Character choiceOfCharacter(Player player, List<Character> characters);
+    public abstract Character chooseCharacter(Player player, List<Character> characters);
 
     abstract void useWonder(List<Wonder> wonders);
 

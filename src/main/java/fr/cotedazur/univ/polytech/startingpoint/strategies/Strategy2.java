@@ -13,7 +13,7 @@ public class Strategy2 extends Strategy{
         super(description);
     }
 
-    public Character choiceOfCharacter(Player player, List<Character> characters){
+    public Character chooseCharacter(Player player, List<Character> characters){
         return null;
     }
 
