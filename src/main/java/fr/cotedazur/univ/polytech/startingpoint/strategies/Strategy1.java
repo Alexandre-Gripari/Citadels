@@ -13,16 +13,19 @@ import java.util.List;
 
 public class Strategy1 extends Strategy{
 
+    @Override
+    public void useAbility(Draw draw, Player[] players){return;}
     public Strategy1(String description) {
         super(description);
     }
 
-    public Character choiceOfCharacter(Player player, List<Character> characters){
-        return null;
+    public Character chooseCharacter(Player player,List<Character> characters){
+        return characters.get(0);
     }
 
     public void useWonder(List<Wonder> wonders) {return;}
 
+    @Override
     public Constructions chooseCard(ArrayList<Constructions> constructions) {
         Constructions c = new Constructions("null", Color.MERVEILLEUX, 10);
 
@@ -43,15 +46,15 @@ public class Strategy1 extends Strategy{
         if (players[0].getHand().isEmpty()) {
             players[0].drawConstruction(draw, 2);
             for (Wonder w : players[0].getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) players[0].useWonder(draw, w.getWondersPower());
+                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(players[0].getWonders());
             }
         }
         else players[0].takeGold();
         for (Wonder w : players[0].getWonders()) {
-            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) players[0].useWonder(draw, w.getWondersPower());
+            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(players[0].getWonders());
         }
         players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
-        players[0].useAbility(draw, players);
+        useAbility(draw, players);
     }
 
     public void assassin(Player[] players, Draw draw) {return;}

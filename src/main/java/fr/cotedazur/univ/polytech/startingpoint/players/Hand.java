@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Hand{ // extends Arraylist ?
 
-    private ArrayList<Constructions> hand;
+    private List<Constructions> hand;
 
     public Hand(){
         this.hand = new ArrayList<>();
@@ -53,7 +53,7 @@ public class Hand{ // extends Arraylist ?
         Constructions c = new Constructions("null", null, -1);
 
         for (Constructions construction : hand)
-            if (c.getValue() >= construction.getValue()) c = construction;
+            if (c.getValue() <= construction.getValue()) c = construction;
 
         return c;
     }

@@ -6,9 +6,8 @@ import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.text.PlainDocument;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class WonderTest {
 
@@ -28,9 +27,9 @@ class WonderTest {
     void power() {
         wonder.power();
         assertEquals(0,player1.getWonders().size());
-        player1.buildConstruction();
+        player1.buildConstruction(wonder);
         assertEquals(1,player1.getWonders().size());
-        player1.buildConstruction();
+        player1.buildConstruction(wonder2);
         assertEquals(2,player1.getWonders().size());
         player1.getWonders().get(0).power();
     }

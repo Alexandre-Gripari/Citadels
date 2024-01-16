@@ -1,21 +1,27 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
+
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class City{
 
-    private ArrayList<Constructions> city;
+    private List<Constructions> city;
 
     public City() {
         city = new ArrayList<>();
     }
 
+    public List<Constructions> getCity() { return city; }
+
     public void add(Constructions c) { city.add(c); }
 
     public void remove(int i) { city.remove(i); }
+
+    public void remove(Constructions c) { city.remove(c); }
 
     public Constructions get(int i) { return city.get(i); }
 
