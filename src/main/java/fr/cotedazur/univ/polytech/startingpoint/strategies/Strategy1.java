@@ -83,10 +83,10 @@ public class Strategy1 extends Strategy{
 
     public void condottiere(Player[] players, Draw draw) {
         int biggestCityIndex = 1;
-        int biggestCitySize = players[1].getCity().getCity().size();
+        int biggestCitySize = players[1].getCity().size();
         for (int i = 2; i < players.length; i++) {
-            if (players[i].getCity().getCity().size() != 0) {
-                int citySize = players[i].getCity().getCity().size();
+            int citySize = players[i].getCity().size();
+            if (citySize != 0) {
                 if ((citySize > biggestCitySize) || (citySize == biggestCitySize && minCostInCity(players[i].getCity()) < minCostInCity(players[biggestCityIndex].getCity()))) {
                     biggestCityIndex = i;
                     biggestCitySize = citySize;
@@ -95,8 +95,9 @@ public class Strategy1 extends Strategy{
         }
         if (biggestCitySize == 0) Character.CONDOTTIERE.ability(null, players[0], null); // On récupère juste l'or
         else {
-            int consToDestructIndex = indexConsWithMinCost(players[biggestCityIndex].getCity());
-            Character.CONDOTTIERE.ability(players[biggestCityIndex].getCity().get(consToDestructIndex), players[0], players[biggestCityIndex]);
+            int consToDestructIndex = minCostInCityIndex(players[biggestCityIndex].getCity());
+            if (players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue())
+                Character.CONDOTTIERE.ability(players[biggestCityIndex].getCity().get(consToDestructIndex), players[0], players[biggestCityIndex]);
         }
     }
 
@@ -108,11 +109,12 @@ public class Strategy1 extends Strategy{
         return minCost;
     }
 
-    private int indexConsWithMinCost(City city) {
-        int minCost = minCostInCity(city);
+    private int minCostInCityIndex(City city) {
+        int minCost = Integer.MAX_VALUE;
+        int index = -1;
         for (int i = 0; i < city.size(); i++) {
-            if (city.get(i).getValue() == minCost) return i;
+            if (city.get(i).getValue() < minCost) index = i;
         }
-        return -1;
+        return index;
     }
 }
