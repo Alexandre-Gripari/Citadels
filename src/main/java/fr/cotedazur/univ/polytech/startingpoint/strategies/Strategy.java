@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +50,14 @@ public abstract class Strategy {
     abstract void architect(Player[] players, Draw draw);
     abstract void condottiere(Player[] players, Draw draw);
 
+
+    protected int averageCostInHand(Hand hand, int handSize) {
+        int avCost = 0;
+        for (Constructions c : hand.getHand()) avCost += c.getValue();
+        avCost/=handSize;
+        return avCost;
+    }
+
 }
+
+

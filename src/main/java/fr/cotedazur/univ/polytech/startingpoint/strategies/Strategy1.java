@@ -84,20 +84,26 @@ public class Strategy1 extends Strategy{
     // Le joueur échange sa main avec un joueur ayant plus de carte que lui sinon la pioche si sa main est trop vide et/ou trop coûteuse
     public void magician(Player[] players, Draw draw) {
         int handSize = players[0].getHand().size();
-        int averageCost = 0;
-        // Calcul du coût moyen de la main
-        for (Constructions c : players[0].getHand().getHand()) averageCost += c.getValue();
-        averageCost/=handSize;
-        if (handSize <= 2 || averageCost >= 3) {
-            int size = players.length;
-            int maxHandIndex = 0;
-            for (int i = 1; i < size; i++) {
-                if (players[maxHandIndex].getHand().size().compareTo(players[i].getHand().size()) < 0)
-                    maxHandIndex = i;
-            }
-            if (maxHandIndex == 0) Character.MAGICIEN.ability(draw, players[0]);
-            else Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
+        int maxHandIndex = playerWithBiggestHandIndex(players);
+        if (handSize == 0) {
+            if (maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
         }
+        else {
+            int averageCost = averageCostInHand(players[0].getHand(), handSize);
+            if ((handSize <= 2 || averageCost >= 3) && maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
+            else Character.MAGICIEN.ability(draw, players[0]);
+        }
+    }
+
+   
+
+    private int playerWithBiggestHandIndex(Player[] players) {
+        int maxHand = 0;
+        int size = players.length;
+        for (int i = 1; i < size; i++) {
+            if (players[maxHand].getHand().size().compareTo(players[i].getHand().size()) < 0) maxHand = i;
+        }
+        return maxHand;
     }
 
     public void king(Player[] players, Draw draw) {
