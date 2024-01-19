@@ -17,14 +17,13 @@ public class StrategyEco extends Strategy{
 
     public void choiceOfCharacter(Player player, List<Character> characters){
         int max=0;
-        for (Constructions c: player.getCity()) {
+        for (Constructions c: player.getCity().getCity() ) {
             max = Math.max(max, c.getValue());
         }
         if(player.getGold()<max-2) {
             List<Character> characterList = {Character.VOLEUR};
         }
     }
-}
 
     public void useWonder(List<Wonder> wonders) {return;}
 
