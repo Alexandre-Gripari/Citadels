@@ -2,10 +2,8 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.*;
+import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.ArrayList;
@@ -57,12 +55,95 @@ public class Strategy1 extends Strategy{
         useAbility(draw, players);
     }
 
-    public void assassin(Player[] players, Draw draw) {return;}
-    public void thief(Player[] players, Draw draw) {return;}
-    public void magician(Player[] players, Draw draw) {return;}
-    public void king(Player[] players, Draw draw) {return;}
-    public void bishop(Player[] players, Draw draw) {return;}
-    public void merchant(Player[] players, Draw draw) {return;}
-    public void architect(Player[] players, Draw draw) {return;}
-    public void condottiere(Player[] players, Draw draw) {return;}
+    // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
+    // Elle sera utilisée dans les méthodes de caractères.
+
+    // Le joueur cible l'architecte en tant qu'assassin
+    public void assassin(Player[] players, Draw draw) {
+        int size = players.length;
+        for (int i = 1; i < size; i++) {
+            if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
+                Character.ASSASSIN.ability(players[0], players[i]);
+                break;
+            }
+        }
+    }
+
+    // Le joueur cible l'architecte en tant que voleur
+    public void thief(Player[] players, Draw draw) {
+        int size = players.length;
+        for (int i = 1; i < size; i++) {
+            if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
+                Character.VOLEUR.ability(players[i]);
+                break;
+            }
+        }
+    }
+
+    // Le joueur échange sa main avec un joueur ayant plus de carte que lui sinon la pioche si sa main est trop vide et/ou trop coûteuse
+    public void magician(Player[] players, Draw draw) {
+        int handSize = players[0].getHand().size();
+        int averageCost = 0;
+        // Calcul du coût moyen de la main
+        for (Constructions c : players[0].getHand().getHand()) averageCost += c.getValue();
+        averageCost/=handSize;
+        if (handSize <= 2 || averageCost >= 3) {
+            int size = players.length;
+            int maxHandIndex = 0;
+            for (int i = 1; i < size; i++) {
+                if (players[maxHandIndex].getHand().size().compareTo(players[i].getHand().size()) < 0)
+                    maxHandIndex = i;
+            }
+            if (maxHandIndex == 0) Character.MAGICIEN.ability(draw, players[0]);
+            else Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
+        }
+    }
+
+    public void king(Player[] players, Draw draw) {
+        Character.ROI.ability(players[0]);
+    }
+    public void bishop(Player[] players, Draw draw) {
+        Character.EVEQUE.ability(players[0]);
+    }
+    public void merchant(Player[] players, Draw draw) {
+        Character.MARCHAND.ability(players[0]);
+    }
+    public void architect(Player[] players, Draw draw) { Character.ARCHITECTE.ability(draw, players[0]); }
+
+    public void condottiere(Player[] players, Draw draw) {
+        int biggestCityIndex = 1;
+        int biggestCitySize = players[1].getCity().size();
+        for (int i = 2; i < players.length; i++) {
+            int citySize = players[i].getCity().size();
+            if (citySize != 0) {
+                if ((citySize > biggestCitySize) || (citySize == biggestCitySize && minCostInCity(players[i].getCity()) < minCostInCity(players[biggestCityIndex].getCity()))) {
+                    biggestCityIndex = i;
+                    biggestCitySize = citySize;
+                }
+            }
+        }
+        if (biggestCitySize == 0) Character.CONDOTTIERE.ability(null, players[0], null); // On récupère juste l'or
+        else {
+            int consToDestructIndex = minCostInCityIndex(players[biggestCityIndex].getCity());
+            if (players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue())
+                Character.CONDOTTIERE.ability(players[biggestCityIndex].getCity().get(consToDestructIndex), players[0], players[biggestCityIndex]);
+        }
+    }
+
+    private int minCostInCity(City city) {
+        int minCost = Integer.MAX_VALUE;
+        for (Constructions c : city.getCity()) {
+            if (c.getValue() < minCost) minCost = c.getValue();
+        }
+        return minCost;
+    }
+
+    private int minCostInCityIndex(City city) {
+        int minCost = Integer.MAX_VALUE;
+        int index = -1;
+        for (int i = 0; i < city.size(); i++) {
+            if (city.get(i).getValue() < minCost) index = i;
+        }
+        return index;
+    }
 }
