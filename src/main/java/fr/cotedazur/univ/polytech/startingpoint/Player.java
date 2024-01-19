@@ -1,10 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
-import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
@@ -192,7 +190,6 @@ public class Player implements Comparable<Player> {
         characters.remove(0);
         //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
     }
-    //Pour les tests
     public void setCharacter(Character character){
         this.character=character;
     }
@@ -205,8 +202,7 @@ public class Player implements Comparable<Player> {
             hand.add(c);
         }
     }
-
-    public void discardConstruction(Constructions c, Draw d){
+public void discardConstruction(Constructions c, Draw d){
         d.add(c);
         hand.remove(c);
     }
