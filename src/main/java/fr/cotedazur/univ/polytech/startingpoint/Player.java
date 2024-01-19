@@ -110,7 +110,7 @@ public class Player implements Comparable<Player> {
 
     public void drawConstruction(Draw d, int n) {
         ArrayList<Constructions> temp = takeConstructions(d, n);
-        hand.add(strategy.chooseCard(temp));
+        hand.add(strategy.chooseCard(temp, this));
         putBack(d, temp);
     }
 
@@ -134,6 +134,16 @@ public class Player implements Comparable<Player> {
         getHand().remove(c);
         gold -= c.getValue();
         System.out.println("Le joueur " + getNumber() + " construit " + c);
+    }
+
+    public void pick(Draw d, int n) {
+        switch (n){
+            case -1 : break;
+            case 0 :
+                takeGold();
+                break;
+            default: takeConstructions(d, n);
+        }
     }
 
     /*public void useAbility(Draw draw, Player self, Player opponent, Constructions c, Player[] players){

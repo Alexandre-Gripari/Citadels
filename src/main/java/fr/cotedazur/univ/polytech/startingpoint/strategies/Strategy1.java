@@ -25,11 +25,12 @@ public class Strategy1 extends Strategy{
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(ArrayList<Constructions> constructions) {
-        Constructions c = new Constructions("null", Color.MERVEILLEUX, 10);
+    public Constructions chooseCard(ArrayList<Constructions> constructions, Player player) {
+        Constructions c = constructions.get(0);
 
         for (Constructions construction : constructions)
-            if (construction.getValue() <= c.getValue()) c = construction;
+            if (construction.getValue() <= c.getValue() && !player.getHand().contains(construction)
+                        && !player.getCity().getCity().contains(construction)) c = construction;
 
         constructions.remove(c);
         return c;
@@ -42,13 +43,7 @@ public class Strategy1 extends Strategy{
 
     public void play(Player[] players, Draw draw) {
         super.play(players, draw);
-        if (players[0].getHand().isEmpty()) {
-            players[0].drawConstruction(draw, 2);
-            for (Wonder w : players[0].getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(players[0].getWonders());
-            }
-        }
-        else players[0].takeGold();
+        players[0].pick(draw, goldOrCard(players, draw));
         for (Wonder w : players[0].getWonders()) {
             if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(players[0].getWonders());
         }
@@ -58,6 +53,20 @@ public class Strategy1 extends Strategy{
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
     // Elle sera utilisée dans les méthodes de caractères.
+    public int goldOrCard(Player[] players, Draw draw) {
+        if (players[0].getHand().isEmpty()) {
+            for (Wonder w : players[0].getWonders()) {
+                if (w.getName().equals("Observatoire"))
+                    return 3;
+                if (w.getName().equals("Bibliothèque")) {
+                    w.power(players[0], draw);
+                    return -1;
+                }
+            }
+            return 2;
+        }
+        else return 0;
+    }
 
     // Le joueur cible l'architecte en tant qu'assassin
     public void assassin(Player[] players, Draw draw) {
