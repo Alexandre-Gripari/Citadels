@@ -64,7 +64,7 @@ public class Strategy1 extends Strategy{
         int size = players.length;
         for (int i = 1; i < size; i++) {
             if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.ASSASSIN.ability(players[0], players[i]);
+                Character.ASSASSIN.ability(players[i]);
                 break;
             }
         }
@@ -74,8 +74,8 @@ public class Strategy1 extends Strategy{
     public void thief(Player[] players, Draw draw) {
         int size = players.length;
         for (int i = 1; i < size; i++) {
-            if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.VOLEUR.ability(players[i]);
+            if (players[i].getCharacter().equals(Character.ARCHITECTE) && !players[i].isDead()) {
+                Character.VOLEUR.ability(players[0], players[i]);
                 break;
             }
         }
@@ -90,14 +90,15 @@ public class Strategy1 extends Strategy{
         }
         else {
             int averageCost = averageCostInHand(players[0].getHand(), handSize);
-            if ((handSize <= 2 || averageCost >= 3) && maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
-            else Character.MAGICIEN.ability(draw, players[0]);
+            if (handSize <= 2 || averageCost >= 3) {
+                if (maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
+                else Character.MAGICIEN.ability(draw, players[0]);
+            }
+
         }
     }
 
-   
-
-    private int playerWithBiggestHandIndex(Player[] players) {
+    public int playerWithBiggestHandIndex(Player[] players) {
         int maxHand = 0;
         int size = players.length;
         for (int i = 1; i < size; i++) {
@@ -137,7 +138,7 @@ public class Strategy1 extends Strategy{
         }
     }
 
-    private int minCostInCity(City city) {
+    public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
         for (Constructions c : city.getCity()) {
             if (c.getValue() < minCost) minCost = c.getValue();
@@ -145,11 +146,15 @@ public class Strategy1 extends Strategy{
         return minCost;
     }
 
-    private int minCostInCityIndex(City city) {
+    public int minCostInCityIndex(City city) {
         int minCost = Integer.MAX_VALUE;
         int index = -1;
         for (int i = 0; i < city.size(); i++) {
-            if (city.get(i).getValue() < minCost) index = i;
+            int cityValue = city.get(i).getValue();
+            if (cityValue < minCost) {
+                index = i;
+                minCost = cityValue;
+            }
         }
         return index;
     }
