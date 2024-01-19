@@ -5,15 +5,13 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
-import java.util.Optional;
-
 public enum Character{
 
     ASSASSIN("Assassin", Color.NEUTRE, 1){
         @Override
-        public void ability(Player ... players){
-            System.out.println("Le joueur a assasiné " + players[1].getCharacter());
-            players[1].kill();
+        public void ability(Player player){
+            System.out.println("Le joueur a assasiné " + player.getCharacter());
+            player.kill();
         }
     },
 
@@ -92,7 +90,7 @@ public enum Character{
 
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
         @Override
-        public void ability(Draw draw,Player ... players){
+        public void ability(Draw draw, Player ... players){
             //players = reorganizePlayers(ARCHITECTE, players);
             players[0].draw(draw,2);
             System.out.println("Le joueur " + players[0].getNumber() + " a pioché 2 cartes grace au pouvoir de l'architecte");
@@ -101,32 +99,21 @@ public enum Character{
 
     CONDOTTIERE("Condotière", Color.SOLDATESQUE, 8){
         @Override
-        public Constructions ability(int index, Player ... players){
-            //players = reorganizePlayers(CONDOTTIERE, players);
-            String res = "";
-            int nbOfArmyConstructions = 0;
-            Player selfPlayer = players[0];
-            for (int i = 0; i < selfPlayer.getCity().size(); i++) {
-                if (selfPlayer.getCity().get(i).getColor() == this.getColor()) nbOfArmyConstructions++;
+        public Constructions ability(Constructions c, Player self, Player opponent){
+            int gold = 0;
+            if (c != null && !c.getName().equals("Donjon")) {
+                opponent.destroyConstruction(c);
+                self.addGold(-c.getValue()+1);
+                System.out.println("Le joueur " + self.getNumber() + " a détruit la construction " + c.getName() + " du joueur " + opponent.getNumber());
             }
-            selfPlayer.addGold(nbOfArmyConstructions);
-            res += "Le joueur " + selfPlayer.getNumber() + " gagne " + nbOfArmyConstructions +" d'or grâce à la capacité du condottiere";
-            Constructions targetedCons = null;
-            if (players.length >= 2) {
-                Player targetedPlayer = players[1];
-                targetedCons = targetedPlayer.getCity().get(index);
-                // sera remplacé par un assert, les joeurs intelligents ne vont pas choisir le donjon
-                if (targetedCons.equals(new Wonder("Donjon", 3, WondersPower.DONJON))) return null;
-                int cost = targetedCons.getValue() - 1;
-                if (selfPlayer.getGold() >= cost) {
-                    res += " et il détruit la construction : " + targetedCons.toString() + " du joueur " + targetedPlayer.getNumber() + " et perd " + cost + " d'or";
-                    //WondersPower.CIMETIERE.power(targetedPlayer.getCity().get(index), players);
-                    targetedPlayer.getCity().remove(index);
-                    selfPlayer.addGold(-cost);
+            for (Constructions co : self.getCity().getCity()) {
+                if (co.getColor() == Color.SOLDATESQUE) {
+                    gold++;
                 }
             }
-            System.out.println(res);
-            return targetedCons;
+            self.addGold(gold);
+            System.out.println("Le joueur " + self.getNumber() + " gagne " + gold + " d'or grâce à la capacité du condotière");
+            return c;
         }
     };
 
@@ -142,7 +129,7 @@ public enum Character{
 
     public void ability(Player self) {/* abilité du joueur lui-même*/}
     public void ability(Player ... players) {/* abilité du joueur sur les autres joueurs*/}
-    public Constructions ability(int index, Player ... players) {return null;/* abilité du joueur sur les autres joueurs et sur une construction*/}
+    public Constructions ability(Constructions c, Player self, Player opponent) { return null;/* abilité du joueur sur les autres joueurs et sur une construction*/}
     public void ability(Draw d, Player ... players) {/* abilité du joueur sur les autres joueurs et sur la pioche*/}
 
     public String getName() { return this.name; }
@@ -151,23 +138,6 @@ public enum Character{
 
     public int getNumber() { return this.number; }
 
-    /*public Player[] reorganizePlayers(Character c, Player ... players) {
-        boolean isCharacter = false;
-        for (Player player : players) {
-            if (player.getCharacter() == Character.ROI) {
-                isCharacter = true;
-                break;
-            }
-        }
-        if (players[0].getCharacter() != c && isCharacter) {
-            Player p = players[0];
-            for (int i = 0; i < players.length - 1; i++)
-                players[i] = players[i + 1];
-            players[players.length - 1] = p;
-            players = reorganizePlayers(c, players);
-        }
-        return players;
-    }*/
 }
 
 

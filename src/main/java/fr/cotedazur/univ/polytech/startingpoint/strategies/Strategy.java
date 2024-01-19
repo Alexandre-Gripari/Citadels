@@ -5,14 +5,14 @@ import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
-import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
-
+import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import java.util.*;
 
 public abstract class Strategy {
 
     private String description;
 
+    public abstract void useAbility(Draw draw, Player[] players);
     public Strategy(String description) {
         this.description = description;
     }
@@ -21,9 +21,24 @@ public abstract class Strategy {
         return description;
     }
 
-    abstract Character choiceOfCharacter(Player player, List<Character> characters);
+    public Character chooseCharacter(Player player, List<Character> characters, Player[] players){
+        if (player.getHand().isEmpty() && characters.contains(Character.MAGICIEN)){
+            return Character.MAGICIEN;
+        }
+        if (player.getGold() < 2 && characters.contains(Character.VOLEUR)) {
+            return Character.VOLEUR;
+        }
+        Player[] playersCopy = players.clone();
+        Arrays.sort(playersCopy);
+        if (playersCopy[playersCopy.length-1].equals(player) && characters.contains(Character.ASSASSIN)) {
+            return Character.ASSASSIN;
+        }
+        return null;
+    }
 
+    public abstract List<Character> getCharacterPriority(Player[] players);
     abstract void useWonder(List<Wonder> wonders);
+    public abstract Constructions chooseCard(List<Constructions> constructions);
 
     public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()) {
@@ -69,6 +84,14 @@ public abstract class Strategy {
     abstract void architect(Player[] players, Draw draw);
 
     abstract void condottiere(Player[] players, Draw draw);
+
+
+    protected double averageCostInHand(Hand hand, int handSize) {
+        double avCost = 0;
+        for (Constructions c : hand.getHand()) avCost += c.getValue();
+        avCost/=handSize;
+        return avCost;
+    }
 
     public List<Character> mostProfitableCharacters(Player p) {
         int commercialValue = 1;
@@ -118,3 +141,5 @@ public abstract class Strategy {
         return charactersRank;
     }
 }
+
+
