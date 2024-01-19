@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
@@ -212,7 +213,7 @@ public class Player implements Comparable<Player> {
         System.out.println("Le joueur " + number + " a choisi le personnage " + chosenCharacter);
         characters.remove(chosenCharacter);
     }
-
+  
     public void setCharacter(Character character){
         this.character=character;
     }
@@ -225,8 +226,7 @@ public class Player implements Comparable<Player> {
             hand.add(c);
         }
     }
-
-    public void discardConstruction(Constructions c, Draw d){
+public void discardConstruction(Constructions c, Draw d){
         d.add(c);
         hand.remove(c);
     }
