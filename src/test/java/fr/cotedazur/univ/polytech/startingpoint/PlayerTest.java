@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
@@ -8,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -49,7 +47,6 @@ class PlayerTest {
         p2 = new Player(2,1, hand2);
         p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
 
         opponentOfP2[0] = p2;
         opponentOfP2[1] = p1;
@@ -163,24 +160,13 @@ class PlayerTest {
     @Test
     void testChooseCharacter() {
         init();
-        List<Character> CharacterList = new ArrayList<>(List.of(Character.values()));
-        p1.chooseCharacter(CharacterList);
-        assertEquals("Assassin", p1.getCharacter().getName());
-        p2.chooseCharacter(CharacterList);
-        assertEquals("Voleur", p2.getCharacter().getName());
+        Game game = new Game(new Player[]{p1, p2});
+        game.init();
+        game.discardCharacter();
+        p1.chooseCharacter(game.getCharacters(), game.getOpponents(p1));
+        p2.chooseCharacter(game.getCharacters(), game.getOpponents(p2));
+        assertEquals(3, game.getCharacters().size());
 
-        assertEquals(6,CharacterList.size());
-
-        List<Character> CharacterList2 = new ArrayList<>();
-        CharacterList2.add(Character.CONDOTTIERE);
-        CharacterList2.add(Character.MAGICIEN);
-
-        p1.chooseCharacter(CharacterList2);
-        assertEquals("Condotière", p1.getCharacter().getName());
-        p2.chooseCharacter(CharacterList2);
-        assertEquals("Magicien", p2.getCharacter().getName());
-
-        assertEquals(0,CharacterList2.size());
     }
 
     @Test

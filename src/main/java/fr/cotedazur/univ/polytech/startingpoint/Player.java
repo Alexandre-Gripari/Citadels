@@ -206,9 +206,10 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void chooseCharacter(List<Character> characters){
-        Character chosenCharacter = strategy.chooseCharacter(this, characters);
+    public void chooseCharacter(List<Character> characters, Player[] players){
+        Character chosenCharacter = strategy.chooseCharacter(this, characters, players);
         this.setCharacter(chosenCharacter);
+        System.out.println("Le joueur " + number + " a choisi le personnage " + chosenCharacter);
         characters.remove(chosenCharacter);
     }
 

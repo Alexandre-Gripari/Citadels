@@ -7,7 +7,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class Strategy {
@@ -23,10 +23,24 @@ public abstract class Strategy {
         return description;
     }
 
-    public abstract Character chooseCharacter(Player player, List<Character> characters);
+    public Character chooseCharacter(Player player, List<Character> characters, Player[] players){
+        if (player.getHand().isEmpty() && characters.contains(Character.MAGICIEN)){
+            return Character.MAGICIEN;
+        }
+        if (player.getGold() < 2 && characters.contains(Character.VOLEUR)) {
+            return Character.VOLEUR;
+        }
+        Player[] playersCopy = players.clone();
+        Arrays.sort(playersCopy);
+        if (playersCopy[playersCopy.length-1].equals(player) && characters.contains(Character.ASSASSIN)) {
+            return Character.ASSASSIN;
+        }
+        return null;
+    }
 
+    public abstract List<Character> getCharacterPriority(Player[] players);
     abstract void useWonder(List<Wonder> wonders);
-    public abstract Constructions chooseCard(ArrayList<Constructions> constructions);
+    public abstract Constructions chooseCard(List<Constructions> constructions);
 
     public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()){
@@ -51,8 +65,8 @@ public abstract class Strategy {
     abstract void condottiere(Player[] players, Draw draw);
 
 
-    protected int averageCostInHand(Hand hand, int handSize) {
-        int avCost = 0;
+    protected double averageCostInHand(Hand hand, int handSize) {
+        double avCost = 0;
         for (Constructions c : hand.getHand()) avCost += c.getValue();
         avCost/=handSize;
         return avCost;
