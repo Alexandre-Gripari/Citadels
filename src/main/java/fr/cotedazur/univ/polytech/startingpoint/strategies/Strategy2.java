@@ -3,21 +3,33 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Strategy2 extends Strategy{
+
+    @Override
+    public void useAbility(Draw draw, Player[] players) {
+
+    }
 
     public Strategy2(String description) {
         super(description);
     }
 
-    public Character choiceOfCharacter(Player player, List<Character> characters){
+    public Character chooseCharacter(Player player, List<Character> characters){
         return null;
     }
 
     public void useWonder(List<Wonder> wonders) {return;}
+
+    @Override
+    public Constructions chooseCard(ArrayList<Constructions> constructions) {
+        return null;
+    }
 
     @Override
     public void play(Player[] players, Draw draw) {

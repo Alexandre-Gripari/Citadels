@@ -5,14 +5,15 @@ import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
-import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Strategy {
 
     private String description;
 
+    public abstract void useAbility(Draw draw, Player[] players);
     public Strategy(String description) {
         this.description = description;
     }
@@ -21,9 +22,10 @@ public abstract class Strategy {
         return description;
     }
 
-    abstract Character choiceOfCharacter(Player player, List<Character> characters);
+    public abstract Character chooseCharacter(Player player, List<Character> characters);
 
     abstract void useWonder(List<Wonder> wonders);
+    public abstract Constructions chooseCard(ArrayList<Constructions> constructions);
 
     public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()){
