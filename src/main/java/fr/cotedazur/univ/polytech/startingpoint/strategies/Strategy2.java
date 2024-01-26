@@ -6,7 +6,6 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Strategy2 extends Strategy{
@@ -20,6 +19,11 @@ public class Strategy2 extends Strategy{
         super(description);
     }
 
+    @Override
+    public List<Character> getCharacterPriority(Player[] players) {
+        return null;
+    }
+
     public Character chooseCharacter(Player player, List<Character> characters){
         return null;
     }
@@ -27,7 +31,7 @@ public class Strategy2 extends Strategy{
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(ArrayList<Constructions> constructions) {
+    public Constructions chooseCard(List<Constructions> constructions) {
         return null;
     }
 

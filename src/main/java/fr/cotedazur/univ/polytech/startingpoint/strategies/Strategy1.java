@@ -18,14 +18,39 @@ public class Strategy1 extends Strategy{
         super(description);
     }
 
-    public Character chooseCharacter(Player player,List<Character> characters){
-        return characters.get(0);
+    public Character chooseCharacter(Player player,List<Character> characters, Player[] players){
+        Character character = super.chooseCharacter(player, characters, players);
+        if (character != null) return character;
+        List<Character> characterPriority = getCharacterPriority(players);
+        for (Character c : characterPriority){
+            if (characters.contains(c)) return c;
+        }
+        return characters.get(0); // normalement on ne devrait jamais arriver ici
     }
+
+    public List<Character> getCharacterPriority(Player[] players){
+        List<Character> characterPriority = new ArrayList<>();
+        Hand hand = players[0].getHand();
+        characterPriority.add(Character.ARCHITECTE);
+        characterPriority.add(Character.ROI);
+        if (!hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.MAGICIEN);
+        // en attende de la méthode qui arrangera les persos avec une couleur;
+        characterPriority.add(Character.CONDOTTIERE);
+        characterPriority.add(Character.EVEQUE);
+        characterPriority.add(Character.MARCHAND);
+        characterPriority.add(Character.ASSASSIN);
+        if (!characterPriority.contains(Character.VOLEUR)) characterPriority.add(Character.VOLEUR);
+        if (!characterPriority.contains(Character.MAGICIEN)) characterPriority.add(Character.MAGICIEN);
+        return characterPriority;
+    }
+
+
+
 
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(ArrayList<Constructions> constructions) {
+    public Constructions chooseCard(List<Constructions> constructions) {
         Constructions c = new Constructions("null", Color.MERVEILLEUX, 10);
 
         for (Constructions construction : constructions)
@@ -89,12 +114,11 @@ public class Strategy1 extends Strategy{
             if (maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
         }
         else {
-            int averageCost = averageCostInHand(players[0].getHand(), handSize);
+            double averageCost = averageCostInHand(players[0].getHand(), handSize);
             if (handSize <= 2 || averageCost >= 3) {
                 if (maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
                 else Character.MAGICIEN.ability(draw, players[0]);
             }
-
         }
     }
 
