@@ -90,10 +90,10 @@ class GameTest {
         Player p4 = new Player(4, new Hand());
         Game game = new Game(new Player[]{p1, p2, p3, p4});
         game.init();
-        p1.chooseCharacter(game.getCharacters());
-        p2.chooseCharacter(game.getCharacters());
-        p3.chooseCharacter(game.getCharacters());
-        p4.chooseCharacter(game.getCharacters());
+        p1.chooseCharacter(game.getCharacters(), game.getOpponents(p1));
+        p2.chooseCharacter(game.getCharacters(), game.getOpponents(p2));
+        p3.chooseCharacter(game.getCharacters(), game.getOpponents(p3));
+        p4.chooseCharacter(game.getCharacters(), game.getOpponents(p4));
         game.reorganizePlayers();
         assertEquals(ROI, game.getPlayers()[0].getCharacter());
     }

@@ -134,7 +134,7 @@ public class Game {
     public void choiceOfCharacter(){
         reorganizePlayers();
         for (Player player : players) {
-            player.chooseCharacter(characters);
+            player.chooseCharacter(characters, getOpponents(player));
         }
         for (Player player : players) {
             characters.add(player.getCharacter());

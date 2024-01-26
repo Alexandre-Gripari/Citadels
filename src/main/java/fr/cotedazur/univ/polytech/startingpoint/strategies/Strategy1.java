@@ -18,9 +18,34 @@ public class Strategy1 extends Strategy{
         super(description);
     }
 
-    public Character chooseCharacter(Player player,List<Character> characters){
-        return characters.get(0);
+    public Character chooseCharacter(Player player,List<Character> characters, Player[] players){
+        Character character = super.chooseCharacter(player, characters, players);
+        if (character != null) return character;
+        List<Character> characterPriority = getCharacterPriority(players);
+        for (Character c : characterPriority){
+            if (characters.contains(c)) return c;
+        }
+        return characters.get(0); // normalement on ne devrait jamais arriver ici
     }
+
+    public List<Character> getCharacterPriority(Player[] players){
+        List<Character> characterPriority = new ArrayList<>();
+        Hand hand = players[0].getHand();
+        characterPriority.add(Character.ARCHITECTE);
+        characterPriority.add(Character.ROI);
+        if (!hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.MAGICIEN);
+        // en attende de la méthode qui arrangera les persos avec une couleur;
+        characterPriority.add(Character.CONDOTTIERE);
+        characterPriority.add(Character.EVEQUE);
+        characterPriority.add(Character.MARCHAND);
+        characterPriority.add(Character.ASSASSIN);
+        if (!characterPriority.contains(Character.VOLEUR)) characterPriority.add(Character.VOLEUR);
+        if (!characterPriority.contains(Character.MAGICIEN)) characterPriority.add(Character.MAGICIEN);
+        return characterPriority;
+    }
+
+
+
 
     public void useWonder(List<Wonder> wonders) {return;}
 
@@ -76,7 +101,7 @@ public class Strategy1 extends Strategy{
         int size = players.length;
         for (int i = 1; i < size; i++) {
             if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.ASSASSIN.ability(players[0], players[i]);
+                Character.ASSASSIN.ability(players[i]);
                 break;
             }
         }
@@ -86,8 +111,8 @@ public class Strategy1 extends Strategy{
     public void thief(Player[] players, Draw draw) {
         int size = players.length;
         for (int i = 1; i < size; i++) {
-            if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.VOLEUR.ability(players[i]);
+            if (players[i].getCharacter().equals(Character.ARCHITECTE) && !players[i].isDead()) {
+                Character.VOLEUR.ability(players[0], players[i]);
                 break;
             }
         }
@@ -101,15 +126,15 @@ public class Strategy1 extends Strategy{
             if (maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
         }
         else {
-            int averageCost = averageCostInHand(players[0].getHand(), handSize);
-            if ((handSize <= 2 || averageCost >= 3) && maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
-            else Character.MAGICIEN.ability(draw, players[0]);
+            double averageCost = averageCostInHand(players[0].getHand(), handSize);
+            if (handSize <= 2 || averageCost >= 3) {
+                if (maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
+                else Character.MAGICIEN.ability(draw, players[0]);
+            }
         }
     }
 
-   
-
-    private int playerWithBiggestHandIndex(Player[] players) {
+    public int playerWithBiggestHandIndex(Player[] players) {
         int maxHand = 0;
         int size = players.length;
         for (int i = 1; i < size; i++) {
@@ -149,7 +174,7 @@ public class Strategy1 extends Strategy{
         }
     }
 
-    private int minCostInCity(City city) {
+    public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
         for (Constructions c : city.getCity()) {
             if (c.getValue() < minCost) minCost = c.getValue();
@@ -157,11 +182,15 @@ public class Strategy1 extends Strategy{
         return minCost;
     }
 
-    private int minCostInCityIndex(City city) {
+    public int minCostInCityIndex(City city) {
         int minCost = Integer.MAX_VALUE;
         int index = -1;
         for (int i = 0; i < city.size(); i++) {
-            if (city.get(i).getValue() < minCost) index = i;
+            int cityValue = city.get(i).getValue();
+            if (cityValue < minCost) {
+                index = i;
+                minCost = cityValue;
+            }
         }
         return index;
     }

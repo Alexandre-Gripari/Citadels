@@ -6,7 +6,8 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
-import fr.cotedazur.univ.polytech.startingpoint.strategies.*;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -216,12 +217,12 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void chooseCharacter(List<Character> characters){
-        Character chosenCharacter = strategy.chooseCharacter(this, characters);
+    public void chooseCharacter(List<Character> characters, Player[] players){
+        Character chosenCharacter = strategy.chooseCharacter(this, characters, players);
         this.setCharacter(chosenCharacter);
         characters.remove(chosenCharacter);
     }
-
+  
     public void setCharacter(Character character){
         this.character=character;
     }
@@ -234,8 +235,7 @@ public class Player implements Comparable<Player> {
             hand.add(c);
         }
     }
-
-    public void discardConstruction(Constructions c, Draw d){
+public void discardConstruction(Constructions c, Draw d){
         d.add(c);
         hand.remove(c);
     }
