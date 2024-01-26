@@ -138,13 +138,9 @@ public class Player implements Comparable<Player> {
     }
 
     public void pick(Draw d, int n) {
-        switch (n){
-            case -1 : break;
-            case 0 :
-                takeGold();
-                break;
-            default: drawConstruction(d, n);
-        }
+        if (n < 0) wonders.get(-n).power(this, d);
+        else if (n == 1) takeGold();
+        else drawConstruction(d, n);
     }
 
     /*public void useAbility(Draw draw, Player self, Player opponent, Constructions c, Player[] players){

@@ -89,20 +89,19 @@ class Strategy1Test {
 
         d.add(tour);
         d.add(bastion);
+        d.add(ecole);
+        d.add(echoppe);
 
         assertEquals(2, s.goldOrCard(new Player[]{p}, d));
 
         p.getWonders().add(observatoire);
-        assertEquals(3, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
 
         p.getWonders().add(bibliotheque);
-        assertEquals(3, s.goldOrCard(new Player[]{p}, d));
-
-        p.getWonders().remove(observatoire);
-        assertEquals(-1, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
 
         p.getHand().add(manoir);
-        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(1, s.goldOrCard(new Player[]{p}, d));
     }
 
     Strategy1 strat;
@@ -131,7 +130,11 @@ class Strategy1Test {
         players = new Player[4];
         players[0] = p1; players[1] = p2; players[2] = p3; players[3] = p4;
         draw = new Draw();
-
+        draw.add(chateau);
+        draw.add(marche);
+        draw.add(prison);
+        draw.add(port);
+        draw.add(echoppe);
     }
 
     @Test
@@ -167,7 +170,8 @@ class Strategy1Test {
         assertEquals(2, p1.getGold());
         assertEquals(2, p2.getGold());
         strat.thief(players, draw);
-        assertEquals(4, p1.getGold());
+        assertEquals(2, p1.getGold());
+        assertEquals(1, p1.getCity().size());
         assertEquals(0, p2.getGold());
 
         p1.setGold(2);
@@ -203,8 +207,8 @@ class Strategy1Test {
 
         strat.magician(players, draw);
 
-        assertEquals(3, p1.getHand().size());
-        assertEquals(1, p1.getHand().get(0).getValue());
+        assertEquals(2, p1.getHand().size());
+        assertEquals(2, p1.getHand().get(0).getValue());
     }
 
     @Test
@@ -230,8 +234,8 @@ class Strategy1Test {
 
         strat.magician(players, draw);
 
-        assertEquals(4, p1.getHand().size());
-        assertEquals(3, p1.getHand().get(0).getValue());
+        assertEquals(3, p1.getHand().size());
+        assertEquals(4, p1.getHand().get(0).getValue());
     }
 
     @Test
@@ -262,8 +266,8 @@ class Strategy1Test {
 
         strat.magician(players, draw);
 
-        assertEquals(3, p1.getHand().size());
-        assertEquals(1, p1.getHand().get(0).getValue());
+        assertEquals(2, p1.getHand().size());
+        assertEquals(3, p1.getHand().get(0).getValue());
     }
 
     @Test
@@ -305,7 +309,7 @@ class Strategy1Test {
         assertEquals(5, p2.getCity().get(0).getValue());
         // p3 est désormais ciblé
         assertEquals(0, p3.getCity().size());
-        assertEquals(8, p1.getGold());
+        assertEquals(6, p1.getGold());
 
     }
 
