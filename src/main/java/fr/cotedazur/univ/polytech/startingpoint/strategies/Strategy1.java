@@ -26,12 +26,15 @@ public class Strategy1 extends Strategy{
 
     @Override
     public Constructions chooseCard(ArrayList<Constructions> constructions, Player player) {
-        Constructions c = constructions.get(0);
+        Constructions c = new Constructions("null", Color.NEUTRE, 10);
 
-        for (Constructions construction : constructions)
-            if (construction.getValue() <= c.getValue() && !player.getHand().contains(construction)
-                        && !player.getCity().getCity().contains(construction)) c = construction;
+        for (Constructions construction : constructions) {
+            if (construction.getValue() < c.getValue() && !player.getHand().contains(construction)
+                    && !player.getCity().getCity().contains(construction)) c = construction;
+            if (construction.getValue() == c.getValue() && construction.getColor() == Color.MERVEILLEUX) c = construction;
+        }
 
+        if (c.getName() == "null") c = constructions.get(0);
         constructions.remove(c);
         return c;
     }

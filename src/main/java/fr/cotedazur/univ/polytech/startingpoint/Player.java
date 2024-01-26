@@ -92,6 +92,7 @@ public class Player implements Comparable<Player> {
             return;
         }
         System.out.println("Le joueur " + number + " est le " + character.getName());
+        strategy.play(players, draw);
 
         /*if (hand.isEmpty()) {
             hand.add(takeConstruction(draw));
@@ -105,7 +106,6 @@ public class Player implements Comparable<Player> {
         }
         buildConstruction();
         useAbility(draw, players);*/
-        strategy.play(players, draw);
     }
 
     public void drawConstruction(Draw d, int n) {
@@ -142,7 +142,7 @@ public class Player implements Comparable<Player> {
             case 0 :
                 takeGold();
                 break;
-            default: takeConstructions(d, n);
+            default: drawConstruction(d, n);
         }
     }
 
