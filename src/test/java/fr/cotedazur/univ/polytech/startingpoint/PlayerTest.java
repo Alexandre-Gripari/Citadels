@@ -2,7 +2,9 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -176,5 +178,20 @@ class PlayerTest {
         assertEquals(1, p1.getHand().size());
         assertEquals(6, draw.size());
         assertEquals("Forteresse", p1.getHand().get(0).getName());
+    }
+
+    @Test
+    void testPick() {
+        init();
+        Strategy1 s = new Strategy1("Test");
+        Player p = new Player(0, 2, new Hand(), new City(), s);
+
+        p.pick(draw, s.goldOrCard(new Player[]{p}, draw));
+        assertEquals(1, p.getHand().size() );
+        assertEquals(2, p.getGold());
+
+        p.pick(draw, s.goldOrCard(new Player[]{p}, draw));
+        assertEquals(1, p.getHand().size() );
+        assertEquals(4, p.getGold());
     }
 }
