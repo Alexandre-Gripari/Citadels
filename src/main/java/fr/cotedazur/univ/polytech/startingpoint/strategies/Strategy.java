@@ -32,7 +32,9 @@ public abstract class Strategy {
         }
         Player[] playersCopy = players.clone();
         Arrays.sort(playersCopy);
-        if (playersCopy[playersCopy.length-1].equals(player) && characters.contains(Character.ASSASSIN)) {
+        if (playersCopy[playersCopy.length-1].equals(player)
+                && (player.getCity().cityValue() - playersCopy[players.length-2].getCity().cityValue() >8)
+                && characters.contains(Character.ASSASSIN)) {
             return Character.ASSASSIN;
         }
         return null;

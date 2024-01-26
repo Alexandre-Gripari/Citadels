@@ -33,8 +33,7 @@ public class Strategy1 extends Strategy{
         Hand hand = players[0].getHand();
         characterPriority.add(Character.ARCHITECTE);
         characterPriority.add(Character.ROI);
-        if (!hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.VOLEUR);
-        if (hand.size() < 2 || !hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.MAGICIEN);
+        if (!hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.MAGICIEN);
         // en attende de la méthode qui arrangera les persos avec une couleur;
         characterPriority.add(Character.CONDOTTIERE);
         characterPriority.add(Character.EVEQUE);

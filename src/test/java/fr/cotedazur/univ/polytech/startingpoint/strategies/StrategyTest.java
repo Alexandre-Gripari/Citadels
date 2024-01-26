@@ -52,6 +52,7 @@ class StrategyTest {
         assertEquals(Character.VOLEUR, strategy.chooseCharacter(p1, characters, new Player[]{p1, p2}));
         characters.remove(Character.VOLEUR);
         p1.getCity().add(cathédrale);
+        p1.getCity().add(chateau);
         assertEquals(Character.ASSASSIN, strategy.chooseCharacter(p1, characters, new Player[]{p1, p2}));
         p2.getCity().add(chateau);
         p2.getCity().add(monastère);
