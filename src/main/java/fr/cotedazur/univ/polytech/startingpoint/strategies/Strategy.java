@@ -41,8 +41,8 @@ public abstract class Strategy {
 
     public abstract List<Character> getCharacterPriority(Player[] players);
     abstract void useWonder(List<Wonder> wonders);
-    public abstract Constructions chooseCard(List<Constructions> constructions);
 
+    public abstract Constructions chooseCard(ArrayList<Constructions> constructions, Player player);
     public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()) {
             case ASSASSIN:
