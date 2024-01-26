@@ -51,10 +51,6 @@ class Strategy1Test {
         assertEquals(Character.VOLEUR, characterPriority.get(6));
         assertEquals(Character.MAGICIEN, characterPriority.get(7));
 
-
-
-
-
     }
 
 }

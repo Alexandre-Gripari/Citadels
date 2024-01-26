@@ -1,13 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
-import fr.cotedazur.univ.polytech.startingpoint.strategies.*;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -210,7 +210,6 @@ public class Player implements Comparable<Player> {
     public void chooseCharacter(List<Character> characters, Player[] players){
         Character chosenCharacter = strategy.chooseCharacter(this, characters, players);
         this.setCharacter(chosenCharacter);
-        System.out.println("Le joueur " + number + " a choisi le personnage " + chosenCharacter);
         characters.remove(chosenCharacter);
     }
   

@@ -25,6 +25,7 @@ public abstract class Strategy {
         if (player.getHand().isEmpty() && characters.contains(Character.MAGICIEN)){
             return Character.MAGICIEN;
         }
+        // rajouter une condition pour l'or moyen des joueurs
         if (player.getGold() < 2 && characters.contains(Character.VOLEUR)) {
             return Character.VOLEUR;
         }
