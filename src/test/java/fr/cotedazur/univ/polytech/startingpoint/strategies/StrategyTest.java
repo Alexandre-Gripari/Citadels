@@ -72,12 +72,9 @@ class StrategyTest {
 
     Hand hand1;
     Hand hand2;
-    Player p1;
-    Player p2;
     Draw draw;
 
     Strategy strat = new StrategyEco("oui");
-       
 
     @BeforeEach
     void init() {
@@ -87,7 +84,10 @@ class StrategyTest {
         p1 = new Player(1, hand1);
         p1.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p1.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        p1.getCity().add(new Constructions("Gros château", Color.NOBLE, 284));
+        p1.getCity().add(new Constructions("Big château", Color.NOBLE, 284));
+        p1.getCity().add(new Constructions("Big église", Color.RELIGIEUX, 284));
+        p1.getCity().add(new Constructions("Giga base militaire", Color.SOLDATESQUE, 284));
+        p1.getCity().add(new Constructions("Hypermarché", Color.COMMERCIAL, 284));
 
         draw = new Draw();
         draw.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
@@ -101,14 +101,13 @@ class StrategyTest {
         p2 = new Player(2, 1, hand2, new City());
         p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
     }
 
     @Test
     void mostProfitableCharactersTest() {
-        assertEquals(Character.ROI,strat.mostProfitableCharacters(p1).get(0));
+        assertEquals(Character.ROI,strat.mostProfitableCharacters(p1).get(2));
         assertEquals(Character.MARCHAND,strat.mostProfitableCharacters(p1).get(1));
-        assertEquals(Character.EVEQUE,strat.mostProfitableCharacters(p1).get(2));
-        assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p1).get(3));
+        assertEquals(Character.EVEQUE,strat.mostProfitableCharacters(p1).get(3));
+        assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p1).get(4));
     }
 }

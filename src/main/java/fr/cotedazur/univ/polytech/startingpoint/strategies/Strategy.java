@@ -121,19 +121,19 @@ public abstract class Strategy {
         for (int j = 0; j < cityColorsValue.length; j++) {
             OptionalInt maxValue = Arrays.stream(cityColorsValue).max();
             int max = maxValue.getAsInt();
-            if (max == nobleValue) {
+            if (max == nobleValue && nobleValue!=0) {
                 charactersRank.add(Character.ROI);
                 cityColorsValue[0]=-1;
             }
-            if (max == religieuxValue) {
+            if (max == religieuxValue && religieuxValue!=0) {
                 charactersRank.add(Character.EVEQUE);
                 cityColorsValue[1]=-1;
             }
-            if (max == soldatesqueValue) {
+            if (max == soldatesqueValue && soldatesqueValue!=0) {
                 charactersRank.add(Character.CONDOTTIERE);
                 cityColorsValue[2]=-1;
             }
-            if (max == commercialValue) {
+            if (max == commercialValue && commercialValue!=0) {
                 charactersRank.add(Character.MARCHAND);
                 cityColorsValue[3] = -1;
             }
