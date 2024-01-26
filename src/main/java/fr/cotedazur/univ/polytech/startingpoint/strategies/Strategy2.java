@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Strategy2 extends Strategy{
