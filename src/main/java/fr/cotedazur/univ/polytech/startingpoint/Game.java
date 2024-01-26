@@ -1,12 +1,10 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
+import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 
 import java.util.*;
-
-import static fr.cotedazur.univ.polytech.startingpoint.Draw.*;
 
 public class Game {
 
@@ -136,7 +134,7 @@ public class Game {
     public void choiceOfCharacter(){
         reorganizePlayers();
         for (Player player : players) {
-            player.chooseCharacter(characters);
+            player.chooseCharacter(characters, getOpponents(player));
         }
         for (Player player : players) {
             characters.add(player.getCharacter());

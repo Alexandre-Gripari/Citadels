@@ -17,7 +17,7 @@ public enum WondersPower {
 
     DONJON {
         @Override
-        public void power(){return;}
+        public void power(){return;} // dans l'abilité de la condotière
     },
 
     LABORATOIRE {
@@ -32,9 +32,7 @@ public enum WondersPower {
         @Override
         public void power(Player player, Draw d){
             if (player.getGold() >= 3) {
-                player.getHand().add(d.draw());
-                player.getHand().add(d.draw());
-                player.getHand().add(d.draw());
+                player.draw(d,3);
                 player.addGold(-3);
             }
         }
@@ -44,16 +42,9 @@ public enum WondersPower {
         @Override
         public void power(Player player, Draw d){
             Constructions c1 = d.draw();
-            Constructions c2 = player.getHand().get(player.getHand().size()-1);
-            if (c1.getValue() <= c2.getValue()){
-                d.add(c2);
-                System.out.println("Le joueur " + player.getNumber() + " a pioché " + c1);
-                player.getHand().set(player.getHand().size()-1, c1);
-            }
-            else {
-                d.add(c1);
-                System.out.println("Le joueur " + player.getNumber() + " a pioché " + c2);
-            }
+            Constructions c2 = d.draw();
+            Constructions c3 = d.draw();
+            //player.getStrategy().choose(Arrays.asList(c1,c2,c3));
         }
     },
 
@@ -72,8 +63,7 @@ public enum WondersPower {
     BIBLIOTHEQUE {
         @Override
         public void power(Player p, Draw d){
-            p.getHand().add(d.draw());
-            p.getHand().add(d.draw());
+            p.draw(d,2);
         }
     },
 

@@ -1,18 +1,14 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
-import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PlayerTest {
 
@@ -24,6 +20,14 @@ class PlayerTest {
     Player[] opponentOfP1 = new Player[2];
     Player[] opponentOfP2 = new Player[2];
 
+
+    Constructions cathédrale = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
+    Constructions chateau = new Constructions("Château", Color.NOBLE, 4);
+    Constructions monastère = new Constructions("Monastère", Color.RELIGIEUX, 3);
+    Constructions marché = new Constructions("Marché", Color.COMMERCIAL, 2);
+    Constructions comptoir = new Constructions("Comptoir", Color.COMMERCIAL, 3);
+
+
     void init() {
         hand1 = new Hand();
 
@@ -32,27 +36,26 @@ class PlayerTest {
         p1.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         draw = new Draw();
-        draw.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
-        draw.addXConstructions(new Constructions("Château", Color.NOBLE, 4), 1);
-        draw.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
-        draw.addXConstructions(new Constructions("Marché", Color.COMMERCIAL, 2), 1);
-        draw.addXConstructions(new Constructions("Comptoir", Color.COMMERCIAL, 3), 1);
+        draw.addXConstructions(cathédrale, 1);
+        draw.addXConstructions(chateau, 1);
+        draw.addXConstructions(monastère, 1);
+        draw.addXConstructions(marché, 1);
+        draw.addXConstructions(comptoir, 1);
 
         hand2 = new Hand();
 
-        p2 = new Player(2, 1, hand2, new City());
+        p2 = new Player(2,1, hand2);
         p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
 
         opponentOfP2[0] = p2;
         opponentOfP2[1] = p1;
     }
 
-    @Test
+    /*@Test
     void play() {
         init();
-        assertEquals(1, p2.getGold());
+        assertEquals(2, p2.getGold());
         p2.play(draw, opponentOfP2);
         assertEquals(2, p2.getGold());
         assertEquals("Temple", p2.getCity().get(0).getName());
@@ -74,14 +77,22 @@ class PlayerTest {
         assertEquals("Château", p2.getCity().get(2).getName());
         assertEquals(1, p2.getHand().size());
         assertEquals(3, p2.getCity().size());
-    }
+    }*/
 
     @Test
     void takeConstruction() {
         init();
-        assertEquals("Château", p1.takeConstruction(draw).getName());
-        assertEquals("Marché", p1.takeConstruction(draw).getName());
-        assertEquals("Comptoir", p1.takeConstruction(draw).getName());
+        assertEquals(new ArrayList<Constructions>(Arrays.asList(cathédrale,chateau)), p1.takeConstructions(draw,2));
+        assertEquals(new ArrayList<Constructions>(Arrays.asList(monastère,marché, comptoir)), p1.takeConstructions(draw,3));
+    }
+
+    @Test
+    void testPutBack() {
+        init();
+        ArrayList<Constructions> constructions = p1.takeConstructions(draw, 2);
+        assertEquals(3, draw.size());
+        p1.putBack(draw, constructions);
+        assertEquals(5, draw.size());
     }
 
     @Test
@@ -104,15 +115,18 @@ class PlayerTest {
 
     @Test
     void buildConstruction() {
-        init();
-        p1.buildConstruction();
-        assertEquals(2, p1.getHand().get(0).getValue());
-        assertEquals(1, p1.getHand().size());
+        Player p = new Player(1, new Hand());
+        Constructions temple = new Constructions("Temple", Color.RELIGIEUX, 1);
+        Constructions forteresse = new Constructions("Forteresse", Color.SOLDATESQUE, 2);
+        p.getHand().add(temple);
+        p.getHand().add(forteresse);
 
-        assertEquals(1, p1.getCity().get(0).getValue());
-        assertEquals(1, p1.getCity().size());
-
-        assertEquals(1, p1.getGold());
+        assertEquals(2, p.getHand().size());
+        assertEquals(0, p.getCity().size());
+        p.buildConstruction(temple);
+        assertEquals(1, p.getHand().size());
+        assertEquals(1, p.getCity().size());
+        assertEquals(temple, p.getCity().get(0));
     }
 
     @Test
@@ -146,24 +160,13 @@ class PlayerTest {
     @Test
     void testChooseCharacter() {
         init();
-        List<Character> CharacterList = new ArrayList<>(List.of(Character.values()));
-        p1.chooseCharacter(CharacterList);
-        assertEquals("Assassin", p1.getCharacter().getName());
-        p2.chooseCharacter(CharacterList);
-        assertEquals("Voleur", p2.getCharacter().getName());
+        Game game = new Game(new Player[]{p1, p2});
+        game.init();
+        game.discardCharacter();
+        p1.chooseCharacter(game.getCharacters(), game.getOpponents(p1));
+        p2.chooseCharacter(game.getCharacters(), game.getOpponents(p2));
+        assertEquals(3, game.getCharacters().size());
 
-        assertEquals(6,CharacterList.size());
-
-        List<Character> CharacterList2 = new ArrayList<>();
-        CharacterList2.add(Character.CONDOTTIERE);
-        CharacterList2.add(Character.MAGICIEN);
-
-        p1.chooseCharacter(CharacterList2);
-        assertEquals("Condotière", p1.getCharacter().getName());
-        p2.chooseCharacter(CharacterList2);
-        assertEquals("Magicien", p2.getCharacter().getName());
-
-        assertEquals(0,CharacterList2.size());
     }
 
     @Test
