@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 
 import java.util.*;
+import java.util.logging.Level;
 
 
 public class Game {
@@ -96,19 +97,19 @@ public class Game {
     public void play() {
         while(!isFinished()) {
             nbTurn++;
-            System.out.println("\nTour " + (int) nbTurn + " : ");
+            MyLogger.log(Level.INFO, "\nTour " + (int) nbTurn + " : ");
             discardCharacter();
             choiceOfCharacter();
             sortPlayersByCharacter();
             for (Player player : players) {
                 player.play(draw, getOpponents(player));
-                System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or. \nLe joueur " + player.getNumber() + " a dans sa main : " + player.getHand() + "\n"); //+ " cartes dans sa main.\n");
+                MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or. \nLe joueur " + player.getNumber() + " a dans sa main : " + player.getHand() + "\n"); //+ " cartes dans sa main.\n");
             }
         }
         sortPlayersByPoints();
         for (int i= players.length-1,j=1;i>=0;i--,j++ ){
             if(i<players.length-1 && players[i].getCity().cityValue() == players[i+1].getCity().cityValue()) j--;
-            System.out.println("Le joueur " + players[i].getNumber() + " termine à la " + j + "ème place avec " + players[i].getCity().cityValue() + " points.");
+            MyLogger.log(Level.INFO, "Le joueur " + players[i].getNumber() + " termine à la " + j + "ème place avec " + players[i].getCity().cityValue() + " points.");
         }
 
     }
@@ -161,7 +162,7 @@ public class Game {
         for (int i = 0; i < 2; i++) {
             int randoms = random.nextInt(characters.size());
             Character characterDiscarded = characters.get(randoms);
-            System.out.println("Le personnage " + characterDiscarded + " a été défaussé.");
+            MyLogger.log(Level.INFO, "Le personnage " + characterDiscarded + " a été défaussé.");
             charactersDiscarded[i] = characterDiscarded;
             characters.remove(characterDiscarded);
         }
@@ -170,7 +171,7 @@ public class Game {
         Character characterDiscarded = characters.get(randoms);
         charactersDiscarded[2] = characterDiscarded;
         characters.remove(characterDiscarded);
-        System.out.println("Un personnage a été défaussé face cachée.\n");
+        MyLogger.log(Level.INFO, "Un personnage a été défaussé face cachée.\n");
     }
 
     //tri selon le numéro du personnage du joueur

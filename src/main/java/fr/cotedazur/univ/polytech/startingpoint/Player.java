@@ -12,6 +12,7 @@ import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -101,7 +102,7 @@ public class Player implements Comparable<Player> {
             resurrect();
             return;
         }
-        System.out.println("Le joueur " + number + " est le " + character.getName());
+        MyLogger.log(Level.INFO, "Le joueur " + number + " est le " + character.getName());
         strategy.play(players, draw);
 
         /*if (hand.isEmpty()) {
@@ -143,7 +144,7 @@ public class Player implements Comparable<Player> {
         if (c.getColor().equals(Color.MERVEILLEUX)) getWonders().add((Wonder) c);
         getHand().remove(c);
         gold -= c.getValue();
-        System.out.println("Le joueur " + getNumber() + " construit " + c);
+        MyLogger.log(Level.INFO, "Le joueur " + getNumber() + " construit " + c);
     }
 
     public void pick(Draw d, int n) {
@@ -199,7 +200,7 @@ public class Player implements Comparable<Player> {
 
     public void takeGold(){
         gold += 2;
-        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
+        MyLogger.log(Level.INFO, "Le joueur " + number + " a pris 2 pièces d'or");
     }
 
     public void addGold(int gold) {
@@ -236,7 +237,7 @@ public class Player implements Comparable<Player> {
     public void useCimetiery(Constructions c) {
         if (c.getValue() <= gold) {
             gold -= c.getValue();
-            System.out.println("Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
+            MyLogger.log(Level.INFO, "Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
             hand.add(c);
         }
     }

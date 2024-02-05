@@ -31,7 +31,7 @@ public class Main {
         Player[] players = new Player[]{p1, p2, p3, p4};
         if (twoThousands) {
             MyLogger.setLogLevel(Level.OFF);
-            // que lui meme pour l'instant on a pas d'autres joeurs
+            // que lui meme pour l'instant on a pas d'autres joueurs
             for (int i = 0; i < 1000; i++) {
                 Game game = new Game(players);
                 game.init();
