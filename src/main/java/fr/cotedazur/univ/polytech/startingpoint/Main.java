@@ -6,8 +6,6 @@ import com.beust.jcommander.Parameter;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 
 public class Main {
@@ -16,11 +14,7 @@ public class Main {
     @Parameter(names={"--demo"})
     boolean demo = false;
 
-    private final static Logger logger = Logger.getLogger(Main.class.getName());
-
-
     public static void main(String... args) {
-        System.setProperty("java.util.logging.SimpleFormatter.format", "[%4$s] %5$s%6$s%n");
         Main main = new Main();
         JCommander.newBuilder()
                 .addObject(main)
@@ -36,6 +30,7 @@ public class Main {
         Player p4 = new Player(4, new Hand());
         Player[] players = new Player[]{p1, p2, p3, p4};
         if (twoThousands) {
+            MyLogger.setLogLevel(Level.OFF);
             // que lui meme pour l'instant on a pas d'autres joeurs
             for (int i = 0; i < 1000; i++) {
                 Game game = new Game(players);
@@ -44,8 +39,9 @@ public class Main {
                 game.calculateStats();
                 game.resetGame();
             }
+            MyLogger.setLogLevel(Level.INFO);
             for (Player player : players) {
-                logger.log(Level.INFO, "Player " + player.getNumber() + " V:" + player.getNumberOfVictory() + " D:" + player.getNumberOfDefeat() + " DR:" + player.getNumberOfDraw() + " Ap:" + player.getAverageScore());
+                MyLogger.log(Level.INFO, "Player " + player.getNumber() + " V:" + player.getNumberOfVictory() + " D:" + player.getNumberOfDefeat() + " E:" + player.getNumberOfDraw() + " SM:" + player.getAverageScore());
             }
         }
         else if(demo){
