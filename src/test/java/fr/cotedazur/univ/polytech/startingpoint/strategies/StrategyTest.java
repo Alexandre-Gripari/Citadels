@@ -1,6 +1,5 @@
 package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
@@ -10,6 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +56,7 @@ class StrategyTest {
         assertEquals(Character.VOLEUR, strategy.chooseCharacter(p1, characters, new Player[]{p1, p2}));
         characters.remove(Character.VOLEUR);
         p1.getCity().add(cathédrale);
+        p1.getCity().add(chateau);
         assertEquals(Character.ASSASSIN, strategy.chooseCharacter(p1, characters, new Player[]{p1, p2}));
         p2.getCity().add(chateau);
         p2.getCity().add(monastère);
@@ -72,8 +73,8 @@ class StrategyTest {
 
     Hand hand1;
     Hand hand2;
-    Player p1;
-    Player p2;
+    Player p11;
+    Player p22;
     Draw draw;
 
     Strategy strat = new StrategyEco("oui");
@@ -84,10 +85,10 @@ class StrategyTest {
 
         hand1 = new Hand();
 
-        p1 = new Player(1, hand1);
-        p1.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
-        p1.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        p1.getCity().add(new Constructions("Gros château", Color.NOBLE, 284));
+        p11 = new Player(1, hand1);
+        p11.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p11.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        p11.getCity().add(new Constructions("Gros château", Color.NOBLE, 284));
 
         draw = new Draw();
         draw.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
@@ -98,17 +99,17 @@ class StrategyTest {
 
         hand2 = new Hand();
 
-        p2 = new Player(2, 1, hand2, new City());
-        p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
-        p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        p2.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())));
+        p22 = new Player(2, 1, hand2, new City());
+        p22.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p22.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        p22.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())), new Player[]{p11, p22});
     }
 
     @Test
     void mostProfitableCharactersTest() {
-        assertEquals(Character.ROI,strat.mostProfitableCharacters(p1).get(0));
-        assertEquals(Character.MARCHAND,strat.mostProfitableCharacters(p1).get(1));
-        assertEquals(Character.EVEQUE,strat.mostProfitableCharacters(p1).get(2));
-        assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p1).get(3));
+        assertEquals(Character.ROI,strat.mostProfitableCharacters(p11).get(0));
+        assertEquals(Character.MARCHAND,strat.mostProfitableCharacters(p11).get(1));
+        assertEquals(Character.EVEQUE,strat.mostProfitableCharacters(p11).get(2));
+        assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p11).get(3));
     }
 }

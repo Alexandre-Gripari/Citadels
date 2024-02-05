@@ -25,12 +25,15 @@ public abstract class Strategy {
         if (player.getHand().isEmpty() && characters.contains(Character.MAGICIEN)){
             return Character.MAGICIEN;
         }
+        // rajouter une condition pour l'or moyen des joueurs
         if (player.getGold() < 2 && characters.contains(Character.VOLEUR)) {
             return Character.VOLEUR;
         }
         Player[] playersCopy = players.clone();
         Arrays.sort(playersCopy);
-        if (playersCopy[playersCopy.length-1].equals(player) && characters.contains(Character.ASSASSIN)) {
+        if (playersCopy[playersCopy.length-1].equals(player)
+                && (player.getCity().cityValue() - playersCopy[players.length-2].getCity().cityValue() >8)
+                && characters.contains(Character.ASSASSIN)) {
             return Character.ASSASSIN;
         }
         return null;
@@ -38,8 +41,8 @@ public abstract class Strategy {
 
     public abstract List<Character> getCharacterPriority(Player[] players);
     abstract void useWonder(List<Wonder> wonders);
-    public abstract Constructions chooseCard(List<Constructions> constructions);
 
+    public abstract Constructions chooseCard(List<Constructions> constructions, Player player);
     public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()) {
             case ASSASSIN:

@@ -33,8 +33,7 @@ public class Strategy1 extends Strategy{
         Hand hand = players[0].getHand();
         characterPriority.add(Character.ARCHITECTE);
         characterPriority.add(Character.ROI);
-        if (!hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.VOLEUR);
-        if (hand.size() < 2 || !hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.MAGICIEN);
+        if (!hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.MAGICIEN);
         // en attende de la méthode qui arrangera les persos avec une couleur;
         characterPriority.add(Character.CONDOTTIERE);
         characterPriority.add(Character.EVEQUE);
@@ -51,12 +50,16 @@ public class Strategy1 extends Strategy{
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(List<Constructions> constructions) {
-        Constructions c = new Constructions("null", Color.MERVEILLEUX, 10);
+    public Constructions chooseCard(List<Constructions> constructions, Player player) {
+        Constructions c = new Constructions("null", Color.NEUTRE, 10);
 
-        for (Constructions construction : constructions)
-            if (construction.getValue() <= c.getValue()) c = construction;
+        for (Constructions construction : constructions) {
+            if (construction.getValue() < c.getValue() && !player.getHand().contains(construction)
+                    && !player.getCity().getCity().contains(construction)) c = construction;
+            if (construction.getValue() == c.getValue() && construction.getColor() == Color.MERVEILLEUX) c = construction;
+        }
 
+        if (c.getName().equals("null")) c = constructions.get(0);
         constructions.remove(c);
         return c;
     }
@@ -68,29 +71,35 @@ public class Strategy1 extends Strategy{
 
     public void play(Player[] players, Draw draw) {
         super.play(players, draw);
-        if (players[0].getHand().isEmpty()) {
-            players[0].drawConstruction(draw, 2);
-            for (Wonder w : players[0].getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(players[0].getWonders());
-            }
-        }
-        else players[0].takeGold();
-        for (Wonder w : players[0].getWonders()) {
-            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(players[0].getWonders());
-        }
+
+    }
+
+    public void playDefault(Player[] players, Draw draw) {
+        players[0].pick(draw, goldOrCard(players, draw));
         players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
-        useAbility(draw, players);
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
     // Elle sera utilisée dans les méthodes de caractères.
+    public int goldOrCard(Player[] players, Draw draw) {
+        if (players[0].getHand().isEmpty()) {
+            for (Wonder w : players[0].getWonders()) {
+                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) {
+                    return -players[0].getWonders().indexOf(w);
+                }
+            }
+            return 2;
+        }
+        else return 1;
+    }
 
     // Le joueur cible l'architecte en tant qu'assassin
     public void assassin(Player[] players, Draw draw) {
+        playDefault(players, draw);
         int size = players.length;
         for (int i = 1; i < size; i++) {
             if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.ASSASSIN.ability(players[0], players[i]);
+                Character.ASSASSIN.ability(players[i]);
                 break;
             }
         }
@@ -98,10 +107,11 @@ public class Strategy1 extends Strategy{
 
     // Le joueur cible l'architecte en tant que voleur
     public void thief(Player[] players, Draw draw) {
+        playDefault(players, draw);
         int size = players.length;
         for (int i = 1; i < size; i++) {
-            if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.VOLEUR.ability(players[i]);
+            if (players[i].getCharacter().equals(Character.ARCHITECTE) && !players[i].isDead()) {
+                Character.VOLEUR.ability(players[0], players[i]);
                 break;
             }
         }
@@ -116,14 +126,15 @@ public class Strategy1 extends Strategy{
         }
         else {
             double averageCost = averageCostInHand(players[0].getHand(), handSize);
-            if ((handSize <= 2 || averageCost >= 3) && maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
-            else Character.MAGICIEN.ability(draw, players[0]);
+            if (handSize <= 2 || averageCost >= 3) {
+                if (maxHandIndex != 0) Character.MAGICIEN.ability(draw, players[0], players[maxHandIndex]);
+                else Character.MAGICIEN.ability(draw, players[0]);
+            }
         }
+        playDefault(players, draw);
     }
 
-   
-
-    private int playerWithBiggestHandIndex(Player[] players) {
+    public int playerWithBiggestHandIndex(Player[] players) {
         int maxHand = 0;
         int size = players.length;
         for (int i = 1; i < size; i++) {
@@ -133,17 +144,24 @@ public class Strategy1 extends Strategy{
     }
 
     public void king(Player[] players, Draw draw) {
+        playDefault(players, draw);
         Character.ROI.ability(players[0]);
     }
     public void bishop(Player[] players, Draw draw) {
+        playDefault(players, draw);
         Character.EVEQUE.ability(players[0]);
     }
     public void merchant(Player[] players, Draw draw) {
+        playDefault(players, draw);
         Character.MARCHAND.ability(players[0]);
     }
-    public void architect(Player[] players, Draw draw) { Character.ARCHITECTE.ability(draw, players[0]); }
+    public void architect(Player[] players, Draw draw) {
+        Character.ARCHITECTE.ability(draw, players[0]);
+        playDefault(players, draw);
+    }
 
     public void condottiere(Player[] players, Draw draw) {
+        playDefault(players, draw);
         int biggestCityIndex = 1;
         int biggestCitySize = players[1].getCity().size();
         for (int i = 2; i < players.length; i++) {
@@ -163,7 +181,7 @@ public class Strategy1 extends Strategy{
         }
     }
 
-    private int minCostInCity(City city) {
+    public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
         for (Constructions c : city.getCity()) {
             if (c.getValue() < minCost) minCost = c.getValue();
@@ -171,11 +189,15 @@ public class Strategy1 extends Strategy{
         return minCost;
     }
 
-    private int minCostInCityIndex(City city) {
+    public int minCostInCityIndex(City city) {
         int minCost = Integer.MAX_VALUE;
         int index = -1;
         for (int i = 0; i < city.size(); i++) {
-            if (city.get(i).getValue() < minCost) index = i;
+            int cityValue = city.get(i).getValue();
+            if (cityValue < minCost) {
+                index = i;
+                minCost = cityValue;
+            }
         }
         return index;
     }

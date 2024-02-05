@@ -102,7 +102,7 @@ public class Game {
             sortPlayersByCharacter();
             for (Player player : players) {
                 player.play(draw, getOpponents(player));
-                System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or et " + player.getHand().size() + " cartes dans sa main.\n");
+                System.out.println("Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or. \nLe joueur " + player.getNumber() + " a dans sa main : " + player.getHand() + "\n"); //+ " cartes dans sa main.\n");
             }
         }
         sortPlayersByPoints();

@@ -1,13 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
-import fr.cotedazur.univ.polytech.startingpoint.strategies.*;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +93,7 @@ public class Player implements Comparable<Player> {
             return;
         }
         System.out.println("Le joueur " + number + " est le " + character.getName());
+        strategy.play(players, draw);
 
         /*if (hand.isEmpty()) {
             hand.add(takeConstruction(draw));
@@ -106,12 +107,11 @@ public class Player implements Comparable<Player> {
         }
         buildConstruction();
         useAbility(draw, players);*/
-        strategy.play(players, draw);
     }
 
     public void drawConstruction(Draw d, int n) {
         ArrayList<Constructions> temp = takeConstructions(d, n);
-        hand.add(strategy.chooseCard(temp));
+        hand.add(strategy.chooseCard(temp, this));
         putBack(d, temp);
     }
 
@@ -135,6 +135,12 @@ public class Player implements Comparable<Player> {
         getHand().remove(c);
         gold -= c.getValue();
         System.out.println("Le joueur " + getNumber() + " construit " + c);
+    }
+
+    public void pick(Draw d, int n) {
+        if (n < 0) wonders.get(-n).power(this, d);
+        else if (n == 1) takeGold();
+        else drawConstruction(d, n);
     }
 
     /*public void useAbility(Draw draw, Player self, Player opponent, Constructions c, Player[] players){
@@ -210,7 +216,6 @@ public class Player implements Comparable<Player> {
     public void chooseCharacter(List<Character> characters, Player[] players){
         Character chosenCharacter = strategy.chooseCharacter(this, characters, players);
         this.setCharacter(chosenCharacter);
-        System.out.println("Le joueur " + number + " a choisi le personnage " + chosenCharacter);
         characters.remove(chosenCharacter);
     }
   

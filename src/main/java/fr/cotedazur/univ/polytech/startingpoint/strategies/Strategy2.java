@@ -31,7 +31,7 @@ public class Strategy2 extends Strategy{
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(List<Constructions> constructions) {
+    public Constructions chooseCard(List<Constructions> constructions, Player player) {
         return null;
     }
 

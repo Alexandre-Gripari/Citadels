@@ -41,10 +41,7 @@ public enum WondersPower {
     OBSERVATOIRE {
         @Override
         public void power(Player player, Draw d){
-            Constructions c1 = d.draw();
-            Constructions c2 = d.draw();
-            Constructions c3 = d.draw();
-            //player.getStrategy().choose(Arrays.asList(c1,c2,c3));
+            player.drawConstruction(d, 3);
         }
     },
 

@@ -24,4 +24,8 @@ public class Constructions extends Card {
         return this.name.equals(c.getName());
     }
 
+    public String toString() {
+        return super.toString() + "(" + value + ")";
+    }
+
 }
