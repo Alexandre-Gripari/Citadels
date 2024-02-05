@@ -70,8 +70,23 @@ public class Strategy1 extends Strategy{
     }
 
     public void play(Player[] players, Draw draw) {
+        for (Wonder wonder : players[0].getWonders()) {
+            switch (wonder.getName()) {
+                case "Laboratoire":
+                    capacityLaboratoire(players, draw);
+                    break;
+                case "Manufacture":
+                    capacityManufacture(players, draw);
+                    break;
+                case "Ecole de magie":
+                    capacityEcoleDeMagie(players);
+                    break;
+            }
+        }
         super.play(players, draw);
-
+        for (Wonder wonder : players[0].getWonders()) {
+            if (wonder.getName() == "Ecole de magie") wonder.setColor(Color.MERVEILLEUX);
+        }
     }
 
     public void playDefault(Player[] players, Draw draw) {
@@ -176,15 +191,17 @@ public class Strategy1 extends Strategy{
         if (biggestCitySize == 0) Character.CONDOTTIERE.ability(null, players[0], null); // On récupère juste l'or
         else {
             int consToDestructIndex = minCostInCityIndex(players[biggestCityIndex].getCity());
-            if (players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue())
+            if (players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue()) {
+                WondersPower.CIMETIERE.power(players[biggestCityIndex].getCity().get(consToDestructIndex), players);
                 Character.CONDOTTIERE.ability(players[biggestCityIndex].getCity().get(consToDestructIndex), players[0], players[biggestCityIndex]);
+            }
         }
     }
 
     public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
         for (Constructions c : city.getCity()) {
-            if (c.getValue() < minCost) minCost = c.getValue();
+            if (c.getValue() < minCost && c.getName() != "Donjon") minCost = c.getValue();
         }
         return minCost;
     }
@@ -194,11 +211,24 @@ public class Strategy1 extends Strategy{
         int index = -1;
         for (int i = 0; i < city.size(); i++) {
             int cityValue = city.get(i).getValue();
-            if (cityValue < minCost) {
+            if (cityValue < minCost && city.get(i).getName() != "Donjon") {
                 index = i;
                 minCost = cityValue;
             }
         }
         return index;
+    }
+
+    public void capacityLaboratoire(Player[] players, Draw draw) {
+        Constructions max = players[0].getHand().max();
+        if (max.getValue() >= 4) WondersPower.LABORATOIRE.power(max, players[0], draw);
+    }
+
+    public void capacityManufacture(Player[] players, Draw draw) {
+        if (players[0].getGold() >= 3 && players[0].getHand().size() == 0) WondersPower.MANUFACTURE.power(players[0], draw);
+    }
+
+    public void capacityEcoleDeMagie(Player[] players) {
+        if (players[0].getCharacter().getColor() != Color.NEUTRE) WondersPower.ECOLE_DE_MAGIE.power(players[0], players[0].getCharacter().getColor());
     }
 }

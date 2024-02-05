@@ -56,32 +56,44 @@ class WondersPowerTest {
 
     }
 
-    City playerWithEcoleDeMagieCity = new City();
-    Hand playerWithEcoleDeMagieHand = new Hand();
-    Player playerWithEcoleDeMagie = new Player(1,  2, playerWithEcoleDeMagieHand, playerWithEcoleDeMagieCity);
-    Wonder edm = new Wonder("Ecole de magie", 6, WondersPower.ECOLE_DE_MAGIE);
 
     @Test
     void ecoleDeMagieTest() {
+        City playerWithEcoleDeMagieCity = new City();
+        Hand playerWithEcoleDeMagieHand = new Hand();
+        Wonder edm = new Wonder("Ecole de magie", 6, WondersPower.ECOLE_DE_MAGIE);
+        playerWithEcoleDeMagieCity.add(edm);
+        Player playerWithEcoleDeMagie = new Player(0,  2, playerWithEcoleDeMagieHand, playerWithEcoleDeMagieCity);
+        playerWithEcoleDeMagie.getWonders().add(edm);
+
+        Draw d = new Draw();
+        d.addXConstructions(new Constructions("testEDM", Color.MERVEILLEUX, 100), 100);
+
         assertEquals(2, playerWithEcoleDeMagie.getGold());
+
         playerWithEcoleDeMagie.setCharacter(Character.ROI);
-        edm.getWondersPower().power(playerWithEcoleDeMagie);
+        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie}, d);
         assertEquals(3, playerWithEcoleDeMagie.getGold());
+
         playerWithEcoleDeMagie.setCharacter(Character.EVEQUE);
-        edm.getWondersPower().power(playerWithEcoleDeMagie);
-        assertEquals(4, playerWithEcoleDeMagie.getGold());
+        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie}, d);
+        assertEquals(6, playerWithEcoleDeMagie.getGold());
+
         playerWithEcoleDeMagie.setCharacter(Character.MARCHAND);
-        edm.getWondersPower().power(playerWithEcoleDeMagie);
-        assertEquals(5, playerWithEcoleDeMagie.getGold());
+        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie}, d);
+        assertEquals(10, playerWithEcoleDeMagie.getGold());
+
         playerWithEcoleDeMagie.setCharacter(Character.CONDOTTIERE);
-        edm.getWondersPower().power(playerWithEcoleDeMagie);
-        assertEquals(6, playerWithEcoleDeMagie.getGold());
+        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie, player1}, d);
+        assertEquals(13, playerWithEcoleDeMagie.getGold());
+
         playerWithEcoleDeMagie.setCharacter(Character.VOLEUR);
-        edm.getWondersPower().power(playerWithEcoleDeMagie);
-        assertEquals(6, playerWithEcoleDeMagie.getGold());
+        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie}, d);
+        assertEquals(15, playerWithEcoleDeMagie.getGold());
+
         playerWithEcoleDeMagie.setCharacter(Character.MAGICIEN);
-        edm.getWondersPower().power(playerWithEcoleDeMagie);
-        assertEquals(6, playerWithEcoleDeMagie.getGold());
+        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie}, d);
+        assertEquals(17, playerWithEcoleDeMagie.getGold());
     }
 
     @Test
