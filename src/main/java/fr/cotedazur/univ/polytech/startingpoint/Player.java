@@ -12,8 +12,14 @@ import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 
 public class Player implements Comparable<Player> {
+    private int numberOfVictory= 0;
+    private int numberOfDefeat= 0;
+    private int numberOfDraw = 0;
+    private int cumulatedScore = 0;
     private int number;
     private int gold;
     private Hand hand;
@@ -23,6 +29,8 @@ public class Player implements Comparable<Player> {
     private Strategy strategy;
 
     private boolean isDead=false;
+
+    private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
 
     public Player(int i, int gold, Hand hand, City city) {
         this(i,gold,hand,city,new Strategy1("Agressif"));
@@ -232,7 +240,7 @@ public class Player implements Comparable<Player> {
             hand.add(c);
         }
     }
-public void discardConstruction(Constructions c, Draw d){
+    public void discardConstruction(Constructions c, Draw d){
         d.add(c);
         hand.remove(c);
     }
@@ -243,6 +251,51 @@ public void discardConstruction(Constructions c, Draw d){
 
     public void destroyConstruction(Constructions c) {
         city.remove(c);
+    }
+
+    public int getNumberOfVictory() {
+        return numberOfVictory;
+    }
+
+    public void setNumberOfVictory(int numberOfVictory) {
+        this.numberOfVictory = numberOfVictory;
+    }
+
+    public int getNumberOfDefeat() {
+        return numberOfDefeat;
+    }
+
+    public void setNumberOfDefeat(int numberOfDefeat) {
+        this.numberOfDefeat = numberOfDefeat;
+    }
+
+    public int getNumberOfDraw() {
+        return numberOfDraw;
+    }
+
+    public void setNumberOfDraw(int numberOfDraw) {
+        this.numberOfDraw = numberOfDraw;
+    }
+
+    public int getCumulatedScore() {
+        return cumulatedScore;
+    }
+
+    public void setCumulatedScore(int cumulatedScore) {
+        this.cumulatedScore = cumulatedScore;
+    }
+
+    public double getAverageScore() {
+        return (double) getCumulatedScore() /1000;
+    }
+
+    public void reset(){
+        this.hand = new Hand();
+        this.city = new City();
+        this.character = null;
+        this.wonders = new ArrayList<>();
+        this.isDead = false;
+        this.gold = 2;
     }
 }
 

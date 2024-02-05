@@ -119,4 +119,34 @@ class GameTest {
         assertEquals(p3, opponents2[2]);
         assertEquals(p4, opponents2[3]);
     }
+
+    /*@Test
+    void testGameReset(){
+        Player player1 = new Player(1, new Hand());
+        Player player2 = new Player(2, new Hand());
+        Player player3 = new Player(3, new Hand());
+        Player player4 = new Player(4, new Hand());
+
+        Game game = new Game(new Player[]{player1, player2, player3, player4});
+        game.init();
+        game.play();
+        assertTrue(game.isFinished());
+        game.resetGame();
+        assertFalse(game.isFinished());
+        assertEquals(0, game.getPlayers()[0].getCity().size());
+        assertEquals(0, game.getPlayers()[1].getCity().size());
+        assertEquals(0, game.getPlayers()[2].getCity().size());
+        assertEquals(0, game.getPlayers()[3].getCity().size());
+        assertEquals(2, game.getPlayers()[0].getGold());
+        assertEquals(2, game.getPlayers()[1].getGold());
+        assertEquals(2, game.getPlayers()[2].getGold());
+        assertEquals(2, game.getPlayers()[3].getGold());
+        assertEquals(0, game.getPlayers()[0].getHand().size());
+        assertEquals(0, game.getPlayers()[1].getHand().size());
+        assertEquals(0, game.getPlayers()[2].getHand().size());
+        assertEquals(0, game.getPlayers()[3].getHand().size());
+
+        assertEquals(0, game.getNbTurn());
+
+    }*/
 }

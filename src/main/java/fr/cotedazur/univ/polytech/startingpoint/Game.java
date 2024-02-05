@@ -6,6 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 
 import java.util.*;
 
+
 public class Game {
 
     private Player[] players;
@@ -18,7 +19,6 @@ public class Game {
         this.players = players;
         this.nbTurn = 0;
         this.draw = new Draw();
-
     }
 
     public void init() {
@@ -113,6 +113,20 @@ public class Game {
 
     }
 
+    public void calculateStats(){
+        int refValue = players[players.length-1].getCity().cityValue();
+        for (int i = 0; i <= players.length-2; i++) {
+            players[i].setCumulatedScore(players[i].getCumulatedScore() + players[i].getCity().cityValue());
+            if (players[i].getCity().cityValue() == refValue) players[i].setNumberOfDraw(players[i].getNumberOfDraw() + 1);
+            else players[i].setNumberOfDefeat(players[i].getNumberOfDefeat() + 1);
+        }
+        if (refValue == players[players.length-2].getCity().cityValue()) players[players.length-1].setNumberOfDraw(players[players.length-1].getNumberOfDraw() + 1);
+        else players[players.length-1].setNumberOfVictory(players[players.length-1].getNumberOfVictory() + 1);
+        players[players.length-1].setCumulatedScore(players[players.length-1].getCumulatedScore() + players[players.length-1].getCity().cityValue());
+
+
+    }
+
     public void sortPlayersByPoints(){
         Arrays.sort(players);
     }
@@ -179,6 +193,13 @@ public class Game {
             players[players.length-1] = p;
             reorganizePlayers();
         }
+    }
+
+    public void resetGame(){
+        for (Player player : players) {
+            player.reset();
+        }
+        nbTurn = 0;
     }
 
 
