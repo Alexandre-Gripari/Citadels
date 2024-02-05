@@ -50,7 +50,7 @@ public class Strategy1 extends Strategy{
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(ArrayList<Constructions> constructions, Player player) {
+    public Constructions chooseCard(List<Constructions> constructions, Player player) {
         Constructions c = new Constructions("null", Color.NEUTRE, 10);
 
         for (Constructions construction : constructions) {
