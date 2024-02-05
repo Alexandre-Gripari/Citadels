@@ -211,14 +211,15 @@ class CharacterTest {
         condottiere.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         List<Character> CharacterList = new ArrayList<>(List.of(Character.values()));
-        assassin.chooseCharacter(CharacterList);
-        thief.chooseCharacter(CharacterList);
-        magician.chooseCharacter(CharacterList);
-        king.chooseCharacter(CharacterList);
-        bishop.chooseCharacter(CharacterList);
-        merchant.chooseCharacter(CharacterList);
-        architect.chooseCharacter(CharacterList);
-        condottiere.chooseCharacter(CharacterList);
+        assassin.setCharacter(Character.ASSASSIN);
+        king.setCharacter(Character.ROI);
+        bishop.setCharacter(Character.EVEQUE);
+        merchant.setCharacter(Character.MARCHAND);
+        architect.setCharacter(Character.ARCHITECTE);
+        thief.setCharacter(Character.VOLEUR);
+        magician.setCharacter(Character.MAGICIEN);
+        condottiere.setCharacter(Character.CONDOTTIERE);
+
 
     }
 

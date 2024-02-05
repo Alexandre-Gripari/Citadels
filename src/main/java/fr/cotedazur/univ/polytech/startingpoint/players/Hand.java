@@ -50,10 +50,10 @@ public class Hand{ // extends Arraylist ?
     }
 
     public Constructions min() {
-        Constructions c = new Constructions("null", null, -1);
+        Constructions c = new Constructions("null", null, 10);
 
         for (Constructions construction : hand)
-            if (c.getValue() <= construction.getValue()) c = construction;
+            if (c.getValue() >= construction.getValue()) c = construction;
 
         return c;
     }
