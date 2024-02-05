@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
@@ -131,14 +132,14 @@ public class Player implements Comparable<Player> {
     public void buildConstruction(Constructions c){
         if (c == null) return;
         getCity().add(c);
-        if (c instanceof Wonder) getWonders().add((Wonder) c);
+        if (c.getColor().equals(Color.MERVEILLEUX)) getWonders().add((Wonder) c);
         getHand().remove(c);
         gold -= c.getValue();
         System.out.println("Le joueur " + getNumber() + " construit " + c);
     }
 
     public void pick(Draw d, int n) {
-        if (n < 0) wonders.get(-n).power(this, d);
+        if (n <= 0) wonders.get(-n).power(this, d);
         else if (n == 1) takeGold();
         else drawConstruction(d, n);
     }
