@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -75,10 +74,10 @@ class StrategyTest {
     Hand hand2;
     Player p11;
     Player p22;
+
     Draw draw;
 
     Strategy strat = new StrategyEco("oui");
-       
 
     @BeforeEach
     void init() {
@@ -89,6 +88,12 @@ class StrategyTest {
         p11.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p11.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
         p11.getCity().add(new Constructions("Gros château", Color.NOBLE, 284));
+        p11.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p11.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        p11.getCity().add(new Constructions("Big château", Color.NOBLE, 284));
+        p11.getCity().add(new Constructions("Big église", Color.RELIGIEUX, 284));
+        p11.getCity().add(new Constructions("Giga base militaire", Color.SOLDATESQUE, 284));
+        p11.getCity().add(new Constructions("Hypermarché", Color.COMMERCIAL, 284));
 
         draw = new Draw();
         draw.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
@@ -100,16 +105,27 @@ class StrategyTest {
         hand2 = new Hand();
 
         p22 = new Player(2, 1, hand2, new City());
-        p22.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
-        p22.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
-        p22.chooseCharacter(new ArrayList<>(Arrays.asList(Character.values())), new Player[]{p11, p22});
+        p22.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p22.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        p22.getCity().add(new Constructions("Big château", Color.NOBLE, 284));
+        p22.getCity().add(new Constructions("Big église", Color.COMMERCIAL, 284));
+
+
+
     }
 
     @Test
     void mostProfitableCharactersTest() {
+
         assertEquals(Character.ROI,strat.mostProfitableCharacters(p11).get(0));
         assertEquals(Character.MARCHAND,strat.mostProfitableCharacters(p11).get(1));
         assertEquals(Character.EVEQUE,strat.mostProfitableCharacters(p11).get(2));
         assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p11).get(3));
+
+        assertEquals(Character.ROI,strat.mostProfitableCharacters(p22).get(1));
+        assertEquals(Character.MARCHAND,strat.mostProfitableCharacters(p22).get(0));
+        assertEquals(Character.EVEQUE,strat.mostProfitableCharacters(p22).get(2));
+        assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p22).get(3));
+
     }
 }

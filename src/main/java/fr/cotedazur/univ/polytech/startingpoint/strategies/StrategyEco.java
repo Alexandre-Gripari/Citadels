@@ -23,26 +23,29 @@ public class StrategyEco extends Strategy{
 
     @Override
     public List<Character> getCharacterPriority(Player[] players) {
-        return null;
+        List<Character> characters = new ArrayList<>();
+        characters.add(Character.VOLEUR);
+        characters.addAll(mostProfitableCharacters(players[0]));
+        characters.addAll(List.of(Character.ARCHITECTE, Character.ASSASSIN, Character.MAGICIEN));
+        return  characters;
     }
 
+
     public Character chooseCharacter(Player player, List<Character> characters, Player[] players){
-        int max=0;
-        super.chooseCharacter(player, characters, players);
-        // ne pas le mettre dans cette fonction
-        for (Constructions c: player.getCity().getCity() ) {
-            max = Math.max(max, c.getValue());
+        List<Character> characterList = new ArrayList<>();
+        characterList=getCharacterPriority(players);
+        for (Character c : characterList) {
+            if (characters.contains(c)) {
+                return c;
+            }
         }
-        if(player.getGold()<max-2) {
-            List<Character> characterList = new ArrayList<>(List.of(Character.VOLEUR));
-        }
-        return null;
+        return Character.ROI;
     }
 
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(List<Constructions> Constructions, Player player) {
+    public Constructions chooseCard(List<Constructions> constructions, Player player) {
         return null;
     }
 
@@ -59,6 +62,4 @@ public class StrategyEco extends Strategy{
     public void architect(Player[] players, Draw draw) {return;}
     public void condottiere(Player[] players, Draw draw) {return;}
 }
-
-
 
