@@ -216,7 +216,9 @@ public class Player implements Comparable<Player> {
     }
 
     @Override
-    public int compareTo(Player other){ return this.score - other.score;}
+    public int compareTo(Player other){
+        return this.getCity().compareTo(other.getCity());
+    }
 
     public void draw(Draw d, int nb){
         for(int i=0;i<nb;i++){

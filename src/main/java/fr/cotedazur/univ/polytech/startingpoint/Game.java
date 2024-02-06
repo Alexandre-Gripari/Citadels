@@ -145,7 +145,7 @@ public class Game {
     }
 
     public void sortPlayersByPoints(){
-        Arrays.sort(players);
+        Arrays.sort(players, Comparator.comparingInt(Player::getScore));
     }
 
     public Player[] getOpponents(Player player) {
