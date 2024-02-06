@@ -44,9 +44,6 @@ public class Strategy1 extends Strategy{
         return characterPriority;
     }
 
-
-
-
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
@@ -96,25 +93,14 @@ public class Strategy1 extends Strategy{
     // Le joueur cible l'architecte en tant qu'assassin
     public void assassin(Player[] players, Draw draw) {
         playDefault(players, draw);
-        int size = players.length;
-        for (int i = 1; i < size; i++) {
-            if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.ASSASSIN.ability(players[i]);
-                break;
-            }
-        }
+        Character.ASSASSIN.ability(Character.ARCHITECTE, players);
     }
 
     // Le joueur cible l'architecte en tant que voleur
     public void thief(Player[] players, Draw draw) {
         playDefault(players, draw);
-        int size = players.length;
-        for (int i = 1; i < size; i++) {
-            if (players[i].getCharacter().equals(Character.ARCHITECTE) && !players[i].isDead()) {
-                Character.VOLEUR.ability(players[0], players[i]);
-                break;
-            }
-        }
+        if (!Character.ARCHITECTE.isDead(players)) Character.VOLEUR.ability(Character.ARCHITECTE, players);
+        else Character.VOLEUR.ability(Character.ROI, players);
     }
 
     // Le joueur échange sa main avec un joueur ayant plus de carte que lui sinon la pioche si sa main est trop vide et/ou trop coûteuse

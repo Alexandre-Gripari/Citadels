@@ -43,7 +43,7 @@ class CharacterTest {
     }
     @Test
     void assassinability(){
-        p1.getCharacter().ability(p2);
+        Character.ASSASSIN.ability(Character.VOLEUR, new Player[]{p1, p2,p3});
         assertTrue(p2.isDead());
     }
     @Test
@@ -51,10 +51,10 @@ class CharacterTest {
         p1.setGold(10);
         p2.setGold(10);
         p3.setGold(10);
-        Character.VOLEUR.ability(p2, p3);
+        Character.VOLEUR.ability(Character.MARCHAND, new Player[]{p2,p1, p3});
         assertEquals(0, p3.getGold());
         assertEquals(20, p2.getGold());
-        Character.VOLEUR.ability(p2, p1);
+        Character.VOLEUR.ability(Character.ASSASSIN, new Player[]{p2,p3, p1});
         assertEquals(20, p2.getGold());
         assertEquals(10, p1.getGold());
     }

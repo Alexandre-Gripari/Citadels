@@ -181,12 +181,12 @@ class Strategy1Test {
         p1.setGold(2);
         p2.setGold(2);
 
-        Character.ASSASSIN.ability(p2);
+        Character.ASSASSIN.ability(Character.ARCHITECTE, new Player[]{p1, p2,p3});
 
         assertEquals(2, p1.getGold());
         assertEquals(2, p2.getGold());
         strat.thief(players2, draw);
-        assertEquals(2, p1.getGold());
+        assertEquals(4, p1.getGold());
         assertEquals(2, p2.getGold());
     }
 
