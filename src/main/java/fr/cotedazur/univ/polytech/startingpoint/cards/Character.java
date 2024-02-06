@@ -2,15 +2,18 @@ package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+
+import java.util.logging.Level;
 
 public enum Character{
 
     ASSASSIN("Assassin", Color.NEUTRE, 1){
         @Override
         public void ability(Player player){
-            System.out.println("Le joueur a assasiné " + player.getCharacter());
+            MyLogger.log(Level.INFO, "Le joueur a assasiné " + player.getCharacter());
             player.kill();
         }
     },
@@ -19,7 +22,7 @@ public enum Character{
         @Override
         public void ability(Player ... players){
             if(!players[1].getCharacter().equals(ASSASSIN) && !players[1].isDead()) {
-                System.out.println("Le joueur a volé" + players[1].getCharacter());
+                MyLogger.log(Level.INFO, "Le joueur a volé" + players[1].getCharacter());
                 int butin = players[1].getGold();
                 players[1].setGold(0);
                 players[0].addGold(butin);
@@ -39,7 +42,7 @@ public enum Character{
                     hand.remove(0);
                 }
                 players[0].draw(draw, size);
-                System.out.println("Le joueur " + players[0].getNumber() + " a échangé sa main avec la pioche");
+                MyLogger.log(Level.INFO, "Le joueur " + players[0].getNumber() + " a échangé sa main avec la pioche");
             }
             else {
                 Hand hand2 = players[1].getHand();
@@ -47,7 +50,7 @@ public enum Character{
                 tmp.setHand(hand);
                 hand.setHand(hand2);
                 hand2.setHand(tmp);
-                System.out.println("Le joueur " + players[0].getNumber() + " a échangé sa main avec le joueur " + players[1].getNumber());
+                MyLogger.log(Level.INFO, "Le joueur " + players[0].getNumber() + " a échangé sa main avec le joueur " + players[1].getNumber());
             }
        }
     },
@@ -60,7 +63,7 @@ public enum Character{
                 if (player.getCity().get(i).getColor() == this.getColor()) nbOfNoblessConstructions++;
             }
             player.addGold(nbOfNoblessConstructions);
-            System.out.println("Le joueur " + player.getNumber() + " gagne " + nbOfNoblessConstructions +" d'or grâce à la capacité du Roi");
+            MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " gagne " + nbOfNoblessConstructions +" d'or grâce à la capacité du Roi");
         }
     },
   
@@ -72,7 +75,7 @@ public enum Character{
                 if (player.getCity().get(i).getColor() == this.getColor()) nbOfReligiousConstructions++;
             }
             player.addGold(nbOfReligiousConstructions);
-            System.out.println("Le joueur " + player.getNumber() + " gagne " + nbOfReligiousConstructions +" d'or grâce à la capacité de l'évêque");
+            MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " gagne " + nbOfReligiousConstructions +" d'or grâce à la capacité de l'évêque");
         } 
     },
 
@@ -84,7 +87,7 @@ public enum Character{
                 if (player.getCity().get(i).getColor() == Color.COMMERCIAL) nbOfCommercialConstructions++;
             }
             player.addGold(nbOfCommercialConstructions);
-            System.out.println("Le joueur " + player.getNumber() + " gagne " + nbOfCommercialConstructions +" d'or grâce à la capacité du marchand");
+            MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " gagne " + nbOfCommercialConstructions +" d'or grâce à la capacité du marchand");
         }
     },
 
@@ -93,7 +96,7 @@ public enum Character{
         public void ability(Draw draw, Player ... players){
             //players = reorganizePlayers(ARCHITECTE, players);
             players[0].draw(draw,2);
-            System.out.println("Le joueur " + players[0].getNumber() + " a pioché 2 cartes grace au pouvoir de l'architecte");
+            MyLogger.log(Level.INFO, "Le joueur " + players[0].getNumber() + " a pioché 2 cartes grace au pouvoir de l'architecte");
         }
     },
 
@@ -104,7 +107,7 @@ public enum Character{
             if (c != null && !c.getName().equals("Donjon")) {
                 opponent.destroyConstruction(c);
                 self.addGold(-c.getValue()+1);
-                System.out.println("Le joueur " + self.getNumber() + " a détruit la construction " + c.getName() + " du joueur " + opponent.getNumber());
+                MyLogger.log(Level.INFO, "Le joueur " + self.getNumber() + " a détruit la construction " + c.getName() + " du joueur " + opponent.getNumber());
             }
             for (Constructions co : self.getCity().getCity()) {
                 if (co.getColor() == Color.SOLDATESQUE) {
@@ -112,7 +115,7 @@ public enum Character{
                 }
             }
             self.addGold(gold);
-            System.out.println("Le joueur " + self.getNumber() + " gagne " + gold + " d'or grâce à la capacité du condotière");
+            MyLogger.log(Level.INFO, "Le joueur " + self.getNumber() + " gagne " + gold + " d'or grâce à la capacité du condotière");
             return c;
         }
     };

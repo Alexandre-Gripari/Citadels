@@ -1,9 +1,12 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.*;
+
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +23,7 @@ class WondersPowerTest {
 
     @BeforeEach
     void setUp() {
+        MyLogger.setLogLevel(Level.OFF);
         player1.getHand().add(wonder);
         player1.getHand().add(construction);
         player1.addGold(10);

@@ -8,6 +8,8 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Level;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CityTest {
@@ -37,6 +39,7 @@ class CityTest {
 
     @BeforeEach
     void init() {
+        MyLogger.setLogLevel(Level.OFF);
         city1.add(c1);
         city1.add(c2);
         city1.add(c3);

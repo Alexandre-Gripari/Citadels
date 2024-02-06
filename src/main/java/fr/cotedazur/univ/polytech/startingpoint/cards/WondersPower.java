@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 
+
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -41,10 +42,7 @@ public enum WondersPower {
     OBSERVATOIRE {
         @Override
         public void power(Player player, Draw d){
-            Constructions c1 = d.draw();
-            Constructions c2 = d.draw();
-            Constructions c3 = d.draw();
-            //player.getStrategy().choose(Arrays.asList(c1,c2,c3));
+            player.drawConstruction(d, 3);
         }
     },
 
@@ -73,7 +71,6 @@ public enum WondersPower {
             Character character = player.getCharacter();
             if (character == Character.ROI || character == Character.EVEQUE || character == Character.MARCHAND || character == Character.CONDOTTIERE) {
                 player.addGold(1);
-                System.out.println("Le joueur " + player +" à gagné une pièce grâce à l'école de magie");
             }
         }
     },
