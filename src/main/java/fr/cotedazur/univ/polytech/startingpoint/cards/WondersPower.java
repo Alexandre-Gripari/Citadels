@@ -68,7 +68,7 @@ public enum WondersPower {
         @Override
         public void power(Player player, Color color) {
             for (Wonder wonder : player.getWonders()) {
-                if (wonder.getName() == "Ecole de magie") wonder.setColor(color);
+                if (wonder.getName().equals("Ecole de magie")) wonder.setColor(color);
             }
         }
     },

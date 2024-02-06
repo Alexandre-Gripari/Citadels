@@ -12,8 +12,6 @@ import java.util.List;
 
 public class Strategy1 extends Strategy{
 
-    @Override
-    public void useAbility(Draw draw, Player[] players){return;}
     public Strategy1(String description) {
         super(description);
     }
@@ -43,11 +41,6 @@ public class Strategy1 extends Strategy{
         if (!characterPriority.contains(Character.MAGICIEN)) characterPriority.add(Character.MAGICIEN);
         return characterPriority;
     }
-
-
-
-
-    public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
     public Constructions chooseCard(List<Constructions> constructions, Player player) {
@@ -81,11 +74,13 @@ public class Strategy1 extends Strategy{
                 case "Ecole de magie":
                     capacityEcoleDeMagie(players);
                     break;
+                default:
+                    break;
             }
         }
         super.play(players, draw);
         for (Wonder wonder : players[0].getWonders()) {
-            if (wonder.getName() == "Ecole de magie") wonder.setColor(Color.MERVEILLEUX);
+            if (wonder.getName().equals("Ecole de magie")) wonder.setColor(Color.MERVEILLEUX);
         }
     }
 
@@ -173,6 +168,8 @@ public class Strategy1 extends Strategy{
     public void architect(Player[] players, Draw draw) {
         Character.ARCHITECTE.ability(draw, players[0]);
         playDefault(players, draw);
+        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
+        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
     }
 
     public void condottiere(Player[] players, Draw draw) {
@@ -225,7 +222,7 @@ public class Strategy1 extends Strategy{
     }
 
     public void capacityManufacture(Player[] players, Draw draw) {
-        if (players[0].getGold() >= 3 && players[0].getHand().size() == 0) WondersPower.MANUFACTURE.power(players[0], draw);
+        if (players[0].getGold() >= 3 && players[0].getHand().isEmpty()) WondersPower.MANUFACTURE.power(players[0], draw);
     }
 
     public void capacityEcoleDeMagie(Player[] players) {
