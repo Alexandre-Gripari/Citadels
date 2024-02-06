@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 
+
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -17,7 +18,7 @@ public enum WondersPower {
 
     DONJON {
         @Override
-        public void power(){return;}
+        public void power(){return;} // dans l'abilité de la condotière
     },
 
     LABORATOIRE {
@@ -32,9 +33,7 @@ public enum WondersPower {
         @Override
         public void power(Player player, Draw d){
             if (player.getGold() >= 3) {
-                player.getHand().add(d.draw());
-                player.getHand().add(d.draw());
-                player.getHand().add(d.draw());
+                player.draw(d,3);
                 player.addGold(-3);
             }
         }
@@ -43,17 +42,7 @@ public enum WondersPower {
     OBSERVATOIRE {
         @Override
         public void power(Player player, Draw d){
-            Constructions c1 = d.draw();
-            Constructions c2 = player.getHand().get(player.getHand().size()-1);
-            if (c1.getValue() <= c2.getValue()){
-                d.add(c2);
-                System.out.println("Le joueur " + player.getNumber() + " a pioché " + c1);
-                player.getHand().set(player.getHand().size()-1, c1);
-            }
-            else {
-                d.add(c1);
-                System.out.println("Le joueur " + player.getNumber() + " a pioché " + c2);
-            }
+            player.drawConstruction(d, 3);
         }
     },
 
@@ -72,8 +61,7 @@ public enum WondersPower {
     BIBLIOTHEQUE {
         @Override
         public void power(Player p, Draw d){
-            p.getHand().add(d.draw());
-            p.getHand().add(d.draw());
+            p.draw(d,2);
         }
     },
 
@@ -83,7 +71,6 @@ public enum WondersPower {
             int numberOfCharacter = player.getCharacter().getNumber();
             if (numberOfCharacter == 4 || numberOfCharacter == 5 || numberOfCharacter == 6 || numberOfCharacter == 8) {
                 player.addGold(1);
-                System.out.println("Le joueur " + player +" à gagné une pièce grâce à l'école de magie");
             }
         }
     },

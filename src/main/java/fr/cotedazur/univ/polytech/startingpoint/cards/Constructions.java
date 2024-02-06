@@ -1,5 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+
 public class Constructions extends Card {
 
     private int value;
@@ -22,5 +24,8 @@ public class Constructions extends Card {
         return this.name.equals(c.getName());
     }
 
+    public String toString() {
+        return super.toString() + "(" + value + ")";
+    }
 
 }

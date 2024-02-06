@@ -2,24 +2,40 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
-import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Player implements Comparable<Player> {
+    private int numberOfVictory= 0;
+    private int numberOfDefeat= 0;
+    private int numberOfDraw = 0;
+    private int cumulatedScore = 0;
     private int number;
     private int gold;
     private Hand hand;
     private City city;
     private Character character;
     private List<Wonder> wonders = new ArrayList<>();
+    private Strategy strategy;
 
     private boolean isDead=false;
+
+    private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
+
+    public Player(int i, int gold, Hand hand, City city) {
+        this(i,gold,hand,city,new Strategy1("Agressif"));
+    }
 
     public void kill() {
         this.isDead = true;
@@ -35,8 +51,12 @@ public class Player implements Comparable<Player> {
 
     public void resurrect(){this.isDead = false;}
 
+    public Player(int number, int gold, Hand hand){
+        this(number, gold, hand, new City(), new Strategy1("Agressif"));
+    }
+
     public Player(int number, Hand hand){
-        this(number, 2, hand, new City());
+        this(number, 2, hand, new City(), new Strategy1("Agressif"));
     }
 
     public void setGold(int gold) {
@@ -44,11 +64,12 @@ public class Player implements Comparable<Player> {
     }
 
     /* Constructeur utile aux tests */
-    public Player(int number, int gold, Hand hand, City city){
+    public Player(int number, int gold, Hand hand, City city, Strategy strategy){
         this.number = number;
         this.gold = gold;
         this.hand = hand;
         this.city = city;
+        this.strategy = strategy;
     }
 
 
@@ -81,8 +102,10 @@ public class Player implements Comparable<Player> {
             resurrect();
             return;
         }
-        System.out.println("Le joueur " + number + " est le " + character.getName());
-        if (hand.isEmpty()) {
+        MyLogger.log(Level.INFO, "Le joueur " + number + " est le " + character.getName());
+        strategy.play(players, draw);
+
+        /*if (hand.isEmpty()) {
             hand.add(takeConstruction(draw));
             for (Wonder w : getWonders()) {
                 if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(draw, w.getWondersPower());
@@ -93,78 +116,91 @@ public class Player implements Comparable<Player> {
             if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(draw, w.getWondersPower());
         }
         buildConstruction();
-        useAbility(draw, players);
+        useAbility(draw, players);*/
     }
 
+    public void drawConstruction(Draw d, int n) {
+        ArrayList<Constructions> temp = takeConstructions(d, n);
+        hand.add(strategy.chooseCard(temp, this));
+        putBack(d, temp);
+    }
 
     /* Renvoie la construction (quartier) la moins chère entre les 2 en haut de la pioche */
-    public Constructions takeConstruction(Draw d){
-        Constructions c1 = d.draw();
-        Constructions c2 = d.draw();
-        if (c1.getValue() <= c2.getValue()){
-            d.add(c2);
-            System.out.println("Le joueur " + number + " a pioché " + c1);
-            return c1;
-        }
-        else {
-            d.add(c1);
-            System.out.println("Le joueur " + number + " a pioché " + c2);
-            return c2;
-        }
+    public ArrayList<Constructions> takeConstructions(Draw d, int n) {
+        ArrayList<Constructions> tab = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            tab.add(d.draw());
+        return tab;
     }
 
-    public void buildConstruction(){
-        for (int i=0; i<hand.size(); i++){
-            int valueOfConstruction = hand.get(i).getValue();
-            if (gold >= valueOfConstruction){
-                System.out.println("Le joueur " + number + " construit " + hand.get(i));
-                gold -= valueOfConstruction;
-                if (hand.get(i) instanceof Wonder) wonders.add((Wonder) hand.get(i));
-                city.add(hand.get(i));
-                hand.remove(i);
-                return;
-            }
-        }
+    public void putBack(Draw d, ArrayList<Constructions> constructions) {
+        for (Constructions construction : constructions)
+            d.add(construction);
     }
 
-    public void useAbility(Draw draw, Player ... players) {
+    public void buildConstruction(Constructions c){
+        if (c == null) return;
+        getCity().add(c);
+        if (c.getColor().equals(Color.MERVEILLEUX)) getWonders().add((Wonder) c);
+        getHand().remove(c);
+        gold -= c.getValue();
+        MyLogger.log(Level.INFO, "Le joueur " + getNumber() + " construit " + c);
+    }
+
+    public void pick(Draw d, int n) {
+        if (n <= 0) wonders.get(-n).power(this, d);
+        else if (n == 1) takeGold();
+        else drawConstruction(d, n);
+    }
+
+    /*public void useAbility(Draw draw, Player self, Player opponent, Constructions c, Player[] players){
         switch (character.getNumber()){
             case 1:
-                character.ability(players);
+                character.ability(opponent);
                 break;
             case 2:
-                character.ability(players[0], players[1]);
+                character.ability(self, opponent);
                 break;
-            case 3, 7:
-                character.ability(draw, players);
+            case 3:
+                if (opponent == null) character.ability(self);
+                else character.ability(self, opponent);
                 break;
             case 4, 5, 6:
                 character.ability(this);
                 break;
+            case 7:
+                character.ability(draw, self);
+                break;
             case 8:
-                Constructions destroyedCons = character.ability(0, players);
+                Constructions destroyedCons = character.ability(c ,self, opponent);
                 if (destroyedCons != null) WondersPower.CIMETIERE.power(destroyedCons, players);
                 break;
         }
     }
 
-    public void useWonder(Draw draw, WondersPower wonderPower) {
-        switch (wonderPower.name()) {
-            case "LABORATOIRE":
-                if (!this.getHand().isEmpty()) wonderPower.power(this.getHand().get(0), this, draw);
+    public void useWonder(Wonder wonder, Player player, Draw d, Constructions c ) {
+        switch (wonder.getName()){
+            case "Laboratoire":
+                WondersPower.LABORATOIRE.power(c, player, d);
                 break;
-            case "MANUFACTURE", "OBSERVATOIRE", "BIBLIOTHEQUE":
-                wonderPower.power(this, draw);
+            case "Manufacture":
+                WondersPower.MANUFACTURE.power(player, d);
                 break;
-            case "ECOLE_DE_MAGIE":
-                wonderPower.power(this);
+            case "Observatoire":
+                WondersPower.OBSERVATOIRE.power(player, d);
+                break;
+            case "Bibliothèque":
+                WondersPower.BIBLIOTHEQUE.power(player, d);
+                break;
+            case "Ecole de magie":
+                WondersPower.ECOLE_DE_MAGIE.power(player);
                 break;
         }
-    }
+    }*/
 
     public void takeGold(){
         gold += 2;
-        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
+        MyLogger.log(Level.INFO, "Le joueur " + number + " a pris 2 pièces d'or");
     }
 
     public void addGold(int gold) {
@@ -187,12 +223,12 @@ public class Player implements Comparable<Player> {
         }
     }
 
-    public void chooseCharacter(List<Character> characters){
-        character = characters.get(0);
-        characters.remove(0);
-        //System.out.println("Le joueur " + number + " a choisi le personnage " + character.getName());
+    public void chooseCharacter(List<Character> characters, Player[] players){
+        Character chosenCharacter = strategy.chooseCharacter(this, characters, players);
+        this.setCharacter(chosenCharacter);
+        characters.remove(chosenCharacter);
     }
-    //Pour les tests
+  
     public void setCharacter(Character character){
         this.character=character;
     }
@@ -201,14 +237,66 @@ public class Player implements Comparable<Player> {
     public void useCimetiery(Constructions c) {
         if (c.getValue() <= gold) {
             gold -= c.getValue();
-            System.out.println("Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
+            MyLogger.log(Level.INFO, "Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
             hand.add(c);
         }
     }
-
     public void discardConstruction(Constructions c, Draw d){
         d.add(c);
         hand.remove(c);
+    }
+
+    public Strategy getStrategy() {
+        return strategy;
+    }
+
+    public void destroyConstruction(Constructions c) {
+        city.remove(c);
+    }
+
+    public int getNumberOfVictory() {
+        return numberOfVictory;
+    }
+
+    public void setNumberOfVictory(int numberOfVictory) {
+        this.numberOfVictory = numberOfVictory;
+    }
+
+    public int getNumberOfDefeat() {
+        return numberOfDefeat;
+    }
+
+    public void setNumberOfDefeat(int numberOfDefeat) {
+        this.numberOfDefeat = numberOfDefeat;
+    }
+
+    public int getNumberOfDraw() {
+        return numberOfDraw;
+    }
+
+    public void setNumberOfDraw(int numberOfDraw) {
+        this.numberOfDraw = numberOfDraw;
+    }
+
+    public int getCumulatedScore() {
+        return cumulatedScore;
+    }
+
+    public void setCumulatedScore(int cumulatedScore) {
+        this.cumulatedScore = cumulatedScore;
+    }
+
+    public double getAverageScore() {
+        return (double) getCumulatedScore() /1000;
+    }
+
+    public void reset(){
+        this.hand = new Hand();
+        this.city = new City();
+        this.character = null;
+        this.wonders = new ArrayList<>();
+        this.isDead = false;
+        this.gold = 2;
     }
 }
 
