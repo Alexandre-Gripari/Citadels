@@ -1,16 +1,22 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class PlayerTest {
 
@@ -29,6 +35,11 @@ class PlayerTest {
     Constructions marché = new Constructions("Marché", Color.COMMERCIAL, 2);
     Constructions comptoir = new Constructions("Comptoir", Color.COMMERCIAL, 3);
 
+
+    @BeforeEach
+    void notLog(){
+        MyLogger.setLogLevel(Level.OFF);
+    }
 
     void init() {
         hand1 = new Hand();
@@ -193,5 +204,23 @@ class PlayerTest {
         p.pick(draw, s.goldOrCard(new Player[]{p}, draw));
         assertEquals(1, p.getHand().size() );
         assertEquals(4, p.getGold());
+    }
+
+    @Test
+    void testReset(){
+        Player player3 = new Player(3, new Hand());
+        player3.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        player3.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        player3.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        player3.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        player3.addGold(40);
+        player3.setCharacter(Character.ASSASSIN);
+        player3.buildConstruction(new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES));
+        player3.reset();
+        assertEquals(2, player3.getGold());
+        assertEquals(0, player3.getCity().size());
+        assertEquals(0, player3.getHand().size());
+        assertNull(player3.getCharacter());
+        assertEquals(0, player3.getWonders().size());
     }
 }

@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 
+
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -70,7 +71,6 @@ public enum WondersPower {
             int numberOfCharacter = player.getCharacter().getNumber();
             if (numberOfCharacter == 4 || numberOfCharacter == 5 || numberOfCharacter == 6 || numberOfCharacter == 8) {
                 player.addGold(1);
-                System.out.println("Le joueur " + player +" à gagné une pièce grâce à l'école de magie");
             }
         }
     },

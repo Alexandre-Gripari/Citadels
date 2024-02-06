@@ -12,8 +12,15 @@ import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Player implements Comparable<Player> {
+    private int numberOfVictory= 0;
+    private int numberOfDefeat= 0;
+    private int numberOfDraw = 0;
+    private int cumulatedScore = 0;
     private int number;
     private int gold;
     private Hand hand;
@@ -23,6 +30,8 @@ public class Player implements Comparable<Player> {
     private Strategy strategy;
 
     private boolean isDead=false;
+
+    private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
 
     public Player(int i, int gold, Hand hand, City city) {
         this(i,gold,hand,city,new Strategy1("Agressif"));
@@ -93,7 +102,7 @@ public class Player implements Comparable<Player> {
             resurrect();
             return;
         }
-        System.out.println("Le joueur " + number + " est le " + character.getName());
+        MyLogger.log(Level.INFO, "Le joueur " + number + " est le " + character.getName());
         strategy.play(players, draw);
 
         /*if (hand.isEmpty()) {
@@ -135,7 +144,7 @@ public class Player implements Comparable<Player> {
         if (c.getColor().equals(Color.MERVEILLEUX)) getWonders().add((Wonder) c);
         getHand().remove(c);
         gold -= c.getValue();
-        System.out.println("Le joueur " + getNumber() + " construit " + c);
+        MyLogger.log(Level.INFO, "Le joueur " + getNumber() + " construit " + c);
     }
 
     public void pick(Draw d, int n) {
@@ -191,7 +200,7 @@ public class Player implements Comparable<Player> {
 
     public void takeGold(){
         gold += 2;
-        System.out.println("Le joueur " + number + " a pris 2 pièces d'or");
+        MyLogger.log(Level.INFO, "Le joueur " + number + " a pris 2 pièces d'or");
     }
 
     public void addGold(int gold) {
@@ -228,11 +237,11 @@ public class Player implements Comparable<Player> {
     public void useCimetiery(Constructions c) {
         if (c.getValue() <= gold) {
             gold -= c.getValue();
-            System.out.println("Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
+            MyLogger.log(Level.INFO, "Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
             hand.add(c);
         }
     }
-public void discardConstruction(Constructions c, Draw d){
+    public void discardConstruction(Constructions c, Draw d){
         d.add(c);
         hand.remove(c);
     }
@@ -243,6 +252,51 @@ public void discardConstruction(Constructions c, Draw d){
 
     public void destroyConstruction(Constructions c) {
         city.remove(c);
+    }
+
+    public int getNumberOfVictory() {
+        return numberOfVictory;
+    }
+
+    public void setNumberOfVictory(int numberOfVictory) {
+        this.numberOfVictory = numberOfVictory;
+    }
+
+    public int getNumberOfDefeat() {
+        return numberOfDefeat;
+    }
+
+    public void setNumberOfDefeat(int numberOfDefeat) {
+        this.numberOfDefeat = numberOfDefeat;
+    }
+
+    public int getNumberOfDraw() {
+        return numberOfDraw;
+    }
+
+    public void setNumberOfDraw(int numberOfDraw) {
+        this.numberOfDraw = numberOfDraw;
+    }
+
+    public int getCumulatedScore() {
+        return cumulatedScore;
+    }
+
+    public void setCumulatedScore(int cumulatedScore) {
+        this.cumulatedScore = cumulatedScore;
+    }
+
+    public double getAverageScore() {
+        return (double) getCumulatedScore() /1000;
+    }
+
+    public void reset(){
+        this.hand = new Hand();
+        this.city = new City();
+        this.character = null;
+        this.wonders = new ArrayList<>();
+        this.isDead = false;
+        this.gold = 2;
     }
 }
 
