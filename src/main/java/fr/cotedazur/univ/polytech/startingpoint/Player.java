@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 
 
 public class Player implements Comparable<Player> {
-    private int numberOfVictory= 0;
-    private int numberOfDefeat= 0;
+    private int numberOfVictory = 0;
+    private int numberOfDefeat = 0;
     private int numberOfDraw = 0;
     private int cumulatedScore = 0;
     private int number;
@@ -29,7 +29,10 @@ public class Player implements Comparable<Player> {
     private List<Wonder> wonders = new ArrayList<>();
     private Strategy strategy;
 
+    private Integer score = 0;
+
     private boolean isDead=false;
+
 
     private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
 
@@ -213,9 +216,7 @@ public class Player implements Comparable<Player> {
     }
 
     @Override
-    public int compareTo(Player other){
-        return this.getCity().compareTo(other.getCity());
-    }
+    public int compareTo(Player other){ return this.score - other.score;}
 
     public void draw(Draw d, int nb){
         for(int i=0;i<nb;i++){
@@ -253,6 +254,10 @@ public class Player implements Comparable<Player> {
     public void destroyConstruction(Constructions c) {
         city.remove(c);
     }
+
+    public int getScore() {return score;}
+
+    public void setScore(Integer newScore) {score = newScore;}
 
     public int getNumberOfVictory() {
         return numberOfVictory;
@@ -297,6 +302,7 @@ public class Player implements Comparable<Player> {
         this.wonders = new ArrayList<>();
         this.isDead = false;
         this.gold = 2;
+        this.score = 0;
     }
 }
 

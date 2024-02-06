@@ -145,14 +145,24 @@ class PlayerTest {
     @Test
     void testcompareTo(){
         init();
+        p1.setScore(p1.getCity().cityValue());
+        p2.setScore(p2.getCity().cityValue());
         assertEquals(0, p1.compareTo(p2));
         p1.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p1.setScore(p1.getCity().cityValue());
+        p2.setScore(p2.getCity().cityValue());
         assertEquals(1, p1.compareTo(p2));
         p2.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p1.setScore(p1.getCity().cityValue());
+        p2.setScore(p2.getCity().cityValue());
         assertEquals(0, p1.compareTo(p2));
         p1.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p1.setScore(p1.getCity().cityValue());
+        p2.setScore(p2.getCity().cityValue());
         assertEquals(1, p1.compareTo(p2));
         p2.getCity().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
+        p1.setScore(p1.getCity().cityValue());
+        p2.setScore(p2.getCity().cityValue());
         assertEquals(-2, p1.compareTo(p2));
     }
 
