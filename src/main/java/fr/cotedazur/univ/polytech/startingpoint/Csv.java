@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Csv {
+    private Csv() {}
+
     public static void appendIntoCsvFile(String filePath, String[] result) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter(filePath, true));
         writer.writeNext(result, false);
