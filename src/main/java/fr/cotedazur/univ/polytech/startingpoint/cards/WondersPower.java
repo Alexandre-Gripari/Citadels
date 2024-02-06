@@ -4,6 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 
+
 public enum WondersPower {
 
     COUR_DES_MIRACLES {
@@ -11,7 +12,7 @@ public enum WondersPower {
         public void power(City city, Wonder wonder){
             // la couleur devient celle qui n'est pas dans la cité
             Color missingColor = city.missingColor();
-            wonder.setColor(missingColor);
+            if (missingColor != Color.NEUTRE) wonder.setColor(missingColor);
         }
     },
 

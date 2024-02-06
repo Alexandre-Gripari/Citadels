@@ -1,10 +1,13 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -18,6 +21,7 @@ class WonderTest {
 
     @BeforeEach
     void setUp() {
+        MyLogger.setLogLevel(Level.OFF);
         player1.getHand().add(wonder);
         player1.getHand().add(wonder2);
         player1.addGold(10);

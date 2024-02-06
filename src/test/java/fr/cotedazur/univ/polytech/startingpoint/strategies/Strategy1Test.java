@@ -2,6 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -118,6 +120,7 @@ class Strategy1Test {
 
     @BeforeEach
     void init() {
+        MyLogger.setLogLevel(Level.OFF);
         strat = new Strategy1("rush");
         h1 = new Hand();
         p1 = new Player(1, h1);
