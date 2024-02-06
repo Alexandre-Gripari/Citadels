@@ -1,40 +1,43 @@
 package fr.cotedazur.univ.polytech.startingpoint;
-
-import com.opencsv.exceptions.CsvException;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.*;
-import java.nio.file.Path;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CsvTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
+    private final String[] testString = {"ça marche super bien!"};
     @Test
-    void testAppendIntoCsvFile() throws IOException {
-        Csv.appendIntoCsvFile("src/main/resources/stats/testappend.csv",new String[]{"oui"});
-        assertTrue(new File("src/main/resources/stats/testappend.csv").exists());
-        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/stats/testappend.csv"));
-        String line = reader.readLine();
-        assertEquals("oui", line);
+    void testAppendIntoCsvFile() throws IOException, CsvValidationException {
+        Csv.appendIntoCsvFile(Csv.getFilePath(),testString);
+        assertTrue(new File(Csv.getFilePath()).exists());
+        CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
+        String[] lastLine = testString;
+        String[] nextLine;
+        while ((nextLine = reader.readNext()) != null) {
+            lastLine = nextLine;
+        }
+        assertTrue(Arrays.equals(testString, lastLine));
     }
     @Test
-    void testReadCsvFile() throws IOException, CsvException {
-        Csv.clearCvsFile("src/main/resources/stats/testread.csv");
+    void testReadCsvFile(){
+        Csv.clearCvsFile(Csv.getFilePath());
         System.setOut(new PrintStream(outContent));
-        Csv.appendIntoCsvFile("src/main/resources/stats/testread.csv",new String[] {"oui"});
-        Csv.readCsvFile("src/main/resources/stats/testread.csv");
+        Csv.appendIntoCsvFile(Csv.getFilePath(),new String[] {"oui"});
+        Csv.readCsvFile(Csv.getFilePath());
         String consoleOutput = outContent.toString().trim();
         assertEquals("[oui]",consoleOutput);
     }
     @Test
-    void testClearCsvFile() throws IOException, CsvException {
+    void testClearCsvFile(){
         System.setOut(new PrintStream(outContent));
-        Csv.appendIntoCsvFile("src/main/resources/stats/testclear.csv",new String[] {"oui"});
-        Csv.clearCvsFile("src/main/resources/stats/testclear.csv");
-        Csv.readCsvFile("src/main/resources/stats/testclear.csv");
+        Csv.appendIntoCsvFile(Csv.getFilePath(),new String[] {"oui"});
+        Csv.clearCvsFile(Csv.getFilePath());
+        Csv.readCsvFile(Csv.getFilePath());
         String consoleOutput = outContent.toString().trim();
         assertEquals("",consoleOutput);
     }
