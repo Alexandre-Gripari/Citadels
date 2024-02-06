@@ -10,9 +10,9 @@ import java.util.logging.Level;
 
 public class Main {
     @Parameter(names={"--2thousands"})
-    boolean twoThousands = false;
+    boolean twoThousands;
     @Parameter(names={"--demo"})
-    boolean demo = false;
+    boolean demo;
 
     public static void main(String... args) {
         Main main = new Main();

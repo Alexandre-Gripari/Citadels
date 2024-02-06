@@ -39,6 +39,10 @@ public abstract class Strategy {
         return null;
     }
 
+    public abstract void playDefault(Player[] players, Draw draw);
+
+    public abstract Constructions constructionToBuild(Hand hand, int gold);
+
     public abstract List<Character> getCharacterPriority(Player[] players);
     abstract void useWonder(List<Wonder> wonders);
 
