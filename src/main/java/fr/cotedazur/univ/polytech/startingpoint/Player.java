@@ -306,7 +306,7 @@ public class Player implements Comparable<Player> {
         String lossRate = String.valueOf(this.getNumberOfDefeat() / 20);
         String draws = String.valueOf(this.getNumberOfDraw());
         String drawRate = String.valueOf(this.getNumberOfDraw() / 20);
-        return new String[]{strat, wins, winRate+"%", losses, lossRate+"%", draws, drawRate};
+        return new String[]{strat, wins, winRate+"%", losses, lossRate+"%", draws, drawRate+"%"};
     }
 }
 
