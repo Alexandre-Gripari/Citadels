@@ -67,10 +67,9 @@ public enum WondersPower {
 
     ECOLE_DE_MAGIE {
         @Override
-        public void power(Player player) {
-            Character character = player.getCharacter();
-            if (character == Character.ROI || character == Character.EVEQUE || character == Character.MARCHAND || character == Character.CONDOTTIERE) {
-                player.addGold(1);
+        public void power(Player player, Color color) {
+            for (Wonder wonder : player.getWonders()) {
+                if (wonder.getName().equals("Ecole de magie")) wonder.setColor(color);
             }
         }
     },
@@ -90,13 +89,14 @@ public enum WondersPower {
     public void power(Player player){}
     public void power(Constructions c, Player player, Draw d){}
     public void power(City city, Wonder wonder){}
+    public void power(Player player, Color color){}
 
   
 
     public Wonder getWonder(){
         return new Wonder(this.name(), 0, this);
     }
-   
+
 }
 
 

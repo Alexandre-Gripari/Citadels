@@ -401,4 +401,93 @@ class Strategy1Test {
         assertEquals(Character.MAGICIEN, characterPriority.get(7));
     }
 
+    @Test
+    void testEcoleDeMagie() {
+        City city = new City();
+        city.add(port);
+        city.add(temple);
+        city.add(forteresse);
+        city.add(ecole);
+
+        Hand hand = new Hand();
+
+        Player p = new Player(0, 0, hand, city);
+        p.getWonders().add(ecole);
+        p.setCharacter(Character.ROI);
+
+        Draw draw = new Draw();
+        draw.add(dracoport);
+        draw.add(hotel);
+
+        p.play(draw, new Player[]{p});
+
+        assertEquals(Color.MERVEILLEUX,cour.getColor());
+        assertEquals(1, p.getGold());
+    }
+
+    @Test
+    void testLaboratoire() {
+        City city1 = new City();
+        city1.add(port);
+        city1.add(temple);
+        city1.add(forteresse);
+        city1.add(laboratoire);
+
+        Hand hand1 = new Hand();
+        hand1.add(manufacure);
+
+        Player p1 = new Player(0, 0, hand1, city1);
+        p1.getWonders().add(laboratoire);
+        p1.setCharacter(Character.ROI);
+
+        Draw draw = new Draw();
+        draw.add(dracoport);
+        draw.add(hotel);
+        draw.add(ecole);
+
+        p1.play(draw, new Player[]{p1});
+
+        assertEquals(1, p1.getGold());
+
+        City city2 = new City();
+        city2.add(port);
+        city2.add(laboratoire);
+
+        Hand hand2 = new Hand();
+        hand2.add(eglise);
+
+        Player p2 = new Player(0, 0, hand2, city2);
+        p2.getWonders().add(laboratoire);
+        p2.setCharacter(Character.VOLEUR);
+
+        p2.play(draw, new Player[]{p2});
+
+        assertEquals(0, p2.getGold());
+    }
+
+    @Test
+    void testManufacture() {
+        City city = new City();
+        city.add(port);
+        city.add(manufacure);
+
+        Hand hand = new Hand();
+
+        Player p = new Player(0, 3, hand, city);
+        p.getWonders().add(manufacure);
+        p.setCharacter(Character.ROI);
+
+        Draw draw = new Draw();
+        draw.add(dracoport);
+        draw.add(hotel);
+        draw.add(cathedrale);
+        draw.add(palais);
+        draw.add(bastion);
+
+        p.play(draw, new Player[]{p});
+
+        assertEquals(3, p.getHand().size());
+        assertEquals(2, p.getGold());
+    }
+
 }
