@@ -97,10 +97,10 @@ class WondersPowerTest {
         assertEquals(Color.RELIGIEUX, wonder.getColor());
         player4.getCity().add(c1);
         wonder.getWondersPower().power(player4.getCity(), wonder);
-        assertEquals(Color.RELIGIEUX, wonder.getColor());
+        assertEquals(Color.SOLDATESQUE, wonder.getColor());
         player4.getCity().add(c5);
         wonder.getWondersPower().power(player4.getCity(), wonder);
-        assertEquals(Color.SOLDATESQUE, wonder.getColor());
+        assertEquals(Color.COMMERCIAL, wonder.getColor());
         player4.getCity().add(c2);
         player4.getCity().add(c3);
         wonder.getWondersPower().power(player4.getCity() , wonder);
