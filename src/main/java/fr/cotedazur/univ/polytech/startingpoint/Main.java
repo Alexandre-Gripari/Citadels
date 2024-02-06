@@ -21,7 +21,7 @@ public class Main {
     @Parameter(names = {"--csv"})
     boolean csv = false;
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IOException, CsvException {
         Main main = new Main();
         JCommander.newBuilder()
                 .addObject(main)
@@ -55,12 +55,12 @@ public class Main {
             game.init();
             game.play();
         } else if (csv) {
-            if (!new File("src/main/resources/stats/gamestats.csv").exists()) {
-                Csv.appendIntoCsvFile("src/main/resources/stats/gamestats.csv", new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
+            if (!new File(Csv.getFilePath()).exists()) {
+                Csv.appendIntoCsvFile(Csv.getFilePath(), new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
             } else {
-                CSVReader reader = new CSVReader(new FileReader("src/main/resources/stats/gamestats.csv"));
+                CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
                 if (reader.readNext() == null) {
-                    Csv.appendIntoCsvFile("src/main/resources/stats/gamestats.csv", new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
+                    Csv.appendIntoCsvFile(Csv.getFilePath(), new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
                 }
                 reader.close();
             }
@@ -73,9 +73,9 @@ public class Main {
                 game.resetGame();
             }
             for (Player p : players) {
-                Csv.appendIntoCsvFile("src/main/resources/stats/gamestats.csv",p.getStats());
+                Csv.appendIntoCsvFile(Csv.getFilePath(),p.getStats());
             }
-            Csv.readCsvFile("src/main/resources/stats/gamestats.csv");
+            Csv.readCsvFile(Csv.getFilePath());
         }
 
     }

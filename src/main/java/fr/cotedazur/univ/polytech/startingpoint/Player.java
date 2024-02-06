@@ -301,12 +301,12 @@ public class Player implements Comparable<Player> {
     public String[] getStats() {
         String strat = this.getStrategy().getDescription();
         String wins = String.valueOf(getNumberOfVictory());
-        String winRate = String.valueOf(this.getNumberOfVictory() / 2000);
+        String winRate = String.valueOf(this.getNumberOfVictory() / 20);
         String losses = String.valueOf(this.getNumberOfDefeat());
-        String lossRate = String.valueOf(this.getNumberOfDefeat() / 2000);
+        String lossRate = String.valueOf(this.getNumberOfDefeat() / 20);
         String draws = String.valueOf(this.getNumberOfDraw());
-        String drawRate = String.valueOf(this.getNumberOfDraw() / 2000);
-        return new String[]{strat, wins, winRate, losses, lossRate, draws, drawRate};
+        String drawRate = String.valueOf(this.getNumberOfDraw() / 20);
+        return new String[]{strat, wins, winRate+"%", losses, lossRate+"%", draws, drawRate};
     }
 }
 
