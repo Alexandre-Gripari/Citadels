@@ -11,7 +11,7 @@ public enum WondersPower {
         public void power(City city, Wonder wonder){
             // la couleur devient celle qui n'est pas dans la cité
             Color missingColor = city.missingColor();
-            wonder.setColor(missingColor);
+            if (missingColor != Color.NEUTRE) wonder.setColor(missingColor);
         }
     },
 
@@ -70,8 +70,8 @@ public enum WondersPower {
     ECOLE_DE_MAGIE {
         @Override
         public void power(Player player) {
-            int numberOfCharacter = player.getCharacter().getNumber();
-            if (numberOfCharacter == 4 || numberOfCharacter == 5 || numberOfCharacter == 6 || numberOfCharacter == 8) {
+            Character character = player.getCharacter();
+            if (character == Character.ROI || character == Character.EVEQUE || character == Character.MARCHAND || character == Character.CONDOTTIERE) {
                 player.addGold(1);
                 System.out.println("Le joueur " + player +" à gagné une pièce grâce à l'école de magie");
             }
