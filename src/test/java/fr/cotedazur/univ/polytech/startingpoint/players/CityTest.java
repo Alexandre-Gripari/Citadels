@@ -24,6 +24,7 @@ class CityTest {
 
     //Test cour des miracles
     Constructions m2 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
+    Constructions m3 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
     Constructions c7 = new Constructions("religieux", Color.RELIGIEUX, 1);
     Constructions c8 = new Constructions("noble", Color.NOBLE, 1);
     Constructions c9 = new Constructions("soldatesque", Color.SOLDATESQUE, 1);
@@ -32,23 +33,34 @@ class CityTest {
     City city2 = new City();
     City city3 = new City();
     City city4 = new City();
+    City city5 = new City();
 
     @BeforeEach
     void init() {
         city1.add(c1);
         city1.add(c2);
         city1.add(c3);
+
         city2.add(c4);
         city2.add(c5);
         city2.add(c6);
+
         city3.add(r1);
         city3.add(r2);
         city3.add(r3);
         city3.add(m1);
+
         city4.add(m2);
         city4.add(c7);
         city4.add(c8);
         city4.add(c9);
+
+        //test bonus fin de partie avec toutes les couleurs
+        city5.add(c1);
+        city5.add(r1);
+        city5.add(c8);
+        city5.add(c9);
+        city5.add(m3);
     }
 
 
@@ -60,6 +72,18 @@ class CityTest {
         assertEquals(14, city3.cityValue());
         city4.cityValue();
         assertEquals(Color.COMMERCIAL, city4.get(0).getColor());
+        assertEquals(Color.MERVEILLEUX, city5.get(4).getColor());
+        assertEquals(Color.NEUTRE, city5.missingColor());
+        assertEquals(9, city5.cityValue());
+        assertEquals(Color.MERVEILLEUX, city5.get(4).getColor());
+        city5.remove(3);
+        assertEquals(Color.MERVEILLEUX, city5.get(3).getColor());
+        assertEquals(Color.SOLDATESQUE, city5.missingColor());
+        assertEquals(5, city5.cityValue());
+        assertEquals(Color.SOLDATESQUE, city5.get(3).getColor());
+        city5.add(m1);
+        assertEquals(16, city5.cityValue());
+        assertEquals(Color.SOLDATESQUE, city5.get(3).getColor());
     }
 
     @Test
@@ -113,6 +137,6 @@ class CityTest {
         assertEquals(Color.NEUTRE, city4.missingColor());
         city4.remove(4);
         city4.add(w1);
-        assertEquals(Color.MERVEILLEUX, city4.missingColor());
+        assertEquals(Color.NEUTRE, city4.missingColor());
     }
 }
