@@ -37,6 +37,7 @@ public class City{
             if (this.get(i).getName().equals("Dracoport") || this.get(i).getName().equals("Université")) value+=2;
             value+=this.get(i).getValue();
         }
+        if (missingColor() == Color.NEUTRE) value+=3; // Bonus si toutes les couleurs sont présentes dans la cité
         return value;
     }
     public int compareTo(City other){
@@ -56,7 +57,7 @@ public class City{
         for (Color c : Color.values()) {
             for (Constructions con : city) {
                 color = false;
-                if (con.getColor() == c && !con.equals(new Wonder("Cour des miracles", 0, null)) && !c.equals(Color.NEUTRE)) {
+                if (con.getColor() == c && !c.equals(Color.NEUTRE)) {
                     color = true;
                     break;
                 }

@@ -12,7 +12,7 @@ public enum WondersPower {
         public void power(City city, Wonder wonder){
             // la couleur devient celle qui n'est pas dans la cité
             Color missingColor = city.missingColor();
-            wonder.setColor(missingColor);
+            if (missingColor != Color.NEUTRE) wonder.setColor(missingColor);
         }
     },
 
@@ -67,10 +67,9 @@ public enum WondersPower {
 
     ECOLE_DE_MAGIE {
         @Override
-        public void power(Player player) {
-            int numberOfCharacter = player.getCharacter().getNumber();
-            if (numberOfCharacter == 4 || numberOfCharacter == 5 || numberOfCharacter == 6 || numberOfCharacter == 8) {
-                player.addGold(1);
+        public void power(Player player, Color color) {
+            for (Wonder wonder : player.getWonders()) {
+                if (wonder.getName().equals("Ecole de magie")) wonder.setColor(color);
             }
         }
     },
@@ -90,13 +89,14 @@ public enum WondersPower {
     public void power(Player player){}
     public void power(Constructions c, Player player, Draw d){}
     public void power(City city, Wonder wonder){}
+    public void power(Player player, Color color){}
 
   
 
     public Wonder getWonder(){
         return new Wonder(this.name(), 0, this);
     }
-   
+
 }
 
 
