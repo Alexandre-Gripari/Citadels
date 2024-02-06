@@ -8,10 +8,12 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -33,6 +35,11 @@ class PlayerTest {
     Constructions marché = new Constructions("Marché", Color.COMMERCIAL, 2);
     Constructions comptoir = new Constructions("Comptoir", Color.COMMERCIAL, 3);
 
+
+    @BeforeEach
+    void notLog(){
+        MyLogger.setLogLevel(Level.OFF);
+    }
 
     void init() {
         hand1 = new Hand();

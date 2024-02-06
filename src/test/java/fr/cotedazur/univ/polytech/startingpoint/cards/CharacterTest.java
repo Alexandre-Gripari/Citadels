@@ -1,17 +1,20 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
+import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.logging.Level;
 
 class CharacterTest {
 
@@ -27,6 +30,7 @@ class CharacterTest {
 
     @BeforeEach
     void init1() {
+        MyLogger.setLogLevel(Level.OFF);
         hand1 = new Hand();
         hand2 = new Hand();
         hand3 = new Hand();

@@ -5,6 +5,8 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Level;
+
 import static fr.cotedazur.univ.polytech.startingpoint.cards.Character.ROI;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +14,8 @@ class GameTest {
 
     @Test
     void init() {
+
+        MyLogger.setLogLevel(Level.OFF);
 
         Game game = new Game(new Player[]{new Player(1, new Hand()), new Player(2, new Hand())});
         game.init();
