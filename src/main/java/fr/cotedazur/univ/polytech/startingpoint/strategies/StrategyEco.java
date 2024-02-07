@@ -42,15 +42,6 @@ public class StrategyEco extends Strategy{
         return characters.get(0);
     }
 
-    @Override
-    public void playDefault(Player[] players, Draw draw) {
-    }
-
-    @Override
-    public Construction constructionToBuild(Hand hand, int gold) {
-        return null;
-    }
-
     public Construction constructionToBuild(Player player) {
         List<Construction> main = player.getHand().getHand();
         Construction choix = chooseCard(main,player);
@@ -113,24 +104,6 @@ public class StrategyEco extends Strategy{
     @Override
     public Construction constructionToBuild(Hand hand, int gold) {
         return null;
-    }
-    public Construction chooseCard(List<Construction> constructions, Player player) {
-        Construction choix = new Construction("Lidl", Color.NEUTRE, 99);
-        List<Character> mostProfitableCharacters = super.mostProfitableCharacters(player);
-        List<Color> mostProfitableColor = new ArrayList<>();
-        mostProfitableColor.add(Color.MERVEILLEUX);
-        for (Character character : mostProfitableCharacters) {
-            mostProfitableColor.add(character.getColor());
-        }
-        mostProfitableColor.add(Color.NEUTRE);
-        for (Construction c : constructions) {
-            if (c.getName().equals("Ecole de magie")) return c;
-            if (mostProfitableColor.indexOf(c.getColor()) < mostProfitableColor.indexOf(choix.getColor())
-                    || (mostProfitableColor.indexOf(c.getColor()) == mostProfitableColor.indexOf(choix.getColor())
-                    && c.getValue() > choix.getValue())) choix = c;
-        }
-        if(choix.getName().equals("Lidl")) choix=constructions.get(0);
-        return choix;
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.

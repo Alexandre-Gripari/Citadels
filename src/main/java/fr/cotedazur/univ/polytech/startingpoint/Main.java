@@ -51,14 +51,14 @@ public class Main {
             MyLogger.setLogLevel(Level.INFO);
             for (Player player : players) {
                 MyLogger.log(Level.INFO, "Player " + player.getNumber() + " V:" + player.getNumberOfVictory()
-                        +"("+player.getNumberOfVictory()/10+"%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat()/10 + "%)"+
-                        " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw()/10 + "%)" + " SM:" + player.getAverageScore());
+                        + "(" + player.getNumberOfVictory() / 10 + "%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat() / 10 + "%)" +
+                        " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw() / 10 + "%)" + " SM:" + player.getAverageScore());
             }
         } else if (demo) {
             Game game = new Game(players);
             game.init();
             game.play();
-        }else if (csv) {
+        } else if (csv) {
             File fichier = new File(Csv.getFilePath());
             if (fichier.exists()) {
                 CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
@@ -71,33 +71,20 @@ public class Main {
                     players[a].setNumberOfDraw(Integer.parseInt(oldData.get(a + 1)[5]));
                     players[a].setDrawRate(Integer.parseInt(oldData.get(a + 1)[6]));
                 }
-        } else if (csv) {
-            String[] legende = {"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"};
-            if (!new File(Csv.getFilePath()).exists()) {
-                Csv.appendIntoCsvFile(Csv.getFilePath(), legende);
-            } else {
-                CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
-                if (!Arrays.equals(reader.readNext(), legende)) {
-                    Csv.appendIntoCsvFile(Csv.getFilePath(), legende);
+                MyLogger.setLogLevel(Level.OFF);
+                for (int i = 0; i < 2000; i++) {
+                    Game game = new Game(players);
+                    game.init();
+                    game.play();
+                    game.calculateStats();
+                    game.resetGame();
                 }
-                reader.close();
-            }
-            MyLogger.setLogLevel(Level.OFF);
-            for (int i = 0; i < 2000; i++) {
-                Game game = new Game(players);
-                game.init();
-                game.play();
-                game.calculateStats();
-                game.resetGame();
-            }
-            List<String[]> newStats = new ArrayList<>();
-            for (Player p : players) {
-                newStats.add(p.getStats());
-            }
-            Csv.appendIntoCsvFile(Csv.getFilePath(), newStats);
-        }
-            for (Player p : players) {
-                Csv.appendIntoCsvFile(Csv.getFilePath(),p.getStats());
+                List<String[]> newStats = new ArrayList<>();
+                newStats.add(new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
+                for (Player p : players) {
+                    newStats.add(p.getStats());
+                }
+                Csv.appendIntoCsvFile(Csv.getFilePath(), newStats);
             }
         }
     }
