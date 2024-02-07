@@ -59,8 +59,8 @@ public class Strategy1 extends Strategy{
         return c;
     }
 
-    public Constructions constructionToBuild(Hand hand, int gold) {
-        if (hand.min().getValue() <= gold) return hand.min();
+    public Constructions constructionToBuild(Player player) {
+        if (player.getHand().minNotInCity(player).getValue() <= player.getGold()) return player.getHand().minNotInCity(player);
         else return null;
     }
 
@@ -88,7 +88,7 @@ public class Strategy1 extends Strategy{
 
     public void playDefault(Player[] players, Draw draw) {
         players[0].pick(draw, goldOrCard(players, draw));
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
+        players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
@@ -159,17 +159,18 @@ public class Strategy1 extends Strategy{
     public void architect(Player[] players, Draw draw) {
         Character.ARCHITECTE.ability(draw, players[0]);
         playDefault(players, draw);
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
+        players[0].buildConstruction(constructionToBuild(players[0]));
+        players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     public void condottiere(Player[] players, Draw draw) {
         playDefault(players, draw);
-        int biggestCityIndex = 1;
-        int biggestCitySize = players[1].getCity().size();
-        for (int i = 2; i < players.length; i++) {
-            int citySize = players[i].getCity().size();
-            if (citySize != 0) {
+        int citySize;
+        int biggestCityIndex = 0;
+        int biggestCitySize = 0;
+        for (int i = 1; i < players.length; i++) {
+            citySize = players[i].getCity().size();
+            if (citySize < 8 && citySize != 0) {
                 if ((citySize > biggestCitySize) || (citySize == biggestCitySize && minCostInCity(players[i].getCity()) < minCostInCity(players[biggestCityIndex].getCity()))) {
                     biggestCityIndex = i;
                     biggestCitySize = citySize;

@@ -100,6 +100,10 @@ public class Player implements Comparable<Player> {
         this.wonders = wonders;
     }
 
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
     public void play(Draw draw, Player[] players) {
         if(isDead) {
             resurrect();

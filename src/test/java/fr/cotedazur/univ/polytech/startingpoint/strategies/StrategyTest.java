@@ -132,4 +132,47 @@ class StrategyTest {
         assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p22).get(3));
 
     }
+
+    @Test
+    void maxCitySizeExcept8Test() {
+        Hand h1 = new Hand();
+        City c1 = new City();
+        Player p1 = new Player(1,0,h1,c1);
+
+        Hand h2 = new Hand();
+        City c2 = new City();
+        Player p2 = new Player(2,0,h2,c2);
+
+        Hand h3 = new Hand();
+        City c3 = new City();
+        Player p3 = new Player(3,0,h3,c3);
+
+        Hand h4 = new Hand();
+        City c4 = new City();
+        Player p4 = new Player(4,0,h4,c4);
+
+        Player[] players = new Player[]{p1,p2,p3,p4};
+
+        assertEquals(0, p1.getStrategy().maxCitySizeExcept8(players));
+
+        c1.add(marché);
+        c1.add(marché);
+        c1.add(marché);
+        c1.add(marché);
+        c1.add(marché);
+
+        c2.add(marché);
+        c2.add(marché);
+        assertEquals(2, p1.getStrategy().maxCitySizeExcept8(players));
+
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+
+        c4.add(marché);
+        assertEquals(1, p1.getStrategy().maxCitySizeExcept8(players));
+    }
 }

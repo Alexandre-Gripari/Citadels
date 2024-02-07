@@ -23,8 +23,8 @@ public class StrategyRichard extends Strategy1{
     }
 
     @Override
-    public Constructions constructionToBuild(Hand hand, int gold) {
-        return super.constructionToBuild(hand, gold);
+    public Constructions constructionToBuild(Player player) {
+        return super.constructionToBuild(player);
     }
 
     @Override
@@ -50,42 +50,66 @@ public class StrategyRichard extends Strategy1{
 
     @Override
     public void assassin(Player[] players, Draw draw) {
-        playDefault(players, draw);
-        Character toAssassinate = Character.ARCHITECTE;
         Player self = players[0];
-        playDefault(players, draw);
         Player[] playersCopy = players.clone();
         Arrays.sort(playersCopy);
+        if (super.maxCitySizeExcept8(players) == 6) {
+            playDefault(players, draw);
+            Character.ASSASSIN.ability(Character.ROI, players);
+            return;
+        }
         if (playersCopy[playersCopy.length-1].equals(self)
                 && (self.getCity().cityValue() - playersCopy[players.length-2].getCity().cityValue() >4)
-               ){ Character.ASSASSIN.ability(Character.CONDOTTIERE, players);
+               ){
+            playDefault(players, draw);
+            Character.ASSASSIN.ability(Character.CONDOTTIERE, players);
             return;
         }
         for (Player p : players) {
-            if (p.getGold()>=6 && !p.equals(self)) Character.ASSASSIN.ability(Character.VOLEUR, players);
+            if (p.getGold()>=6 && !p.equals(self)) {
+                playDefault(players, draw);
+                Character.ASSASSIN.ability(Character.VOLEUR, players);
+                return;
+            }
             if (p.getCity().getCity().size() == 7 && !p.equals(self) && p.getCity().cityValue() >= playersCopy[playersCopy.length-1].getCity().cityValue()-2
                     && p.getCity().getNumberOfColor(Color.SOLDATESQUE)>2) {
+                playDefault(players, draw);
                 Character.ASSASSIN.ability(Character.CONDOTTIERE, players);
                 return;
             }
         }
-        Character.ASSASSIN.ability(toAssassinate, players);
+        super.assassin(players, draw);
     }
 
     @Override
     public void thief(Player[] players, Draw draw) {
+        if (super.maxCitySizeExcept8(players) >= 6) {
+            playDefault(players, draw);
+            Character.VOLEUR.ability(Character.ROI, players);
+            return;
+        }
         super.thief(players, draw);
     }
 
     @Override
     public void magician(Player[] players, Draw draw) {
+        Player p0 = new Player(0, new Hand());
+        for (Player player : players) {
+            if (player.getCity().size() >= 6) p0 = player;
+        }
+
+        if (super.maxCitySizeExcept8(players) >= 6 &&
+                players[0].getHand().min().getValue() > p0.getGold()+2) {
+            Character.MAGICIEN.ability(draw, players[0], p0);
+            playDefault(players, draw);
+            return;
+        }
+
         super.magician(players, draw);
     }
 
     @Override
-    public void king(Player[] players, Draw draw) {
-        super.king(players, draw);
-    }
+    public void king(Player[] players, Draw draw) {super.king(players, draw);}
 
     @Override
     public void bishop(Player[] players, Draw draw) {
