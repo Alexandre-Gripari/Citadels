@@ -148,7 +148,7 @@ public abstract class Strategy {
 
     public boolean isMaybeLastTurn(Player[] players){
         for (Player p : players) {
-            if (p.getCity().size() >= 7 || (p.getCity().size() == 5 && p.getGold()>=4 && !p.getHand().isEmpty()) ) return true;
+            if (p.getCity().size() >= 7) return true;
         }
         return false;
 
@@ -169,7 +169,7 @@ public abstract class Strategy {
 
     public Player canArchiRush(Player[] players){
         for (Player p : players) {
-            if (p.getCity().size() == 5 && p.getGold()>=4 && !p.getHand().isEmpty()) return p;
+            if (p.getCity().size() >= 5 && p.getGold()>=4 && !p.getHand().isEmpty()) return p;
         }
         return null;
     }
