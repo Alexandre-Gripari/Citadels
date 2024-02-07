@@ -36,34 +36,28 @@ public class StrategyRichard extends Strategy1{
 
     public List<Character> getCharacterPriorityRichard(Player[] players, List<Character> characters){
         List<Character> characterPriority = new ArrayList<>();
-        if (isMaybeLastTurn(players)){
+        if (isMaybeLastTurn(players)){ // dernier tour
             if (isWinning(players)){
-                characterPriority.add(Character.ASSASSIN);
+                characterPriority.add(Character.ASSASSIN); // le cas c'est moi la cible
             }
             else if (new HashSet<>(characters).containsAll(Arrays.asList(Character.ASSASSIN, Character.EVEQUE, Character.CONDOTTIERE))){
-                characterPriority.add(Character.CONDOTTIERE);
+                characterPriority.add(Character.CONDOTTIERE); // 1er cas
                 characterPriority.add(Character.ASSASSIN);
             }
-            else if (characters.contains(Character.EVEQUE)) {
+            else if (!characters.contains(Character.EVEQUE)) { // 2ème cas
                 characterPriority.add(Character.ASSASSIN);
                 characterPriority.add(Character.CONDOTTIERE);
             }
-            else if (!characters.contains(Character.CONDOTTIERE)) {
+            else if (!characters.contains(Character.CONDOTTIERE)) { //3ème cas
                 characterPriority.add(Character.ASSASSIN);
                 characterPriority.add(Character.MAGICIEN);
             }
-            else if (!characters.contains(Character.ASSASSIN)) {
+            else if (!characters.contains(Character.ASSASSIN)) { //4ème cas
                 characterPriority.add(Character.CONDOTTIERE);
                 characterPriority.add(Character.EVEQUE);
             }
         }
-        if (gotCitySize(6, players)){
-                characterPriority.add(Character.ROI);
-                characterPriority.add(Character.ASSASSIN);
-                characterPriority.add(Character.CONDOTTIERE);
-                characterPriority.add(Character.EVEQUE);
-            }
-        if (canArchiRush(players) != null){
+        else if (canArchiRush(players) != null){
             if (canArchiRush(players).equals(players[0])) {
                 characterPriority.add(Character.ARCHITECTE);
             }
@@ -71,6 +65,12 @@ public class StrategyRichard extends Strategy1{
                 characterPriority.add(Character.ASSASSIN);
                 characterPriority.add(Character.ARCHITECTE);
             }
+        }
+        else if (gotCitySize(6, players)){
+                characterPriority.add(Character.ROI);
+                characterPriority.add(Character.ASSASSIN);
+                characterPriority.add(Character.CONDOTTIERE);
+                characterPriority.add(Character.EVEQUE);
         }
         List<Character> otherPriority = getCharacterPriority(players);
         for (Character c : otherPriority){

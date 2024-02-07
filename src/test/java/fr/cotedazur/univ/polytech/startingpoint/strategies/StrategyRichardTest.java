@@ -384,18 +384,6 @@ class StrategyRichardTest {
     Player[] players3 = new Player[]{player, player2};
     List<Character> characters = new ArrayList<>(List.of(Character.values()));
 
-    /*@Test
-    void testChooseCharacter() {
-        StrategyRichard StrategyRichard = new StrategyRichard("Agressif");
-        assertEquals(Character.MAGICIEN, StrategyRichard.chooseCharacter(player, characters, players3));
-        player.getHand().add(cathedrale);
-        player.getHand().add(chateau);
-        player.getHand().add(monastere);
-        assertEquals(Character.ARCHITECTE, StrategyRichard.chooseCharacter(player, characters, players3));
-        characters.remove(Character.ARCHITECTE);
-        assertEquals(Character.ROI, StrategyRichard.chooseCharacter(player, characters, players3));
-
-    }*/
 
     @Test
     void testGetCharacterPriority() {
@@ -413,16 +401,97 @@ class StrategyRichardTest {
 
     @Test
     void testGetCharacterPriorityRichard(){
-        StrategyRichard StrategyRichard = new StrategyRichard("Richard");
-        Player player1 = new Player(1,2,new Hand(), new City(), StrategyRichard);
-        Player player2 = new Player(2,2,new Hand(), new City(), StrategyRichard);
-        Player player3 = new Player(3,2,new Hand(), new City(), StrategyRichard);
-        Player player4 = new Player(4,2,new Hand(), new City(), StrategyRichard);
-
+        StrategyRichard strategyRichard = new StrategyRichard("Richard");
+        Player player1 = new Player(1,2,new Hand(), new City(), strategyRichard);
+        Player player2 = new Player(2,2,new Hand(), new City(), strategyRichard);
+        Player player3 = new Player(3,2,new Hand(), new City(), strategyRichard);
+        Player player4 = new Player(4,2,new Hand(), new City(), strategyRichard);
+        player2.getCity().add(temple);
+        player2.getCity().add(eglise);
+        player2.getCity().add(marche);
+        player2.getCity().add(prison);
+        player2.getCity().add(tour);
+        player2.getCity().add(forteresse);
+        Player[] players = new Player[]{player1, player2, player3, player4};
+        Player[] players2 = new Player[]{player2, player3, player1, player4};
+        List<Character> listCharacters = new ArrayList<>(List.of(Character.values()));
+        assertEquals(Character.ROI, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(1));
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(2));
+        assertEquals(Character.EVEQUE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(3));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        player2.setGold(5);
+        assertEquals(Character.ROI, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(1));
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(2));
+        assertEquals(Character.EVEQUE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(3));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        player2.getHand().add(echoppe);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        assertEquals(Character.ARCHITECTE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(1));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        assertEquals(Character.ARCHITECTE, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).get(0));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        player2.getCity().add(prison);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).get(0));
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        characters.remove(Character.EVEQUE);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, characters).get(0));
+        characters.add(Character.EVEQUE);
+        characters.remove(Character.CONDOTTIERE);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, characters).get(0));
+        characters.add(Character.CONDOTTIERE);
+        characters.remove(Character.ASSASSIN);
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, characters).get(0));
     }
 
+    @Test
     void testChooseCharacterRichard(){
+        StrategyRichard strategyRichard = new StrategyRichard("Richard");
+        Player player1 = new Player(1,2,new Hand(), new City(), strategyRichard);
+        Player player2 = new Player(2,2,new Hand(), new City(), strategyRichard);
+        Player player3 = new Player(3,2,new Hand(), new City(), strategyRichard);
+        Player player4 = new Player(4,2,new Hand(), new City(), strategyRichard);
+        player2.getCity().add(temple);
+        player2.getCity().add(eglise);
+        player2.getCity().add(marche);
+        player2.getCity().add(prison);
+        player2.getCity().add(tour);
+        player2.getCity().add(forteresse);
+        player2.getHand().add(echoppe);
+        player2.setGold(4);
+        Player[] players = new Player[]{player2, player1, player3, player4};
+        Player[] players2 = new Player[]{player1, player2, player3, player4};
 
+        characters = new ArrayList<>(List.of(Character.values()));
+        player2.chooseCharacter(characters, players);
+        assertEquals(Character.ARCHITECTE, player2.getCharacter());
+        player2.getCity().add(chateau);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.CONDOTTIERE, player1.getCharacter());
+        assertEquals(Character.ASSASSIN, player3.getCharacter());
+
+        characters = new ArrayList<>(List.of(Character.values()));
+        characters.remove(Character.EVEQUE);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.ASSASSIN, player1.getCharacter());
+        assertEquals(Character.CONDOTTIERE, player3.getCharacter());
+
+        characters = new ArrayList<>(List.of(Character.values()));
+        characters.remove(Character.CONDOTTIERE);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.ASSASSIN, player1.getCharacter());
+        assertEquals(Character.MAGICIEN, player3.getCharacter());
+
+        characters = new ArrayList<>(List.of(Character.values()));
+        characters.remove(Character.ASSASSIN);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.CONDOTTIERE, player1.getCharacter());
+        assertEquals(Character.MAGICIEN, player3.getCharacter());
     }
 
 }

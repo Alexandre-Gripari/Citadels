@@ -162,7 +162,7 @@ public abstract class Strategy {
 
     public boolean gotCitySize(int size, Player[] players){
         for (Player p : players) {
-            if (p.getCity().size() == size) return true;
+            if (p.getCity().size().equals(size)) return true;
         }
         return false;
     }
