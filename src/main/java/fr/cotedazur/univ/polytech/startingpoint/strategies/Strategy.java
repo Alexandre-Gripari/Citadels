@@ -146,6 +146,34 @@ public abstract class Strategy {
         return charactersRank;
     }
 
+    public boolean isMaybeLastTurn(Player[] players){
+        for (Player p : players) {
+            if (p.getCity().size() >= 7) return true;
+        }
+        return false;
+
+    }
+
+    public boolean isWinning(Player[] players){
+        Player[] playersCopy = players.clone();
+        Arrays.sort(playersCopy);
+        return playersCopy[playersCopy.length-1].equals(players[0]);
+    }
+
+    public boolean gotCitySize(int size, Player[] players){
+        for (Player p : players) {
+            if (p.getCity().size().equals(size)) return true;
+        }
+        return false;
+    }
+
+    public Player canArchiRush(Player[] players){
+        for (Player p : players) {
+            if (p.getCity().size() >= 5 && p.getGold()>=4 && !p.getHand().isEmpty()) return p;
+        }
+        return null;
+    }
+
     public int maxCitySizeExcept8(Player[] players) {
         int size = 0;
         for (Player player : players) {

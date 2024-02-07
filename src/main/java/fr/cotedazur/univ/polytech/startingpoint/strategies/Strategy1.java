@@ -16,6 +16,7 @@ public class Strategy1 extends Strategy{
         super(description);
     }
 
+    @Override
     public Character chooseCharacter(Player player,List<Character> characters, Player[] players){
         Character character = super.chooseCharacter(player, characters, players);
         if (character != null) return character;
