@@ -77,10 +77,17 @@ class StrategyRichardTest {
         hand.add(ecole);
         hand.add(cour);
         hand.add(hotel);
-        StrategyRichard s = new StrategyRichard("Test");
 
-        assertEquals(cour, s.constructionToBuild(hand, 5));
-        assertEquals(null, s.constructionToBuild(hand, 0));
+        City city = new City();
+
+        Strategy1 s = new Strategy1("Test");
+
+        Player player = new Player(1, 2, hand, city,s);
+
+        assertEquals(cour, s.constructionToBuild(player));
+
+        player.setGold(0);
+        assertNull(s.constructionToBuild(player));
     }
 
     @Test
@@ -124,12 +131,16 @@ class StrategyRichardTest {
         strat = new StrategyRichard("rush");
         h1 = new Hand();
         p1 = new Player(1, h1);
+        p1.setStrategy(strat);
         h2 = new Hand();
         p2 = new Player(2, h2);
+        p2.setStrategy(strat);
         h3 = new Hand();
         p3 = new Player(3, h3);
+        p3.setStrategy(strat);
         h4 = new Hand();
         p4 = new Player(4, h4);
+        p4.setStrategy(strat);
         players2 = new Player[4];
         players2[0] = p1; players2[1] = p2; players2[2] = p3; players2[3] = p4;
         draw = new Draw();
@@ -162,11 +173,17 @@ class StrategyRichardTest {
         draw.add(prison);
         draw.add(bastion);
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
         assertTrue(player20.isDead());
+        assertFalse(player30.isDead());
+        assertFalse(player40.isDead());
         player20.resurrect();
         player20.addGold(10);
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
         assertTrue(player30.isDead());
+        assertFalse(player40.isDead());
         player30.resurrect();
         player10.getCity().add(temple); // p1 points = 3
         player10.getCity().add(eglise);
@@ -175,18 +192,40 @@ class StrategyRichardTest {
         player30.getCity().add(tour); // p3 points = 3
         player30.getCity().add(forteresse);
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
         assertTrue(player30.isDead());
+        assertFalse(player40.isDead());
         player30.resurrect();
         player10.getCity().add(prison); // p1 points = 6
         player10.getCity().add(bastion); // p1 points = 11
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
+        assertFalse(player30.isDead());
         assertTrue(player40.isDead());
         player40.resurrect();
         player40.getCity().add(prison);
         player40.getCity().add(forteresse);
         player40.getCity().add(bastion);
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
+        assertFalse(player30.isDead());
         assertTrue(player40.isDead());
+        player40.resurrect();
+
+        player20.setCharacter(Character.ROI);
+        player20.getCity().add(manoir);
+        player20.getCity().add(palais);
+        player20.getCity().add(prison);
+        player20.getCity().add(bastion);
+        strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertTrue(player20.isDead());
+        assertFalse(player30.isDead());
+        assertFalse(player40.isDead());
+
     }
 
     @Test
@@ -196,8 +235,17 @@ class StrategyRichardTest {
         p3.setCharacter(Character.ROI);
         p4.setCharacter(Character.CONDOTTIERE);
 
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p1.setGold(0);
+        p1.getStrategy().thief(new Player[]{p1,p2,p3,p4}, draw);
+
         assertEquals(2, p1.getGold());
-        assertEquals(2, p2.getGold());
+        assertEquals(0, p3.getGold());
     }
 
     @Test
@@ -282,6 +330,35 @@ class StrategyRichardTest {
 
         assertEquals(2, p1.getHand().size());
         assertEquals(3, p1.getHand().get(0).getValue());
+    }
+
+    @Test
+    void magicianTestSwapWithAPlayerSpecialKing() {
+        p1.setCharacter(Character.MAGICIEN);
+        p2.setCharacter(Character.ARCHITECTE);
+        p3.setCharacter(Character.ROI);
+        p4.setCharacter(Character.CONDOTTIERE);
+
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+
+        p1.setGold(0);
+        p3.setGold(0);
+
+        p1.getHand().add(chateau);
+        p1.getHand().add(monastere);
+        p1.getHand().add(manoir);
+
+        Player[] players = new Player[]{p1, p2, p3, p4};
+
+        p1.getStrategy().magician(players, draw);
+
+        assertEquals(1, p1.getHand().size());
+        assertEquals(3,p3.getHand().size());
     }
 
     @Test

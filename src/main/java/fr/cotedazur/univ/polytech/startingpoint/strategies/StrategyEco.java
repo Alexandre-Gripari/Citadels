@@ -49,7 +49,7 @@ public class StrategyEco extends Strategy{
     }
 
     @Override
-    public Constructions constructionToBuild(Hand hand, int gold) {
+    public Constructions constructionToBuild(Player player) {
         return null;
     }
 
