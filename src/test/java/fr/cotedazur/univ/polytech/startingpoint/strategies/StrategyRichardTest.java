@@ -153,7 +153,7 @@ class StrategyRichardTest {
 
     @Test
     void assassinTestRichard() {
-        Strategy strategyRichard = new StrategyRichard("Richard");
+        StrategyRichard strategyRichard = new StrategyRichard("Richard");
         Player player10 = new Player(1,2,new Hand(), new City(), strategyRichard);
         Player player20 = new Player(2,2,new Hand(), new City(), strategyRichard);
         Player player30 = new Player(3,2,new Hand(), new City(), strategyRichard);
@@ -172,6 +172,7 @@ class StrategyRichardTest {
         draw.add(forteresse);
         draw.add(prison);
         draw.add(bastion);
+        strategyRichard.setCharacters(new ArrayList<>(List.of(Character.CONDOTTIERE, Character.ARCHITECTE, Character.ASSASSIN, Character.VOLEUR)));
         strategyRichard.assassin(playersList, draw);
         assertFalse(player10.isDead());
         assertTrue(player20.isDead());
@@ -222,9 +223,9 @@ class StrategyRichardTest {
         player20.getCity().add(bastion);
         strategyRichard.assassin(playersList, draw);
         assertFalse(player10.isDead());
-        assertTrue(player20.isDead());
+        assertFalse(player20.isDead());
         assertFalse(player30.isDead());
-        assertFalse(player40.isDead());
+        assertTrue(player40.isDead());
 
     }
 

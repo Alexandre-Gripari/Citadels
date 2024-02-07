@@ -14,6 +14,15 @@ import java.util.HashSet;
 import java.util.List;
 
 public class StrategyRichard extends Strategy1{
+    private List<Character> characters = new ArrayList<>();
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
 
     public StrategyRichard(String description) {
         super(description);
@@ -82,6 +91,7 @@ public class StrategyRichard extends Strategy1{
 
     @Override
     public Character chooseCharacter(Player player, List<Character> characters, Player[] players){
+        this.characters = characters;
         List<Character> characterPriorityRichard = getCharacterPriorityRichard(players, characters);
         for (Character c : characterPriorityRichard){
             if (characters.contains(c)) return c;
@@ -104,6 +114,28 @@ public class StrategyRichard extends Strategy1{
         Player self = players[0];
         Player[] playersCopy = players.clone();
         Arrays.sort(playersCopy);
+        if (isMaybeLastTurn(players) && new HashSet<>(characters).containsAll(Arrays.asList(Character.ASSASSIN, Character.EVEQUE, Character.CONDOTTIERE))) {
+            playDefault(players, draw);
+            Character.ASSASSIN.ability(Character.EVEQUE, players);
+            return;
+        }
+        if (isMaybeLastTurn(players) && !characters.contains(Character.EVEQUE)) {
+            playDefault(players, draw);
+            Character c = characters.get(0);
+            for (Character character : characters) {
+                if (c.equals(Character.CONDOTTIERE)) {
+                    c = character;
+                    break;
+                }
+            }
+            Character.ASSASSIN.ability(c, players);
+            return;
+        }
+        if (isMaybeLastTurn(players) && !characters.contains(Character.CONDOTTIERE)) {
+            playDefault(players, draw);
+            Character.ASSASSIN.ability(Character.MAGICIEN, players);
+            return;
+        }
         if (super.maxCitySizeExcept8(players) == 6) {
             playDefault(players, draw);
             Character.ASSASSIN.ability(Character.ROI, players);
@@ -145,6 +177,15 @@ public class StrategyRichard extends Strategy1{
     @Override
     public void magician(Player[] players, Draw draw) {
         Player p0 = new Player(0, new Hand());
+
+        if (isMaybeLastTurn(players) && !characters.contains(Character.CONDOTTIERE) && players[0].getHand().size() <= 3) {
+            Player[] playersCopy = players.clone();
+            Arrays.sort(playersCopy);
+            Character.MAGICIEN.ability(draw, players[0], playersCopy[players.length - 1]);
+            playDefault(players, draw);
+            return;
+        }
+
         for (Player player : players) {
             if (player.getCity().size() >= 6) p0 = player;
         }
