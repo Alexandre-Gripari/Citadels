@@ -91,8 +91,10 @@ class WondersPowerTest {
         playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie, player1}, d);
         assertEquals(13, playerWithEcoleDeMagie.getGold());
 
+        player1.setGold(0);
+        player1.setCharacter(Character.MARCHAND);
         playerWithEcoleDeMagie.setCharacter(Character.VOLEUR);
-        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie}, d);
+        playerWithEcoleDeMagie.getStrategy().play(new Player[]{playerWithEcoleDeMagie, player1}, d);
         assertEquals(15, playerWithEcoleDeMagie.getGold());
 
         playerWithEcoleDeMagie.setCharacter(Character.MAGICIEN);

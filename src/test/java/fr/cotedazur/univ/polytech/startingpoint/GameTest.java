@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.logging.Level;
@@ -12,11 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
+    @BeforeEach
+    void noLog(){
+        MyLogger.setLogLevel(Level.OFF);
+    }
+
     @Test
     void init() {
-
-        MyLogger.setLogLevel(Level.OFF);
-
         Game game = new Game(new Player[]{new Player(1, new Hand()), new Player(2, new Hand())});
         game.init();
         assertEquals(2, game.getPlayers().length);

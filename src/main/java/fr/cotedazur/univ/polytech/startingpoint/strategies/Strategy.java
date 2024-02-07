@@ -38,6 +38,10 @@ public abstract class Strategy {
         return null;
     }
 
+    public abstract void playDefault(Player[] players, Draw draw);
+
+    public abstract Constructions constructionToBuild(Hand hand, int gold);
+
     public abstract List<Character> getCharacterPriority(Player[] players);
 
     public abstract Constructions chooseCard(List<Constructions> constructions, Player player);

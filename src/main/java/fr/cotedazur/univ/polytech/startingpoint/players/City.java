@@ -66,4 +66,12 @@ public class City{
         }
         return Color.NEUTRE;
     }
+
+    public int getNumberOfColor(Color color){
+        int count = 0;
+        for (Constructions c : city) {
+            if (c.getColor() == color) count++;
+        }
+        return count;
+    }
 }

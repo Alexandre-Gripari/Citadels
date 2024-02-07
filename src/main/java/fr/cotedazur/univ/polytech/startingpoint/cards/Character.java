@@ -12,20 +12,29 @@ public enum Character{
 
     ASSASSIN("Assassin", Color.NEUTRE, 1){
         @Override
-        public void ability(Player player){
-            MyLogger.log(Level.INFO, "Le joueur a assasiné " + player.getCharacter());
-            player.kill();
+        public void ability(Character character, Player ... players){
+            MyLogger.log(Level.INFO, "Le joueur a assasiné " + character.getName());
+            for (Player p : players) {
+                if (p.getCharacter().equals(character)) {
+                    p.kill();
+                }
+            }
         }
     },
 
     VOLEUR("Voleur", Color.NEUTRE, 2){
         @Override
-        public void ability(Player ... players){
-            if(!players[1].getCharacter().equals(ASSASSIN) && !players[1].isDead()) {
-                MyLogger.log(Level.INFO, "Le joueur a volé" + players[1].getCharacter());
-                int butin = players[1].getGold();
-                players[1].setGold(0);
-                players[0].addGold(butin);
+        public void ability(Character character, Player ... players){
+            Player cible = null;
+            Player self = players[0];
+            for (Player p : players){
+                if (p.getCharacter().equals(character)) cible = p;
+            }
+            if(cible != null && !cible.getCharacter().equals(ASSASSIN) && !cible.isDead()) {
+                MyLogger.log(Level.INFO, "Le joueur a volé" + cible.getCharacter());
+                int butin = cible.getGold();
+                cible.setGold(0);
+                self.addGold(butin);
             }
         }
     },
@@ -130,6 +139,7 @@ public enum Character{
         this.number = num;
     }
 
+    public void ability(Character character, Player[] players) {/* abilité du joueur sur les autres personages*/}
     public void ability(Player self) {/* abilité du joueur lui-même*/}
     public void ability(Player ... players) {/* abilité du joueur sur les autres joueurs*/}
     public Constructions ability(Constructions c, Player self, Player opponent) { return null;/* abilité du joueur sur les autres joueurs et sur une construction*/}
@@ -140,6 +150,13 @@ public enum Character{
     public Color getColor() { return this.color; }
 
     public int getNumber() { return this.number; }
+
+    public boolean isDead(Player[] players) {
+        for (Player p : players) {
+            if (p.getCharacter().equals(this) && p.isDead()) return true;
+        }
+        return false;
+    }
 
 }
 
