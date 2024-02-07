@@ -6,13 +6,13 @@ import com.beust.jcommander.Parameter;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.logging.Level;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 
 public class Main {
@@ -71,6 +71,16 @@ public class Main {
                     players[a].setNumberOfDraw(Integer.parseInt(oldData.get(a + 1)[5]));
                     players[a].setDrawRate(Integer.parseInt(oldData.get(a + 1)[6]));
                 }
+        } else if (csv) {
+            String[] legende = {"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"};
+            if (!new File(Csv.getFilePath()).exists()) {
+                Csv.appendIntoCsvFile(Csv.getFilePath(), legende);
+            } else {
+                CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
+                if (!Arrays.equals(reader.readNext(), legende)) {
+                    Csv.appendIntoCsvFile(Csv.getFilePath(), legende);
+                }
+                reader.close();
             }
             MyLogger.setLogLevel(Level.OFF);
             for (int i = 0; i < 2000; i++) {
@@ -86,7 +96,9 @@ public class Main {
             }
             Csv.appendIntoCsvFile(Csv.getFilePath(), newStats);
         }
-
-
+            for (Player p : players) {
+                Csv.appendIntoCsvFile(Csv.getFilePath(),p.getStats());
+            }
+        }
     }
 }

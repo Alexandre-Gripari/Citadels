@@ -191,6 +191,7 @@ public class Strategy1 extends Strategy{
         int minCost = Integer.MAX_VALUE;
         for (Construction c : city.getCity()) {
             if (c.getValue() < minCost && c.getName() != "Donjon") minCost = c.getValue();
+            if (c.getValue() < minCost) minCost = c.getValue();
         }
         return minCost;
     }

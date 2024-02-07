@@ -1,11 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
+import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +30,25 @@ public class StrategyEco extends Strategy{
         characters.addAll(List.of(Character.ARCHITECTE, Character.ASSASSIN, Character.MAGICIEN));
         return  characters;
     }
-
-
     public Character chooseCharacter(Player player, List<Character> characters, Player[] players){
-        List<Character> characterList = getCharacterPriority(players);
+        Character character = super.chooseCharacter(player, characters, players);
+        if (character != null) return character;
+        List<Character> characterList =getCharacterPriority(players);
         for (Character c : characterList) {
             if (characters.contains(c)) {
                 return c;
             }
         }
-        return Character.ROI;
+        return characters.get(0);
+    }
+
+    @Override
+    public void playDefault(Player[] players, Draw draw) {
+    }
+
+    @Override
+    public Construction constructionToBuild(Hand hand, int gold) {
+        return null;
     }
 
     public Construction constructionToBuild(Player player) {
@@ -91,6 +104,7 @@ public class StrategyEco extends Strategy{
         }
     }
 
+    @Override
     public void playDefault(Player[] players, Draw draw) {
         players[0].pick(draw, goldOrCard(players, draw));
         players[0].buildConstruction(constructionToBuild(players[0]));
@@ -99,6 +113,24 @@ public class StrategyEco extends Strategy{
     @Override
     public Construction constructionToBuild(Hand hand, int gold) {
         return null;
+    }
+    public Construction chooseCard(List<Construction> constructions, Player player) {
+        Construction choix = new Construction("Lidl", Color.NEUTRE, 99);
+        List<Character> mostProfitableCharacters = super.mostProfitableCharacters(player);
+        List<Color> mostProfitableColor = new ArrayList<>();
+        mostProfitableColor.add(Color.MERVEILLEUX);
+        for (Character character : mostProfitableCharacters) {
+            mostProfitableColor.add(character.getColor());
+        }
+        mostProfitableColor.add(Color.NEUTRE);
+        for (Construction c : constructions) {
+            if (c.getName().equals("Ecole de magie")) return c;
+            if (mostProfitableColor.indexOf(c.getColor()) < mostProfitableColor.indexOf(choix.getColor())
+                    || (mostProfitableColor.indexOf(c.getColor()) == mostProfitableColor.indexOf(choix.getColor())
+                    && c.getValue() > choix.getValue())) choix = c;
+        }
+        if(choix.getName().equals("Lidl")) choix=constructions.get(0);
+        return choix;
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.

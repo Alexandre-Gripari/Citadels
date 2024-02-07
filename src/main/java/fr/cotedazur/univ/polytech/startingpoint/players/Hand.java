@@ -45,24 +45,19 @@ public class Hand{ // extends Arraylist ?
 
     public void remove(Construction c) {
         hand.remove(c);
-
     }
 
     public Construction min() {
-        Construction c = new Construction("null", null, 110);
-
+        Construction c = new Construction("null", null, 10);
         for (Construction construction : hand)
             if (c.getValue() >= construction.getValue()) c = construction;
-
         return c;
     }
 
     public Construction max() {
         Construction c = new Construction("null", null, -1);
-
         for (Construction construction : hand)
             if (c.getValue() <= construction.getValue()) c = construction;
-
         return c;
     }
 }

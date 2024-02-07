@@ -42,6 +42,9 @@ class GameTest {
         game.getPlayers()[0].setScore(game.getPlayers()[0].getCity().cityValue());
         game.getPlayers()[1].setScore(game.getPlayers()[1].getCity().cityValue());
         game.sortPlayersByPoints();
+        assertEquals(1, game.getPlayers()[1].getNumber());
+        game.getPlayers()[0].getCity().add(new Construction("Temple", Color.RELIGIEUX, 4));
+        game.sortPlayersByPoints();
         assertEquals(2, game.getPlayers()[1].getNumber());
     }
 
@@ -95,6 +98,8 @@ class GameTest {
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 5));
         game.playerHasFinished(game.getPlayers()[0]);
+        assertFalse(game.isFinished());
+        game.getPlayers()[0].getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 5));
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 5));

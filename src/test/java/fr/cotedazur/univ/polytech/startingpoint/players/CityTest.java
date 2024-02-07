@@ -27,6 +27,7 @@ class CityTest {
     //Test cour des miracles
     Construction m2 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
     Construction m3 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
+
     Construction c7 = new Construction("religieux", Color.RELIGIEUX, 1);
     Construction c8 = new Construction("noble", Color.NOBLE, 1);
     Construction c9 = new Construction("soldatesque", Color.SOLDATESQUE, 1);

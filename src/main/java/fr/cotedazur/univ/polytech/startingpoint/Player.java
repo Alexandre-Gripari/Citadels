@@ -272,7 +272,7 @@ public class Player implements Comparable<Player> {
             hand.add(c);
         }
     }
-    public void discardConstruction(Construction c, Draw d){
+public void discardConstruction(Construction c, Draw d){
         d.add(c);
         hand.remove(c);
     }

@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
+
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
@@ -163,6 +164,13 @@ class PlayerTest {
         p2.getCity().add(new Construction("Monastère", Color.RELIGIEUX, 3));
         p1.setScore(p1.getCity().cityValue());
         p2.setScore(p2.getCity().cityValue());
+
+        assertEquals(1, p1.compareTo(p2));
+        p2.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
+        assertEquals(0, p1.compareTo(p2));
+        p1.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
+        assertEquals(1, p1.compareTo(p2));
+        p2.getCity().add(new Construction("Monastère", Color.RELIGIEUX, 3));
         assertEquals(-2, p1.compareTo(p2));
     }
 
