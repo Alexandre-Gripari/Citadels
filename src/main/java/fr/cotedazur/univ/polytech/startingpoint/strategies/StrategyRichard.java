@@ -136,6 +136,11 @@ public class StrategyRichard extends Strategy1{
             Character.ASSASSIN.ability(Character.MAGICIEN, players);
             return;
         }
+        if (canArchiRush(players) != players[0] && canArchiRush(players) != null) {
+            playDefault(players, draw);
+            Character.ASSASSIN.ability(Character.ARCHITECTE, players);
+            return;
+        }
         if (super.maxCitySizeExcept8(players) == 6) {
             playDefault(players, draw);
             Character.ASSASSIN.ability(Character.ROI, players);
