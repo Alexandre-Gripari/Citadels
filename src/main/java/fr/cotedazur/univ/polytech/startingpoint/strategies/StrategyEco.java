@@ -13,7 +13,7 @@ import java.util.List;
 
 /*Le bot qui préfère économiser son or pour poser la carte au coût le plus élevé de sa main*/
 public class StrategyEco extends Strategy{
-    @Override
+
     public void useAbility(Draw draw, Player[] players) {
 
     }

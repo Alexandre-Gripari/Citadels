@@ -13,12 +13,6 @@ import java.util.List;
 
 public class StrategyRichard extends Strategy1{
 
-
-    @Override
-    public void useAbility(Draw draw, Player[] players) {
-        return;
-    }
-
     public StrategyRichard(String description) {
         super(description);
     }

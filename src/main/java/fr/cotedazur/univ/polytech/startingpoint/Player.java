@@ -17,8 +17,8 @@ import java.util.logging.Logger;
 
 
 public class Player implements Comparable<Player> {
-    private int numberOfVictory= 0;
-    private int numberOfDefeat= 0;
+    private int numberOfVictory = 0;
+    private int numberOfDefeat = 0;
     private int numberOfDraw = 0;
     private int cumulatedScore = 0;
     private int number;
@@ -29,7 +29,10 @@ public class Player implements Comparable<Player> {
     private List<Wonder> wonders = new ArrayList<>();
     private Strategy strategy;
 
+    private Integer score = 0;
+
     private boolean isDead=false;
+
 
     private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
 
@@ -254,6 +257,10 @@ public class Player implements Comparable<Player> {
         city.remove(c);
     }
 
+    public int getScore() {return score;}
+
+    public void setScore(Integer newScore) {score = newScore;}
+
     public int getNumberOfVictory() {
         return numberOfVictory;
     }
@@ -297,6 +304,17 @@ public class Player implements Comparable<Player> {
         this.wonders = new ArrayList<>();
         this.isDead = false;
         this.gold = 2;
+        this.score = 0;
+    }
+    public String[] getStats() {
+        String strat = this.getStrategy().getDescription();
+        String wins = String.valueOf(getNumberOfVictory());
+        String winRate = String.valueOf(this.getNumberOfVictory() / 20);
+        String losses = String.valueOf(this.getNumberOfDefeat());
+        String lossRate = String.valueOf(this.getNumberOfDefeat() / 20);
+        String draws = String.valueOf(this.getNumberOfDraw());
+        String drawRate = String.valueOf(this.getNumberOfDraw() / 20);
+        return new String[]{strat, wins, winRate+"%", losses, lossRate+"%", draws, drawRate+"%"};
     }
 }
 

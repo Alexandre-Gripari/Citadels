@@ -25,12 +25,12 @@ public enum Character{
     VOLEUR("Voleur", Color.NEUTRE, 2){
         @Override
         public void ability(Character character, Player ... players){
-            Player cible = players[1];
+            Player cible = null;
             Player self = players[0];
             for (Player p : players){
                 if (p.getCharacter().equals(character)) cible = p;
             }
-            if(!cible.getCharacter().equals(ASSASSIN) && !cible.isDead()) {
+            if(cible != null && !cible.getCharacter().equals(ASSASSIN) && !cible.isDead()) {
                 MyLogger.log(Level.INFO, "Le joueur a volé" + cible.getCharacter());
                 int butin = cible.getGold();
                 cible.setGold(0);

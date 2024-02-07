@@ -12,7 +12,6 @@ public abstract class Strategy {
 
     private String description;
 
-    public abstract void useAbility(Draw draw, Player[] players);
     public Strategy(String description) {
         this.description = description;
     }
@@ -44,7 +43,6 @@ public abstract class Strategy {
     public abstract Constructions constructionToBuild(Hand hand, int gold);
 
     public abstract List<Character> getCharacterPriority(Player[] players);
-    abstract void useWonder(List<Wonder> wonders);
 
     public abstract Constructions chooseCard(List<Constructions> constructions, Player player);
     public void play(Player[] players, Draw draw) {

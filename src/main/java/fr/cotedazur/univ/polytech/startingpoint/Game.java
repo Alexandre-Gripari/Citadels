@@ -15,6 +15,7 @@ public class Game {
     private Draw draw;
     private List<Character> characters;
     private Character[] charactersDiscarded = new Character[3];
+    private boolean someoneFinished = false;
 
     public Game(Player[] players) {
         this.players = players;
@@ -72,8 +73,12 @@ public class Game {
     }
 
     public boolean isFinished() {
-        for (Player player : players)
-            if (player.getCity().size() >= 8) return true;
+        if (someoneFinished) {
+            for (Player player : players) {
+                player.setScore(player.getScore()+player.getCity().cityValue());
+            }
+            return true;
+        }
         return false;
     }
 
@@ -104,32 +109,43 @@ public class Game {
             for (Player player : players) {
                 player.play(draw, getOpponents(player));
                 MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or. \nLe joueur " + player.getNumber() + " a dans sa main : " + player.getHand() + "\n"); //+ " cartes dans sa main.\n");
+                playerHasFinished(player);
             }
         }
         sortPlayersByPoints();
         for (int i= players.length-1,j=1;i>=0;i--,j++ ){
-            if(i<players.length-1 && players[i].getCity().cityValue() == players[i+1].getCity().cityValue()) j--;
-            MyLogger.log(Level.INFO, "Le joueur " + players[i].getNumber() + " termine à la " + j + "ème place avec " + players[i].getCity().cityValue() + " points.");
+            if(i<players.length-1 && players[i].getScore() == players[i+1].getScore()) j--;
+            MyLogger.log(Level.INFO, "Le joueur " + players[i].getNumber() + " termine à la " + j + "ème place avec " + players[i].getScore() + " points.");
         }
 
     }
 
+    public void playerHasFinished(Player player) {
+        if (player.getCity().size() >= 8) {
+            if (!someoneFinished) {
+                someoneFinished = true;
+                player.setScore(player.getScore()+4);
+            }
+            else player.setScore(player.getScore()+2);
+        }
+    }
+
     public void calculateStats(){
-        int refValue = players[players.length-1].getCity().cityValue();
+        int refValue = players[players.length-1].getScore();
         for (int i = 0; i <= players.length-2; i++) {
-            players[i].setCumulatedScore(players[i].getCumulatedScore() + players[i].getCity().cityValue());
-            if (players[i].getCity().cityValue() == refValue) players[i].setNumberOfDraw(players[i].getNumberOfDraw() + 1);
+            players[i].setCumulatedScore(players[i].getCumulatedScore() + players[i].getScore());
+            if (players[i].getScore() == refValue) players[i].setNumberOfDraw(players[i].getNumberOfDraw() + 1);
             else players[i].setNumberOfDefeat(players[i].getNumberOfDefeat() + 1);
         }
-        if (refValue == players[players.length-2].getCity().cityValue()) players[players.length-1].setNumberOfDraw(players[players.length-1].getNumberOfDraw() + 1);
+        if (refValue == players[players.length-2].getScore()) players[players.length-1].setNumberOfDraw(players[players.length-1].getNumberOfDraw() + 1);
         else players[players.length-1].setNumberOfVictory(players[players.length-1].getNumberOfVictory() + 1);
-        players[players.length-1].setCumulatedScore(players[players.length-1].getCumulatedScore() + players[players.length-1].getCity().cityValue());
+        players[players.length-1].setCumulatedScore(players[players.length-1].getCumulatedScore() + players[players.length-1].getScore());
 
 
     }
 
     public void sortPlayersByPoints(){
-        Arrays.sort(players);
+        Arrays.sort(players, Comparator.comparingInt(Player::getScore));
     }
 
     public Player[] getOpponents(Player player) {

@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.logging.Level;
@@ -12,11 +13,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
 
+    @BeforeEach
+    void noLog(){
+        MyLogger.setLogLevel(Level.OFF);
+    }
+
     @Test
     void init() {
-
-        MyLogger.setLogLevel(Level.OFF);
-
         Game game = new Game(new Player[]{new Player(1, new Hand()), new Player(2, new Hand())});
         game.init();
         assertEquals(2, game.getPlayers().length);
@@ -31,28 +34,74 @@ class GameTest {
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[1].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        game.getPlayers()[0].setScore(game.getPlayers()[0].getCity().cityValue());
+        game.getPlayers()[1].setScore(game.getPlayers()[1].getCity().cityValue());
         game.sortPlayersByPoints();
         assertEquals(1, game.getPlayers()[1].getNumber());
         game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 4));
+        game.getPlayers()[0].setScore(game.getPlayers()[0].getCity().cityValue());
+        game.getPlayers()[1].setScore(game.getPlayers()[1].getCity().cityValue());
         game.sortPlayersByPoints();
         assertEquals(2, game.getPlayers()[1].getNumber());
+    }
+
+    @Test
+    void playerHasFinished() {
+        Game game = new Game(new Player[]{new Player(1, new Hand()), new Player(2, new Hand())});
+        game.init();
+        game.playerHasFinished(game.getPlayers()[0]);
+        assertEquals(0, game.getPlayers()[0].getScore());
+        game.playerHasFinished(game.getPlayers()[1]);
+        assertEquals(0, game.getPlayers()[1].getScore());
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.playerHasFinished(game.getPlayers()[0]);
+        assertEquals(0, game.getPlayers()[0].getScore());
+        game.playerHasFinished(game.getPlayers()[1]);
+        assertEquals(0, game.getPlayers()[1].getScore());
+        game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        game.playerHasFinished(game.getPlayers()[0]);
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.getPlayers()[1].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.playerHasFinished(game.getPlayers()[1]);
+        assertEquals(4, game.getPlayers()[0].getScore());
+        assertEquals(2, game.getPlayers()[1].getScore());
+        game.isFinished();
+        assertEquals(12, game.getPlayers()[0].getScore());
+        assertEquals(47, game.getPlayers()[1].getScore());
     }
 
     @Test
     void isFinished() {
         Game game = new Game(new Player[]{new Player(1, new Hand()), new Player(2, new Hand())});
         game.init();
+        game.playerHasFinished(game.getPlayers()[0]);
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.playerHasFinished(game.getPlayers()[0]);
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.playerHasFinished(game.getPlayers()[0]);
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        game.playerHasFinished(game.getPlayers()[0]);
         assertTrue(game.isFinished());
     }
 
