@@ -77,10 +77,17 @@ class Strategy1Test {
         hand.add(ecole);
         hand.add(cour);
         hand.add(hotel);
+
+        City city = new City();
+
         Strategy1 s = new Strategy1("Test");
 
-        assertEquals(cour, s.constructionToBuild(hand, 5));
-        assertEquals(null, s.constructionToBuild(hand, 0));
+        Player player = new Player(1, 2, hand, city,s);
+
+        assertEquals(cour, s.constructionToBuild(player));
+
+        player.setGold(0);
+        assertNull(s.constructionToBuild(player));
     }
 
     @Test

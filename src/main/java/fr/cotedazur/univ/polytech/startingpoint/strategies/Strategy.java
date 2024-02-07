@@ -40,7 +40,7 @@ public abstract class Strategy {
 
     public abstract void playDefault(Player[] players, Draw draw);
 
-    public abstract Constructions constructionToBuild(Hand hand, int gold);
+    public abstract Constructions constructionToBuild(Player player);
 
     public abstract List<Character> getCharacterPriority(Player[] players);
 
@@ -174,6 +174,13 @@ public abstract class Strategy {
         return null;
     }
 
+    public int maxCitySizeExcept8(Player[] players) {
+        int size = 0;
+        for (Player player : players) {
+            if (player.getCity().size() >= size && player.getCity().size() != 8 && player != players[0]) size = player.getCity().size();
+        }
+        return size;
+    }
 }
 
 
