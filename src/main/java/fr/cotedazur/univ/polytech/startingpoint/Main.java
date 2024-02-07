@@ -18,7 +18,7 @@ import java.util.logging.Level;
 
 public class Main {
     @Parameter(names = {"--2thousands"})
-    boolean twoThousands = true;
+    boolean twoThousands = false;
     @Parameter(names = {"--demo"})
     boolean demo = false;
     @Parameter(names = {"--csv"})
@@ -47,7 +47,7 @@ public class Main {
         if (twoThousands) {
             MyLogger.setLogLevel(Level.OFF);
             // que lui meme pour l'instant on a pas d'autres joueurs
-            for (int i = 0; i < 1000000; i++) {
+            for (int i = 0; i < 1000; i++) {
                 Game game = new Game(players);
                 game.init();
                 game.play();
@@ -61,7 +61,7 @@ public class Main {
                         " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw()/10 + "%)" + " SM:" + player.getAverageScore());
             }
             MyLogger.setLogLevel(Level.OFF);
-            for (int i = 0; i < 1000000; i++) {
+            for (int i = 0; i < 1000; i++) {
                 Game game = new Game(playersRichard);
                 game.init();
                 game.play();

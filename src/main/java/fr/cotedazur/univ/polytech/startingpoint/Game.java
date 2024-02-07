@@ -16,6 +16,7 @@ public class Game {
     private List<Character> characters;
     private Character[] charactersDiscarded = new Character[3];
     private boolean someoneFinished = false;
+    private boolean noDraw = false;
 
     public Game(Player[] players) {
         this.players = players;
@@ -100,7 +101,7 @@ public class Game {
 
 
     public void play() {
-        while(!isFinished()) {
+        while(!isFinished() && !draw.getDeck().isEmpty() && !noDraw) {
             nbTurn++;
             MyLogger.log(Level.INFO, "\nTour " + (int) nbTurn + " : ");
             discardCharacter();
@@ -110,6 +111,11 @@ public class Game {
                 player.play(draw, getOpponents(player));
                 MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or. \nLe joueur " + player.getNumber() + " a dans sa main : " + player.getHand() + "\n"); //+ " cartes dans sa main.\n");
                 playerHasFinished(player);
+                if (player.getCity().getCity().contains(new Constructions("pioche vide", Color.NEUTRE, 0)) || player.getHand().getHand().contains(new Constructions("pioche vide", Color.NEUTRE, 0))) {
+                    player.getCity().getCity().removeAll(Collections.singleton(new Constructions("pioche vide", Color.NEUTRE, 0)));
+                    noDraw = true;
+                    break;
+                }
             }
         }
         sortPlayersByPoints();

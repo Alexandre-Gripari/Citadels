@@ -65,7 +65,7 @@ public class Hand{ // extends Arraylist ?
 
         if (player.getHand().isEmpty()) return null;
         for (Constructions construction : hand)
-            if (c.getValue() >= construction.getValue()
+            if (construction != null && c.getValue() >= construction.getValue()
                     && !player.getCity().getCity().contains(construction)) c = construction;
 
         if (c.getName().equals("null")) return null;

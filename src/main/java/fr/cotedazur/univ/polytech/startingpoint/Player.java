@@ -106,18 +106,17 @@ public class Player implements Comparable<Player> {
     }
 
     public void play(Draw draw, Player[] players) {
+        if (draw.getDeck().isEmpty()) {
+            LOGGER.log(Level.INFO, "La pioche est vide");
+            return;
+        }
         if(isDead) {
             resurrect();
             return;
         }
         MyLogger.log(Level.INFO, "Le joueur " + number + " est le " + character.getName());
         strategy.play(players, draw);
-        for (Constructions c : hand.getHand()) {
-            hand.getHand().removeIf(Objects::isNull);
-        }
-        for (Constructions c : city.getCity()) {
-            city.getCity().removeIf(Objects::isNull);
-        }
+
 
 
         /*if (hand.isEmpty()) {
