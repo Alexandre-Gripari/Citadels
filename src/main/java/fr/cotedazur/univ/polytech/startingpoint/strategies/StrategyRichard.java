@@ -195,7 +195,7 @@ public class StrategyRichard extends Strategy1{
             if (player.getCity().size() >= 6) p0 = player;
         }
 
-        if (super.maxCitySizeExcept8(players) >= 6 &&
+        if (players[0].getHand().min() != null && super.maxCitySizeExcept8(players) >= 6 &&
                 players[0].getHand().min().getValue() > p0.getGold()+2) {
             Character.MAGICIEN.ability(draw, players[0], p0);
             playDefault(players, draw);

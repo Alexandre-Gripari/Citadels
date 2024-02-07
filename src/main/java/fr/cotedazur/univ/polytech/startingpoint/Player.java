@@ -12,6 +12,7 @@ import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -111,6 +112,13 @@ public class Player implements Comparable<Player> {
         }
         MyLogger.log(Level.INFO, "Le joueur " + number + " est le " + character.getName());
         strategy.play(players, draw);
+        for (Constructions c : hand.getHand()) {
+            hand.getHand().removeIf(Objects::isNull);
+        }
+        for (Constructions c : city.getCity()) {
+            city.getCity().removeIf(Objects::isNull);
+        }
+
 
         /*if (hand.isEmpty()) {
             hand.add(takeConstruction(draw));
@@ -128,7 +136,9 @@ public class Player implements Comparable<Player> {
 
     public void drawConstruction(Draw d, int n) {
         ArrayList<Constructions> temp = takeConstructions(d, n);
-        hand.add(strategy.chooseCard(temp, this));
+        Constructions c = strategy.chooseCard(temp, this);
+        if (c == null) return;
+        hand.add(c);
         putBack(d, temp);
     }
 

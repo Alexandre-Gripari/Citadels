@@ -49,6 +49,7 @@ public enum WondersPower {
     CIMETIERE {
         @Override
         public void power(Constructions c, Player ... players){
+            if (c == null) return;
             Wonder associatedWonder = this.getWonder();
             for (Player player : players) {
                 if (player.getWonders().contains(associatedWonder) && player.getCharacter() != Character.CONDOTTIERE) {

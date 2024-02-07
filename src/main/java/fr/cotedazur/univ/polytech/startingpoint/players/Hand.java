@@ -63,6 +63,7 @@ public class Hand{ // extends Arraylist ?
     public Constructions minNotInCity(Player player) {
         Constructions c = new Constructions("null", null, 110);
 
+        if (player.getHand().isEmpty()) return null;
         for (Constructions construction : hand)
             if (c.getValue() >= construction.getValue()
                     && !player.getCity().getCity().contains(construction)) c = construction;
