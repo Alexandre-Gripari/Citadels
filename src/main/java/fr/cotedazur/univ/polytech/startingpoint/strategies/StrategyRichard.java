@@ -8,7 +8,9 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class StrategyRichard extends Strategy1{
@@ -32,11 +34,60 @@ public class StrategyRichard extends Strategy1{
         return super.getCharacterPriority(players);
     }
 
-    public Character chooseCharacter(Player player, List<Character> characters, Player[] players){
-        return super.chooseCharacter(player, characters, players);
+    public List<Character> getCharacterPriorityRichard(Player[] players, List<Character> characters){
+        List<Character> characterPriority = new ArrayList<>();
+        if (isMaybeLastTurn(players)){
+            if (isWinning(players)){
+                characterPriority.add(Character.ASSASSIN);
+            }
+            else if (new HashSet<>(characters).containsAll(Arrays.asList(Character.ASSASSIN, Character.EVEQUE, Character.CONDOTTIERE))){
+                characterPriority.add(Character.CONDOTTIERE);
+                characterPriority.add(Character.ASSASSIN);
+            }
+            else if (characters.contains(Character.EVEQUE)) {
+                characterPriority.add(Character.ASSASSIN);
+                characterPriority.add(Character.CONDOTTIERE);
+            }
+            else if (!characters.contains(Character.CONDOTTIERE)) {
+                characterPriority.add(Character.ASSASSIN);
+                characterPriority.add(Character.MAGICIEN);
+            }
+            else if (!characters.contains(Character.ASSASSIN)) {
+                characterPriority.add(Character.CONDOTTIERE);
+                characterPriority.add(Character.EVEQUE);
+            }
+        }
+        if (gotCitySize(6, players)){
+                characterPriority.add(Character.ROI);
+                characterPriority.add(Character.ASSASSIN);
+                characterPriority.add(Character.CONDOTTIERE);
+                characterPriority.add(Character.EVEQUE);
+            }
+        if (canArchiRush(players) != null){
+            if (canArchiRush(players).equals(players[0])) {
+                characterPriority.add(Character.ARCHITECTE);
+            }
+            else {
+                characterPriority.add(Character.ASSASSIN);
+                characterPriority.add(Character.ARCHITECTE);
+            }
+        }
+        List<Character> otherPriority = getCharacterPriority(players);
+        for (Character c : otherPriority){
+            if (!characterPriority.contains(c)) characterPriority.add(c);
+        }
+        return characterPriority;
+
     }
 
-    public void useWonder(List<Wonder> wonders) {return;}
+    @Override
+    public Character chooseCharacter(Player player, List<Character> characters, Player[] players){
+        List<Character> characterPriorityRichard = getCharacterPriorityRichard(players, characters);
+        for (Character c : characterPriorityRichard){
+            if (characters.contains(c)) return c;
+        }
+        return characters.get(0); // normalement on ne devrait jamais arriver ici
+    }
 
     @Override
     public Constructions chooseCard(List<Constructions> constructions, Player player) {
