@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class StrategyTest {
 
@@ -131,5 +131,117 @@ class StrategyTest {
         assertEquals(Character.EVEQUE,strat.mostProfitableCharacters(p22).get(2));
         assertEquals(Character.CONDOTTIERE,strat.mostProfitableCharacters(p22).get(3));
 
+    }
+
+    @Test
+    void isMaybeLastTurnTest() {
+        Player p1 = new Player(0, new Hand());
+        Player p2 = new Player(1, new Hand());
+
+        assertFalse(p1.getStrategy().isMaybeLastTurn(new Player[]{p1, p2}));
+
+        p1.getCity().add(marché);
+        p1.getCity().add(marché);
+        p1.getCity().add(marché);
+        p1.getCity().add(marché);
+        p1.getCity().add(marché);
+        p1.getCity().add(marché);
+        p1.getCity().add(marché);
+
+        assertTrue(p1.getStrategy().isMaybeLastTurn(new Player[]{p1,p2}));
+    }
+
+    @Test
+    void isWinningTest() {
+        Player p1 = new Player(0, new Hand());
+        Player p2 = new Player(1, new Hand());
+
+        p1.getCity().add(chateau, cathédrale, monastère);
+        p2.getCity().add(marché,temple);
+
+        assertTrue(p1.getStrategy().isWinning(new Player[]{p1, p2}));
+        assertFalse(p2.getStrategy().isWinning(new Player[]{p2, p1}));
+    }
+
+    @Test
+    void citySizeTest() {
+        Player p1 = new Player(0, new Hand());
+        Player p2 = new Player(1, new Hand());
+        Player p3 = new Player(3, new Hand());
+        Player p4 = new Player(4, new Hand());
+
+        p1.getCity().add(marché, marché, marché);
+        p3.getCity().add(marché);
+
+        Player[] players = new Player[]{p1, p2, p3, p4};
+
+        assertTrue(p1.getStrategy().gotCitySize(3, players));
+        assertTrue(p1.getStrategy().gotCitySize(1, players));
+        assertFalse(p1.getStrategy().gotCitySize(-8, players));
+        assertFalse(p1.getStrategy().gotCitySize(4, players));
+    }
+
+    @Test
+    void canArchiRushTest() {
+        Player p1 = new Player(0, new Hand());
+        Player p2 = new Player(1, new Hand());
+        Player p3 = new Player(3, new Hand());
+        Player p4 = new Player(4, new Hand());
+
+        Player[] players = new Player[]{p1, p2, p3, p4};
+
+        assertNull(p1.getStrategy().canArchiRush(players));
+
+        p3.getCity().add(marché, marché, marché, marché, marché);
+        assertNull(p1.getStrategy().canArchiRush(players));
+
+        p3.setGold(5);
+        assertNull(p1.getStrategy().canArchiRush(players));
+
+        p3.getHand().add(chateau);
+        assertEquals(p3, p1.getStrategy().canArchiRush(players));
+    }
+  
+    @Test
+    void maxCitySizeExcept8Test() {
+        Hand h1 = new Hand();
+        City c1 = new City();
+        Player p1 = new Player(1,0,h1,c1);
+
+        Hand h2 = new Hand();
+        City c2 = new City();
+        Player p2 = new Player(2,0,h2,c2);
+
+        Hand h3 = new Hand();
+        City c3 = new City();
+        Player p3 = new Player(3,0,h3,c3);
+
+        Hand h4 = new Hand();
+        City c4 = new City();
+        Player p4 = new Player(4,0,h4,c4);
+
+        Player[] players = new Player[]{p1,p2,p3,p4};
+
+        assertEquals(0, p1.getStrategy().maxCitySizeExcept8(players));
+
+        c1.add(marché);
+        c1.add(marché);
+        c1.add(marché);
+        c1.add(marché);
+        c1.add(marché);
+
+        c2.add(marché);
+        c2.add(marché);
+        assertEquals(2, p1.getStrategy().maxCitySizeExcept8(players));
+
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+        c2.add(marché);
+
+        c4.add(marché);
+        assertEquals(1, p1.getStrategy().maxCitySizeExcept8(players));
     }
 }

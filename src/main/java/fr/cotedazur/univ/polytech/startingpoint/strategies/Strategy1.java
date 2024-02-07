@@ -16,6 +16,7 @@ public class Strategy1 extends Strategy{
         super(description);
     }
 
+    @Override
     public Character chooseCharacter(Player player,List<Character> characters, Player[] players){
         Character character = super.chooseCharacter(player, characters, players);
         if (character != null) return character;
@@ -59,8 +60,8 @@ public class Strategy1 extends Strategy{
         return c;
     }
 
-    public Constructions constructionToBuild(Hand hand, int gold) {
-        if (hand.min().getValue() <= gold) return hand.min();
+    public Constructions constructionToBuild(Player player) {
+        if (player.getHand().minNotInCity(player) != null && player.getHand().minNotInCity(player).getValue() <= player.getGold()) return player.getHand().minNotInCity(player);
         else return null;
     }
 
@@ -88,7 +89,7 @@ public class Strategy1 extends Strategy{
 
     public void playDefault(Player[] players, Draw draw) {
         players[0].pick(draw, goldOrCard(players, draw));
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
+        players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
@@ -159,8 +160,8 @@ public class Strategy1 extends Strategy{
     public void architect(Player[] players, Draw draw) {
         Character.ARCHITECTE.ability(draw, players[0]);
         playDefault(players, draw);
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
+        players[0].buildConstruction(constructionToBuild(players[0]));
+        players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     public void condottiere(Player[] players, Draw draw) {
@@ -210,7 +211,7 @@ public class Strategy1 extends Strategy{
 
     public void capacityLaboratoire(Player[] players, Draw draw) {
         Constructions max = players[0].getHand().max();
-        if (max.getValue() >= 4) {
+        if (max != null && max.getValue() >= 4) {
             WondersPower.LABORATOIRE.power(max, players[0], draw);
         }
     }
