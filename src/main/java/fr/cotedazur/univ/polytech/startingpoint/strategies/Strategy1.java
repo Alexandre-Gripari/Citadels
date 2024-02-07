@@ -61,7 +61,7 @@ public class Strategy1 extends Strategy{
     }
 
     public Constructions constructionToBuild(Player player) {
-        if (player.getHand().minNotInCity(player).getValue() <= player.getGold()) return player.getHand().minNotInCity(player);
+        if (player.getHand().minNotInCity(player) != null && player.getHand().minNotInCity(player).getValue() <= player.getGold()) return player.getHand().minNotInCity(player);
         else return null;
     }
 
@@ -211,7 +211,7 @@ public class Strategy1 extends Strategy{
 
     public void capacityLaboratoire(Player[] players, Draw draw) {
         Constructions max = players[0].getHand().max();
-        if (max.getValue() >= 4) {
+        if (max != null && max.getValue() >= 4) {
             WondersPower.LABORATOIRE.power(max, players[0], draw);
         }
     }

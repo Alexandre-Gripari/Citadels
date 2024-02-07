@@ -39,7 +39,7 @@ public class Main {
         if (twoThousands) {
             MyLogger.setLogLevel(Level.OFF);
             // que lui meme pour l'instant on a pas d'autres joueurs
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 10000; i++) {
                 Game game = new Game(players);
                 game.init();
                 game.play();

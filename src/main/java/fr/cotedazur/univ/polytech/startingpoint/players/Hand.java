@@ -56,6 +56,7 @@ public class Hand{ // extends Arraylist ?
         for (Constructions construction : hand)
             if (c.getValue() >= construction.getValue()) c = construction;
 
+        if (c.getName().equals("null")) return null;
         return c;
     }
 
@@ -66,6 +67,7 @@ public class Hand{ // extends Arraylist ?
             if (c.getValue() >= construction.getValue()
                     && !player.getCity().getCity().contains(construction)) c = construction;
 
+        if (c.getName().equals("null")) return null;
         return c;
     }
 
@@ -75,6 +77,7 @@ public class Hand{ // extends Arraylist ?
         for (Constructions construction : hand)
             if (c.getValue() <= construction.getValue()) c = construction;
 
+        if (c.getName().equals("null")) return null;
         return c;
     }
 }
