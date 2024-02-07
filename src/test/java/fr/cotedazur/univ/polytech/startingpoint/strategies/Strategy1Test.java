@@ -454,15 +454,17 @@ class Strategy1Test {
         city2.add(laboratoire);
 
         Hand hand2 = new Hand();
-        hand2.add(eglise);
+        hand2.add(monastere);
 
         Player p222 = new Player(0, 0, hand2, city2);
         p222.getWonders().add(laboratoire);
         p222.setCharacter(Character.VOLEUR);
+        p222.setGold(0);
         p1.setGold(0);
         p222.play(draw, new Player[]{p222,p1});
         assertEquals(1,p222.getHand().size());
-        assertEquals(0, p222.getGold());
+        assertTrue(p222.getHand().contains(monastere));
+        assertEquals(2, p222.getGold());
     }
 
     @Test
