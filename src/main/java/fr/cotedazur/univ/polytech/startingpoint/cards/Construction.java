@@ -1,13 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
-
-public class Constructions extends Card {
+public class Construction extends Card {
 
     private int value;
     private boolean constructed=false;
 
-    public Constructions(String name, Color color, int value) {
+    public Construction(String name, Color color, int value) {
         super(name, color);
         this.value = value;
     }
@@ -20,7 +18,7 @@ public class Constructions extends Card {
         this.value = value;
     }
 
-    public boolean equals(Constructions c){
+    public boolean equals(Construction c){
         return this.name.equals(c.getName());
     }
 

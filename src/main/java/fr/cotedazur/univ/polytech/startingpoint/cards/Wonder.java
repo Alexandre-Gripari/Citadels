@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.cards;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 
-public class Wonder extends Constructions {
+public class Wonder extends Construction {
 
     private final WondersPower power;
 

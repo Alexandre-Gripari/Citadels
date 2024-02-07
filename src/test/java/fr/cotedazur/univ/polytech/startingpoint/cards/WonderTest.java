@@ -51,10 +51,10 @@ class WonderTest {
         player.getCity().add(library);
 
         Draw d = new Draw();
-        d.addXConstructions(new Constructions("Temple", Color.RELIGIEUX, 1), 1);
-        d.addXConstructions(new Constructions("Eglise", Color.RELIGIEUX, 2), 1);
-        d.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
-        d.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
+        d.addXConstructions(new Construction("Temple", Color.RELIGIEUX, 1), 1);
+        d.addXConstructions(new Construction("Eglise", Color.RELIGIEUX, 2), 1);
+        d.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 1);
+        d.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 1);
 
         assertEquals(0, player.getHand().size());
         assertEquals(4,d.size());
@@ -70,10 +70,10 @@ class WonderTest {
         player.getCity().add(manufacture);
 
         Draw d = new Draw();
-        d.addXConstructions(new Constructions("Temple", Color.RELIGIEUX, 1), 3);
-        d.addXConstructions(new Constructions("Eglise", Color.RELIGIEUX, 2), 4);
-        d.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 3);
-        d.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 2);
+        d.addXConstructions(new Construction("Temple", Color.RELIGIEUX, 1), 3);
+        d.addXConstructions(new Construction("Eglise", Color.RELIGIEUX, 2), 4);
+        d.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 3);
+        d.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 2);
 
         manufacture.power(player, d);
         assertEquals(0,player.getHand().size());

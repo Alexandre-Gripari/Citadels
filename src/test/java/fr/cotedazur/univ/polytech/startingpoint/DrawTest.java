@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +19,7 @@ class DrawTest {
 
     @Test
     void addXConstructions() {
-        Constructions c = new Constructions("test", Color.COMMERCIAL, 1);
+        Construction c = new Construction("test", Color.COMMERCIAL, 1);
         Draw draw = new Draw();
         assertEquals(0, draw.getDeck().size());
         draw.addXConstructions(c, 3);
@@ -29,9 +29,9 @@ class DrawTest {
 
     @Test
     void shuffle() {
-        Constructions c1 = new Constructions("test", Color.COMMERCIAL, 1);
-        Constructions c2 = new Constructions("test2", Color.COMMERCIAL, 2);
-        Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
+        Construction c1 = new Construction("test", Color.COMMERCIAL, 1);
+        Construction c2 = new Construction("test2", Color.COMMERCIAL, 2);
+        Construction c3 = new Construction("test3", Color.COMMERCIAL, 3);
         Draw draw = new Draw();
         Draw draw2 = new Draw();
         draw.addXConstructions(c1, 3);
@@ -47,8 +47,8 @@ class DrawTest {
 
     @Test
     void draw() {
-        Constructions c1 = new Constructions("test", Color.COMMERCIAL, 1);
-        Constructions c2 = new Constructions("test2", Color.COMMERCIAL, 2);
+        Construction c1 = new Construction("test", Color.COMMERCIAL, 1);
+        Construction c2 = new Construction("test2", Color.COMMERCIAL, 2);
         Draw draw = new Draw();
         draw.addXConstructions(c1, 1);
         draw.addXConstructions(c2, 3);

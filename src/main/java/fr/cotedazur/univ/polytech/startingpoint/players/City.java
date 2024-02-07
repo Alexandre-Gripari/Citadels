@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
 import java.util.ArrayList;
@@ -9,21 +9,21 @@ import java.util.List;
 
 public class City{
 
-    private List<Constructions> city;
+    private List<Construction> city;
 
     public City() {
         city = new ArrayList<>();
     }
 
-    public List<Constructions> getCity() { return city; }
+    public List<Construction> getCity() { return city; }
 
-    public void add(Constructions c) { city.add(c); }
+    public void add(Construction c) { city.add(c); }
 
     public void remove(int i) { city.remove(i); }
 
-    public void remove(Constructions c) { city.remove(c); }
+    public void remove(Construction c) { city.remove(c); }
 
-    public Constructions get(int i) { return city.get(i); }
+    public Construction get(int i) { return city.get(i); }
 
     public Integer size() { return city.size(); }
 
@@ -47,15 +47,15 @@ public class City{
     @Override
     public String toString() {
         String ville = "";
-        for (Constructions constructions : city)
-            ville += constructions + ", ";
+        for (Construction construction : city)
+            ville += construction + ", ";
         return ville;
     }
 
     public Color missingColor() {
         boolean color = false;
         for (Color c : Color.values()) {
-            for (Constructions con : city) {
+            for (Construction con : city) {
                 color = false;
                 if (con.getColor() == c && !c.equals(Color.NEUTRE)) {
                     color = true;
@@ -69,7 +69,7 @@ public class City{
 
     public int getNumberOfColor(Color color){
         int count = 0;
-        for (Constructions c : city) {
+        for (Construction c : city) {
             if (c.getColor() == color) count++;
         }
         return count;

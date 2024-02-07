@@ -1,67 +1,66 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Hand{ // extends Arraylist ?
 
-    private List<Constructions> hand;
+    private List<Construction> hand;
 
     public Hand(){
         this.hand = new ArrayList<>();
     }
 
-    public List<Constructions> getHand() { return hand; }
+    public List<Construction> getHand() { return hand; }
 
     public boolean isEmpty() {return hand.isEmpty();}
 
-    public void add (Constructions c) { hand.add(c); }
+    public void add (Construction c) { hand.add(c); }
 
     public Integer size() { return hand.size(); }
 
-    public Constructions get(int i) { return  hand.get(i); }
+    public Construction get(int i) { return  hand.get(i); }
 
     public void remove(int i) { hand.remove(i); }
 
     public  String toString() {
         String main = "";
-        for (Constructions constructions : hand)
-            main += constructions + " ";
+        for (Construction construction : hand)
+            main += construction + " ";
         return main;
     }
 
-    public boolean contains(Constructions x) {
+    public boolean contains(Construction x) {
         return hand.contains(x);
     }
 
     public void setHand(Hand hand) {
-        this.hand = (ArrayList<Constructions>) hand.getHand();
+        this.hand = (ArrayList<Construction>) hand.getHand();
     }
 
-    public void set(int i, Constructions c) {
+    public void set(int i, Construction c) {
         hand.set(i, c);
     }
 
-    public void remove(Constructions c) {
+    public void remove(Construction c) {
         hand.remove(c);
 
     }
 
-    public Constructions min() {
-        Constructions c = new Constructions("null", null, 110);
+    public Construction min() {
+        Construction c = new Construction("null", null, 110);
 
-        for (Constructions construction : hand)
+        for (Construction construction : hand)
             if (c.getValue() >= construction.getValue()) c = construction;
 
         return c;
     }
 
-    public Constructions max() {
-        Constructions c = new Constructions("null", null, -1);
+    public Construction max() {
+        Construction c = new Construction("null", null, -1);
 
-        for (Constructions construction : hand)
+        for (Construction construction : hand)
             if (c.getValue() <= construction.getValue()) c = construction;
 
         return c;

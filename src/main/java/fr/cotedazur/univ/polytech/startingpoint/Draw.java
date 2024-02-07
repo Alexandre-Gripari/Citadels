@@ -1,47 +1,45 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
-import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 
 import java.util.*;
 
 public class Draw {
 
-    private Queue<Constructions> drawDeck;
+    private Queue<Construction> drawDeck;
 
     public Draw() {
         drawDeck = new LinkedList<>();
     }
 
-    public void addXConstructions(Constructions c, int x) {
+    public void addXConstructions(Construction c, int x) {
         for (int i = 0; i < x; i++) {
             drawDeck.add(c);
         }
     }
 
     public void shuffle() {
-        Collections.shuffle((List<Constructions>) drawDeck);
+        Collections.shuffle((List<Construction>) drawDeck);
     }
 
 
-    public Queue<Constructions> getDeck() {
+    public Queue<Construction> getDeck() {
         return drawDeck;
     }
 
     public String toString() {
         String s = "";
-        for (Constructions c : drawDeck) {
+        for (Construction c : drawDeck) {
             s += c + "\n";
         }
         return s;
     }
 
-    public Constructions draw() {
+    public Construction draw() {
         return drawDeck.poll();
     }
 
-    public void add(Constructions c) {
+    public void add(Construction c) {
         drawDeck.add(c);
     }
 
@@ -49,11 +47,11 @@ public class Draw {
     	return drawDeck.size();
     }
 
-    public boolean contains(Constructions x) {
+    public boolean contains(Construction x) {
         return drawDeck.contains(x);
     }
 
-    public Constructions peek() {
+    public Construction peek() {
         return drawDeck.peek();
     }
 }

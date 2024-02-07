@@ -10,6 +10,8 @@ import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 
@@ -56,15 +58,19 @@ public class Main {
             Game game = new Game(players);
             game.init();
             game.play();
-        } else if (csv) {
-            if (!new File(Csv.getFilePath()).exists()) {
-                Csv.appendIntoCsvFile(Csv.getFilePath(), new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
-            } else {
+        }else if (csv) {
+            File fichier = new File(Csv.getFilePath());
+            if (fichier.exists()) {
                 CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
-                if (reader.readNext() == null) {
-                    Csv.appendIntoCsvFile(Csv.getFilePath(), new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
+                List<String[]> oldData = reader.readAll();
+                for (int a = 0; a < players.length; a++) {
+                    players[a].setNumberOfVictory(Integer.parseInt(oldData.get(a + 1)[1]));
+                    players[a].setWinRate(Integer.parseInt(oldData.get(a + 1)[2]));
+                    players[a].setNumberOfDefeat(Integer.parseInt(oldData.get(a + 1)[3]));
+                    players[a].setLossRate(Integer.parseInt(oldData.get(a + 1)[4]));
+                    players[a].setNumberOfDraw(Integer.parseInt(oldData.get(a + 1)[5]));
+                    players[a].setDrawRate(Integer.parseInt(oldData.get(a + 1)[6]));
                 }
-                reader.close();
             }
             MyLogger.setLogLevel(Level.OFF);
             for (int i = 0; i < 2000; i++) {
@@ -74,11 +80,13 @@ public class Main {
                 game.calculateStats();
                 game.resetGame();
             }
+            List<String[]> newStats = new ArrayList<>();
             for (Player p : players) {
-                Csv.appendIntoCsvFile(Csv.getFilePath(),p.getStats());
+                newStats.add(p.getStats());
             }
-            Csv.readCsvFile(Csv.getFilePath());
+            Csv.appendIntoCsvFile(Csv.getFilePath(), newStats);
         }
+
 
     }
 }

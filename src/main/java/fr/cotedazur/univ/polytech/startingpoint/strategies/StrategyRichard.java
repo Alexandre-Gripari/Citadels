@@ -4,7 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
@@ -23,7 +23,7 @@ public class StrategyRichard extends Strategy1{
     }
 
     @Override
-    public Constructions constructionToBuild(Hand hand, int gold) {
+    public Construction constructionToBuild(Hand hand, int gold) {
         return super.constructionToBuild(hand, gold);
     }
 
@@ -39,7 +39,7 @@ public class StrategyRichard extends Strategy1{
     public void useWonder(List<Wonder> wonders) {return;}
 
     @Override
-    public Constructions chooseCard(List<Constructions> constructions, Player player) {
+    public Construction chooseCard(List<Construction> constructions, Player player) {
         return super.chooseCard(constructions, player);
     }
 

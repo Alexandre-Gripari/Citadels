@@ -16,8 +16,8 @@ class WondersPowerTest {
     Draw draw = new Draw();
     Player player1 = new Player(1, new Hand());
     Wonder wonder = new Wonder("Cimetière", 3, WondersPower.CIMETIERE);
-    Constructions construction = new Constructions("Test", Color.COMMERCIAL, 1);
-    Constructions construction2 = new Constructions("Test2", Color.COMMERCIAL, 1);
+    Construction construction = new Construction("Test", Color.COMMERCIAL, 1);
+    Construction construction2 = new Construction("Test2", Color.COMMERCIAL, 1);
     Player player2 = new Player(2, new Hand());
     Player player3 = new Player(3, new Hand());
 
@@ -53,7 +53,7 @@ class WondersPowerTest {
         Player[] players = {player2, player4, player1};
         player2.setCharacter(Character.CONDOTTIERE);
         player2.addGold(10);
-        Constructions donjon = new Wonder("Donjon",3, WondersPower.DONJON);
+        Construction donjon = new Wonder("Donjon",3, WondersPower.DONJON);
         player2.getCharacter().ability(donjon, player2, player4);
         assertEquals(12, player2.getGold());
         assertEquals(1,player4.getCity().size());
@@ -71,7 +71,7 @@ class WondersPowerTest {
         playerWithEcoleDeMagie.getWonders().add(edm);
 
         Draw d = new Draw();
-        d.addXConstructions(new Constructions("testEDM", Color.MERVEILLEUX, 100), 100);
+        d.addXConstructions(new Construction("testEDM", Color.MERVEILLEUX, 100), 100);
 
         assertEquals(2, playerWithEcoleDeMagie.getGold());
 
@@ -106,10 +106,10 @@ class WondersPowerTest {
     void testPowerCourDesMiracles(){
         Player player4 = new Player(4, new Hand());
         Wonder wonder = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
-        Constructions c1 = new Constructions("test1", Color.NOBLE, 1);
-        Constructions c2 = new Constructions("test2", Color.SOLDATESQUE, 2);
-        Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
-        Constructions c5 = new Constructions("test5", Color.RELIGIEUX, 5);
+        Construction c1 = new Construction("test1", Color.NOBLE, 1);
+        Construction c2 = new Construction("test2", Color.SOLDATESQUE, 2);
+        Construction c3 = new Construction("test3", Color.COMMERCIAL, 3);
+        Construction c5 = new Construction("test5", Color.RELIGIEUX, 5);
         player4.getCity().add(wonder);
         wonder.getWondersPower().power(player4.getCity(), wonder);
         assertEquals(Color.RELIGIEUX, wonder.getColor());
@@ -130,10 +130,10 @@ class WondersPowerTest {
         Draw d = new Draw();
         Player player4 = new Player(4, new Hand());
         Wonder wonder = new Wonder("Laboratoire", 5, WondersPower.LABORATOIRE);
-        Constructions c1 = new Constructions("test1", Color.NOBLE, 1);
-        Constructions c2 = new Constructions("test2", Color.SOLDATESQUE, 2);
-        Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
-        Constructions c5 = new Constructions("test5", Color.RELIGIEUX, 5);
+        Construction c1 = new Construction("test1", Color.NOBLE, 1);
+        Construction c2 = new Construction("test2", Color.SOLDATESQUE, 2);
+        Construction c3 = new Construction("test3", Color.COMMERCIAL, 3);
+        Construction c5 = new Construction("test5", Color.RELIGIEUX, 5);
         player1.getHand().add(c1);
         player1.getHand().add(c2);
         player1.getHand().add(c3);
