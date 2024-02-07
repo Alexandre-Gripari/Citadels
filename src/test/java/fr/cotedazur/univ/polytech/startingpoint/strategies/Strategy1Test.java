@@ -315,6 +315,24 @@ class Strategy1Test {
         assertEquals(0, p3.getCity().size());
         assertEquals(6, p1.getGold());
 
+
+        Hand h5 = new Hand();
+        City c5 = new City();
+        c5.add(temple);
+        c5.add(donjon);
+        c5.add(palais);
+        c5.add(chateau);
+        c5.add(taverne);
+        c5.add(cathedrale);
+        c5.add(monastere);
+        c5.add(prison);
+
+        Player p5 = new Player(5, 0, h5, c5);
+        p5.setCharacter(Character.EVEQUE);
+        p1.setGold(0);
+        p1.play(draw, new Player[]{p1, p5});
+        assertEquals(3, p1.getCity().size());
+        assertEquals(8, p5.getCity().size());
     }
 
     @Test

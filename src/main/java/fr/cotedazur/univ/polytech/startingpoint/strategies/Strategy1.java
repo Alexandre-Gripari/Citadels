@@ -174,11 +174,12 @@ public class Strategy1 extends Strategy{
 
     public void condottiere(Player[] players, Draw draw) {
         playDefault(players, draw);
-        int biggestCityIndex = 1;
-        int biggestCitySize = players[1].getCity().size();
-        for (int i = 2; i < players.length; i++) {
-            int citySize = players[i].getCity().size();
-            if (citySize != 0) {
+        int citySize;
+        int biggestCityIndex = 0;
+        int biggestCitySize = 0;
+        for (int i = 1; i < players.length; i++) {
+            citySize = players[i].getCity().size();
+            if (citySize < 8 && citySize != 0) {
                 if ((citySize > biggestCitySize) || (citySize == biggestCitySize && minCostInCity(players[i].getCity()) < minCostInCity(players[biggestCityIndex].getCity()))) {
                     biggestCityIndex = i;
                     biggestCitySize = citySize;
