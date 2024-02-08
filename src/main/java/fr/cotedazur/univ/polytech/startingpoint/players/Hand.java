@@ -3,10 +3,13 @@ package fr.cotedazur.univ.polytech.startingpoint.players;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Hand{ // extends Arraylist ?
+
+    public void setHand(List<Constructions> hand) {
+        this.hand = hand;
+    }
 
     private List<Constructions> hand;
 
@@ -43,15 +46,14 @@ public class Hand{ // extends Arraylist ?
 
     public void remove(Constructions c) {
         hand.remove(c);
-
     }
 
     public Constructions min() {
         Constructions c = new Constructions("null", null, 110);
-
+      
         for (Constructions construction : hand)
             if (c.getValue() >= construction.getValue()) c = construction;
-
+        
         if (c.getName().equals("null")) return null;
         return c;
     }
@@ -75,6 +77,7 @@ public class Hand{ // extends Arraylist ?
             if (c.getValue() <= construction.getValue()) c = construction;
 
         if (c.getName().equals("null")) return null;
+      
         return c;
     }
 }

@@ -7,6 +7,7 @@ import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyRichard;
 
@@ -14,6 +15,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main {
@@ -57,8 +60,8 @@ public class Main {
             MyLogger.setLogLevel(Level.INFO);
             for (Player player : players) {
                 MyLogger.log(Level.INFO, "Player " + player.getNumber() + " V:" + player.getNumberOfVictory()
-                        +"("+player.getNumberOfVictory()/10+"%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat()/10 + "%)"+
-                        " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw()/10 + "%)" + " SM:" + player.getAverageScore());
+                        + "(" + player.getNumberOfVictory() / 10 + "%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat() / 10 + "%)" +
+                        " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw() / 10 + "%)" + " SM:" + player.getAverageScore());
             }
             MyLogger.setLogLevel(Level.OFF);
             for (int i = 0; i < 1000; i++) {
@@ -79,14 +82,21 @@ public class Main {
             game.init();
             game.play();
         } else if (csv) {
-            if (!new File(Csv.getFilePath()).exists()) {
-                Csv.appendIntoCsvFile(Csv.getFilePath(), new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
-            } else {
+            File fichier = new File(Csv.getFilePath());
+            if (fichier.exists()) {
                 CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
-                if (reader.readNext() == null) {
-                    Csv.appendIntoCsvFile(Csv.getFilePath(), new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate"});
-                }
+                List<String[]> oldData = reader.readAll();
                 reader.close();
+                for (int a = 0; a < players.length; a++) {
+                    players[a].setNumberOfVictory(Integer.parseInt(oldData.get(a + 1)[1]));
+                    players[a].setWinRate(Float.parseFloat(oldData.get(a + 1)[2]));
+                    players[a].setNumberOfDefeat(Integer.parseInt(oldData.get(a + 1)[3]));
+                    players[a].setLossRate(Float.parseFloat(oldData.get(a + 1)[4]));
+                    players[a].setNumberOfDraw(Integer.parseInt(oldData.get(a + 1)[5]));
+                    players[a].setDrawRate(Float.parseFloat(oldData.get(a + 1)[6]));
+                    players[a].setCumulatedScore(Integer.parseInt(oldData.get(a + 1)[7]));
+                    players[a].setAverageScore(Float.parseFloat(oldData.get(a + 1)[8]));
+                }
             }
             MyLogger.setLogLevel(Level.OFF);
             for (int i = 0; i < 2000; i++) {
@@ -96,11 +106,12 @@ public class Main {
                 game.calculateStats();
                 game.resetGame();
             }
+            List<String[]> newStats = new ArrayList<>();
+            newStats.add(new String[]{"Player", "Wins", "Win Rate", "Losses", "Loss Rate", "Draws", "Draw Rate", "Cumulated Score", "Average Score"});
             for (Player p : players) {
-                Csv.appendIntoCsvFile(Csv.getFilePath(),p.getStats());
+                newStats.add(p.getStats());
             }
-            Csv.readCsvFile(Csv.getFilePath());
+            Csv.appendIntoCsvFile(Csv.getFilePath(), newStats);
         }
-
     }
 }

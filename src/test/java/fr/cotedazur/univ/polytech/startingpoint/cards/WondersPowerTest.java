@@ -16,8 +16,8 @@ class WondersPowerTest {
     Draw draw = new Draw();
     Player player1 = new Player(1, new Hand());
     Wonder wonder = new Wonder("Cimetière", 3, WondersPower.CIMETIERE);
-    Constructions construction = new Constructions("Test", Color.COMMERCIAL, 1);
-    Constructions construction2 = new Constructions("Test2", Color.COMMERCIAL, 1);
+    Constructions constructions = new Constructions("Test", Color.COMMERCIAL, 1);
+    Constructions constructions2 = new Constructions("Test2", Color.COMMERCIAL, 1);
     Player player2 = new Player(2, new Hand());
     Player player3 = new Player(3, new Hand());
 
@@ -25,11 +25,11 @@ class WondersPowerTest {
     void setUp() {
         MyLogger.setLogLevel(Level.OFF);
         player1.getHand().add(wonder);
-        player1.getHand().add(construction);
+        player1.getHand().add(constructions);
         player1.addGold(10);
         player1.buildConstruction(wonder);
-        player1.buildConstruction(construction);
-        player3.getCity().add(construction2);
+        player1.buildConstruction(constructions);
+        player3.getCity().add(constructions2);
     }
 
 

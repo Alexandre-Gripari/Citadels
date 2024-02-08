@@ -23,7 +23,6 @@ class StrategyTest {
     Player p2 = new Player(2, new Hand());
 
     Strategy strategy = new Strategy1("Agressif");
-    Strategy strategy2 = new StrategyRichard("Agressif");
     Constructions cathédrale = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
     Constructions chateau = new Constructions("Château", Color.NOBLE, 4);
     Constructions monastère = new Constructions("Monastère", Color.RELIGIEUX, 3);

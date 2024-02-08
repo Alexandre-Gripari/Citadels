@@ -21,9 +21,35 @@ public class Player implements Comparable<Player> {
     private int numberOfVictory = 0;
     private int numberOfDefeat = 0;
     private int numberOfDraw = 0;
+
+
+    public void setWinRate(float winRate) {
+        this.winRate = winRate;
+    }
+
+
+    public void setLossRate(float lossRate) {
+        this.lossRate = lossRate;
+    }
+
+
+    public void setDrawRate(float drawRate) {
+        this.drawRate = drawRate;
+    }
+
+    private float winRate = 0;
+    private float lossRate = 0;
+    private float drawRate = 0;
     private int cumulatedScore = 0;
+
+    public void setAverageScore(float averageScore) {
+        this.averageScore = averageScore;
+    }
+
+    private float averageScore = 0;
     private int number;
     private int gold;
+
     private Hand hand;
     private City city;
     private Character character;
@@ -136,7 +162,7 @@ public class Player implements Comparable<Player> {
     }
 
     public void buildConstruction(Constructions c){
-        if (c == null) return;
+        if (c == null || c.getColor()==null) return;
         getCity().add(c);
         if (c.getColor().equals(Color.MERVEILLEUX)) getWonders().add((Wonder) c);
         getHand().remove(c);
@@ -193,7 +219,7 @@ public class Player implements Comparable<Player> {
             hand.add(c);
         }
     }
-    public void discardConstruction(Constructions c, Draw d){
+public void discardConstruction(Constructions c, Draw d){
         d.add(c);
         hand.remove(c);
     }
@@ -256,14 +282,17 @@ public class Player implements Comparable<Player> {
         this.score = 0;
     }
     public String[] getStats() {
+        float numberOfGames = (this.getNumberOfDefeat()+this.getNumberOfVictory()+this.getNumberOfDraw());
         String strat = this.getStrategy().getDescription();
         String wins = String.valueOf(getNumberOfVictory());
-        String winRate = String.valueOf(this.getNumberOfVictory() / 20);
+        String winRate1 = String.valueOf(this.getNumberOfVictory()*100/numberOfGames);
         String losses = String.valueOf(this.getNumberOfDefeat());
-        String lossRate = String.valueOf(this.getNumberOfDefeat() / 20);
+        String lossRate1 = String.valueOf(this.getNumberOfDefeat()*100/numberOfGames);
         String draws = String.valueOf(this.getNumberOfDraw());
-        String drawRate = String.valueOf(this.getNumberOfDraw() / 20);
-        return new String[]{strat, wins, winRate+"%", losses, lossRate+"%", draws, drawRate+"%"};
+        String drawRate1 = String.valueOf(this.getNumberOfDraw()*100/numberOfGames);
+        String cumulatedScore1 = String.valueOf(this.getCumulatedScore());
+        String averageScore1 = String.valueOf(this.getCumulatedScore()/numberOfGames);
+        return new String[]{strat, wins, winRate1, losses, lossRate1, draws, drawRate1,cumulatedScore1, averageScore1};
     }
 }
 
