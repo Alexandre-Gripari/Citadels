@@ -101,11 +101,6 @@ public class StrategyEco extends Strategy{
         players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
-    @Override
-    public Constructions constructionToBuild(Player player) {
-        return null;
-    }
-
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
     // Elle sera utilisée dans les méthodes de caractères.
     public int goldOrCard(Player[] players, Draw draw) {
