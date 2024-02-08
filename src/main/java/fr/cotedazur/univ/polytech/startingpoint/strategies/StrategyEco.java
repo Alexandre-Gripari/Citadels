@@ -2,12 +2,11 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
 import java.util.ArrayList;
@@ -41,9 +40,9 @@ public class StrategyEco extends Strategy{
         return characters.get(0);
     }
 
-    public Constructions constructionToBuild(Player player) {
-        List<Constructions> main = player.getHand().getHand();
-        Constructions choix = chooseCard(main,player);
+    public Construction constructionToBuild(Player player) {
+        List<Construction> main = player.getHand().getHand();
+        Construction choix = chooseCard(main,player);
         while(choix.getValue()> player.getGold()){
             main.remove(choix);
             if(main.isEmpty()) return null;
@@ -54,8 +53,8 @@ public class StrategyEco extends Strategy{
 
     /*Choisis en priorité l'école de magie, sinon une merveille, sinon la carte dont la couleur est la plus représentée dans sa ville*/
     @Override
-    public Constructions chooseCard(List<Constructions> constructions, Player player) {
-        Constructions choix = new Constructions("Lidl",Color.NEUTRE,10);
+    public Construction chooseCard(List<Construction> constructions, Player player) {
+        Construction choix = new Construction("Lidl",Color.NEUTRE,10);
         List<Character> mostProfitableCharacters = super.mostProfitableCharacters(player);
         List<Color> mostProfitableColor = new ArrayList<>();
         mostProfitableColor.add(Color.MERVEILLEUX);
@@ -63,7 +62,7 @@ public class StrategyEco extends Strategy{
             mostProfitableColor.add(character.getColor());
         }
         mostProfitableColor.add(Color.NEUTRE);
-        for (Constructions c : constructions) {
+        for (Construction c : constructions) {
             if (c.getName().equals("Ecole de magie")) return c;
             if (mostProfitableColor.indexOf(c.getColor()) < mostProfitableColor.indexOf(choix.getColor())
                     || (mostProfitableColor.indexOf(c.getColor()) == mostProfitableColor.indexOf(choix.getColor())
@@ -199,7 +198,7 @@ public class StrategyEco extends Strategy{
 
     public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
-        for (Constructions c : city.getCity()) {
+        for (Construction c : city.getCity()) {
             if (c.getValue() < minCost && !Objects.equals(c.getName(), "Donjon")) minCost = c.getValue();
         }
         return minCost;
@@ -219,7 +218,7 @@ public class StrategyEco extends Strategy{
     }
 
     public void capacityLaboratoire(Player[] players, Draw draw) {
-        Constructions min = players[0].getHand().min();
+        Construction min = players[0].getHand().min();
         if (min.getValue() <= 4) {
             WondersPower.LABORATOIRE.power(min, players[0], draw);
         }

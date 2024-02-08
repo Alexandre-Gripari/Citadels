@@ -9,7 +9,7 @@ class ConstructionTest {
 
     @Test
     void setValueTest() {
-        Constructions c = new Constructions("test setter", Color.NOBLE, 4);
+        Construction c = new Construction("test setter", Color.NOBLE, 4);
         c.setValue(8);
         assertEquals(8, c.getValue());
     }

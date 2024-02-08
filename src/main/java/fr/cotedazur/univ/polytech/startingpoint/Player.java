@@ -3,7 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
@@ -140,27 +140,27 @@ public class Player implements Comparable<Player> {
     }
 
     public void drawConstruction(Draw d, int n) {
-        ArrayList<Constructions> temp = takeConstructions(d, n);
-        Constructions c = strategy.chooseCard(temp, this);
+        ArrayList<Construction> temp = takeConstructions(d, n);
+        Construction c = strategy.chooseCard(temp, this);
         if (c == null) return;
         hand.add(c);
         putBack(d, temp);
     }
 
     /* Renvoie la construction (quartier) la moins chère entre les 2 en haut de la pioche */
-    public ArrayList<Constructions> takeConstructions(Draw d, int n) {
-        ArrayList<Constructions> tab = new ArrayList<>();
+    public ArrayList<Construction> takeConstructions(Draw d, int n) {
+        ArrayList<Construction> tab = new ArrayList<>();
         for (int i = 0; i < n; i++)
             tab.add(d.draw());
         return tab;
     }
 
-    public void putBack(Draw d, ArrayList<Constructions> constructions) {
-        for (Constructions construction : constructions)
+    public void putBack(Draw d, ArrayList<Construction> constructions) {
+        for (Construction construction : constructions)
             d.add(construction);
     }
 
-    public void buildConstruction(Constructions c){
+    public void buildConstruction(Construction c){
         if (c == null || c.getColor()==null) return;
         getCity().add(c);
         if (c.getColor().equals(Color.MERVEILLEUX)) getWonders().add((Wonder) c);
@@ -211,14 +211,14 @@ public class Player implements Comparable<Player> {
     }
 
 
-    public void useCimetiery(Constructions c) {
+    public void useCimetiery(Construction c) {
         if (c.getValue() <= gold) {
             gold -= c.getValue();
             MyLogger.log(Level.INFO, "Le joueur " + number + " a utilisé le cimetière pour récupérer " + c);
             hand.add(c);
         }
     }
-public void discardConstruction(Constructions c, Draw d){
+public void discardConstruction(Construction c, Draw d){
         d.add(c);
         hand.remove(c);
     }
@@ -227,7 +227,7 @@ public void discardConstruction(Constructions c, Draw d){
         return strategy;
     }
 
-    public void destroyConstruction(Constructions c) {
+    public void destroyConstruction(Construction c) {
         city.remove(c);
     }
 

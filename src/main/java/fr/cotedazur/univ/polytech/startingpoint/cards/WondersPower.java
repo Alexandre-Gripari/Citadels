@@ -23,7 +23,7 @@ public enum WondersPower {
 
     LABORATOIRE {
         @Override
-        public void power(Constructions c, Player player, Draw d) {
+        public void power(Construction c, Player player, Draw d) {
             player.discardConstruction(c,d);
             player.addGold(1);
         }
@@ -48,7 +48,7 @@ public enum WondersPower {
 
     CIMETIERE {
         @Override
-        public void power(Constructions c, Player ... players){
+        public void power(Construction c, Player ... players){
             if (c == null) return;
             Wonder associatedWonder = this.getWonder();
             for (Player player : players) {
@@ -86,8 +86,8 @@ public enum WondersPower {
 
     public void power(){}
     public void power(Player p, Draw d) {}
-    public void power(Constructions c, Player ... players){}
-    public void power(Constructions c, Player player, Draw d){}
+    public void power(Construction c, Player ... players){}
+    public void power(Construction c, Player player, Draw d){}
     public void power(City city, Wonder wonder){}
     public void power(Player player, Color color){}
 

@@ -45,10 +45,10 @@ public class Strategy1 extends Strategy{
     }
 
     @Override
-    public Constructions chooseCard(List<Constructions> constructions, Player player) {
-        Constructions c = new Constructions("null", Color.NEUTRE, 10);
+    public Construction chooseCard(List<Construction> constructions, Player player) {
+        Construction c = new Construction("null", Color.NEUTRE, 10);
 
-        for (Constructions construction : constructions) {
+        for (Construction construction : constructions) {
             if (construction.getValue() < c.getValue() && !player.getHand().contains(construction)
                     && !player.getCity().getCity().contains(construction)) c = construction;
             if (construction.getValue() == c.getValue() && construction.getColor() == Color.MERVEILLEUX) c = construction;
@@ -59,7 +59,7 @@ public class Strategy1 extends Strategy{
         return c;
     }
 
-    public Constructions constructionToBuild(Player player) {
+    public Construction constructionToBuild(Player player) {
 
         if (player.getHand().getHand().isEmpty()) return null;
         if (player.getHand().minNotInCity(player) != null && player.getHand().minNotInCity(player).getValue() <= player.getGold()) return player.getHand().minNotInCity(player);
@@ -191,7 +191,7 @@ public class Strategy1 extends Strategy{
 
     public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
-        for (Constructions c : city.getCity()) {
+        for (Construction c : city.getCity()) {
             if (c.getValue() < minCost && !Objects.equals(c.getName(), "Donjon")) minCost = c.getValue();
         }
         return minCost;
@@ -211,7 +211,7 @@ public class Strategy1 extends Strategy{
     }
 
     public void capacityLaboratoire(Player[] players, Draw draw) {
-        Constructions max = players[0].getHand().max();
+        Construction max = players[0].getHand().max();
         if (max != null && max.getValue() >= 4) {
             WondersPower.LABORATOIRE.power(max, players[0], draw);
         }

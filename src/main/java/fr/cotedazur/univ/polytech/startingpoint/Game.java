@@ -30,26 +30,26 @@ public class Game {
 
     public void init() {
 
-        draw.addXConstructions(new Constructions("Temple", Color.RELIGIEUX, 1), 3);
-        draw.addXConstructions(new Constructions("Eglise", Color.RELIGIEUX, 2), 4);
-        draw.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 3);
-        draw.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 2);
+        draw.addXConstructions(new Construction("Temple", Color.RELIGIEUX, 1), 3);
+        draw.addXConstructions(new Construction("Eglise", Color.RELIGIEUX, 2), 4);
+        draw.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 3);
+        draw.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 2);
 
-        draw.addXConstructions(new Constructions("Manoir", Color.NOBLE, 3), 5);
-        draw.addXConstructions(new Constructions("Château", Color.NOBLE, 4), 4);
-        draw.addXConstructions(new Constructions("Palais", Color.NOBLE, 5), 2);
+        draw.addXConstructions(new Construction("Manoir", Color.NOBLE, 3), 5);
+        draw.addXConstructions(new Construction("Château", Color.NOBLE, 4), 4);
+        draw.addXConstructions(new Construction("Palais", Color.NOBLE, 5), 2);
 
-        draw.addXConstructions(new Constructions("Tour de guet", Color.SOLDATESQUE, 1), 3);
-        draw.addXConstructions(new Constructions("Forteresse", Color.SOLDATESQUE, 2), 3);
-        draw.addXConstructions(new Constructions("Prison", Color.SOLDATESQUE, 3), 3);
-        draw.addXConstructions(new Constructions("Bastion", Color.SOLDATESQUE, 5), 2);
+        draw.addXConstructions(new Construction("Tour de guet", Color.SOLDATESQUE, 1), 3);
+        draw.addXConstructions(new Construction("Forteresse", Color.SOLDATESQUE, 2), 3);
+        draw.addXConstructions(new Construction("Prison", Color.SOLDATESQUE, 3), 3);
+        draw.addXConstructions(new Construction("Bastion", Color.SOLDATESQUE, 5), 2);
 
-        draw.addXConstructions(new Constructions("Taverne", Color.COMMERCIAL, 1), 5);
-        draw.addXConstructions(new Constructions("Echoppe", Color.COMMERCIAL, 2), 3);
-        draw.addXConstructions(new Constructions("Marché", Color.COMMERCIAL, 2), 4);
-        draw.addXConstructions(new Constructions("Comptoir", Color.COMMERCIAL, 3), 3);
-        draw.addXConstructions(new Constructions("Port", Color.COMMERCIAL, 4), 3);
-        draw.addXConstructions(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5), 2);
+        draw.addXConstructions(new Construction("Taverne", Color.COMMERCIAL, 1), 5);
+        draw.addXConstructions(new Construction("Echoppe", Color.COMMERCIAL, 2), 3);
+        draw.addXConstructions(new Construction("Marché", Color.COMMERCIAL, 2), 4);
+        draw.addXConstructions(new Construction("Comptoir", Color.COMMERCIAL, 3), 3);
+        draw.addXConstructions(new Construction("Port", Color.COMMERCIAL, 4), 3);
+        draw.addXConstructions(new Construction("Hôtel de ville", Color.COMMERCIAL, 5), 2);
 
         draw.add(new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES));
         draw.add(new Wonder("Donjon", 3, WondersPower.DONJON));
@@ -107,8 +107,8 @@ public class Game {
                 player.play(draw, getOpponents(player));
                 MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or. \nLe joueur " + player.getNumber() + " a dans sa main : " + player.getHand() + "\n"); //+ " cartes dans sa main.\n");
                 playerHasFinished(player);
-                if (player.getCity().getCity().contains(new Constructions("pioche vide", Color.NEUTRE, 0)) || player.getHand().getHand().contains(new Constructions("pioche vide", Color.NEUTRE, 0))) {
-                    player.getCity().getCity().removeAll(Collections.singleton(new Constructions("pioche vide", Color.NEUTRE, 0)));
+                if (player.getCity().getCity().contains(new Construction("pioche vide", Color.NEUTRE, 0)) || player.getHand().getHand().contains(new Construction("pioche vide", Color.NEUTRE, 0))) {
+                    player.getCity().getCity().removeAll(Collections.singleton(new Construction("pioche vide", Color.NEUTRE, 0)));
                     noDraw = true;
                     break;
                 }

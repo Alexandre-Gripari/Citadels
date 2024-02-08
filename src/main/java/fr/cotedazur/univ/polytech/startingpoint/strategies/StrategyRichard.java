@@ -4,8 +4,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class StrategyRichard extends Strategy1{
     }
 
     @Override
-    public Constructions constructionToBuild(Player player) {
+    public Construction constructionToBuild(Player player) {
         return super.constructionToBuild(player);
     }
 
@@ -96,7 +95,7 @@ public class StrategyRichard extends Strategy1{
     }
 
     @Override
-    public Constructions chooseCard(List<Constructions> constructions, Player player) {
+    public Construction chooseCard(List<Construction> constructions, Player player) {
         return super.chooseCard(constructions, player);
     }
 
