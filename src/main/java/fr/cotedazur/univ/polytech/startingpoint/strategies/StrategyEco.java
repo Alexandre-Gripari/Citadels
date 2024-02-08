@@ -43,6 +43,7 @@ public class StrategyEco extends Strategy{
     public Construction constructionToBuild(Player player) {
         List<Construction> main = player.getHand().getHand();
         Construction choix = chooseCard(main,player);
+        if (choix == null) return null;
         while(choix.getValue()> player.getGold()){
             main.remove(choix);
             if(main.isEmpty()) return null;
@@ -62,6 +63,7 @@ public class StrategyEco extends Strategy{
             mostProfitableColor.add(character.getColor());
         }
         mostProfitableColor.add(Color.NEUTRE);
+        if (constructions.isEmpty()) return null ;
         for (Construction c : constructions) {
             if (c.getName().equals("Ecole de magie")) return c;
             if (mostProfitableColor.indexOf(c.getColor()) < mostProfitableColor.indexOf(choix.getColor())
@@ -219,7 +221,7 @@ public class StrategyEco extends Strategy{
 
     public void capacityLaboratoire(Player[] players, Draw draw) {
         Construction min = players[0].getHand().min();
-        if (min.getValue() <= 4) {
+        if (min != null && min.getValue() <= 4) {
             WondersPower.LABORATOIRE.power(min, players[0], draw);
         }
     }

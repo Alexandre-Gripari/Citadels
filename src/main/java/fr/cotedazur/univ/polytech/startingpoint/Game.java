@@ -4,6 +4,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -223,5 +224,9 @@ public class Game {
             player.reset();
         }
         nbTurn = 0;
+    }
+
+    public void rearrangePlayer(){
+        Arrays.sort(players, Comparator.comparingInt(Player::getNumber));
     }
 }
