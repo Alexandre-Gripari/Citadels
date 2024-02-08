@@ -7,7 +7,6 @@ import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
-import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
@@ -47,6 +46,7 @@ public class StrategyEco extends Strategy{
         Construction choix = chooseCard(main,player);
         while(choix.getValue()> player.getGold()){
             main.remove(choix);
+            if(main.isEmpty()) return null;
             choix = chooseCard(main,player);
         }
         return choix;
@@ -55,7 +55,7 @@ public class StrategyEco extends Strategy{
     /*Choisis en priorité l'école de magie, sinon une merveille, sinon la carte dont la couleur est la plus représentée dans sa ville*/
     @Override
     public Construction chooseCard(List<Construction> constructions, Player player) {
-        Construction choix = new Construction("Lidl", Color.NEUTRE, 99);
+        Construction choix = new Construction("Lidl",Color.NEUTRE,10);
         List<Character> mostProfitableCharacters = super.mostProfitableCharacters(player);
         List<Color> mostProfitableColor = new ArrayList<>();
         mostProfitableColor.add(Color.MERVEILLEUX);

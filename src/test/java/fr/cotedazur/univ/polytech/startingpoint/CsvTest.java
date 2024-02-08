@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CsvTest {
     private final List<String[]> testString = new ArrayList<>();
+    private String testPath = "test/test.csv";
 
     @BeforeEach
     void init() {
@@ -26,9 +27,9 @@ class CsvTest {
 
     @Test
     void testAppendIntoCsvFile() throws IOException, CsvException {
-        Csv.appendIntoCsvFile(Csv.getFilePath(), testString);
-        assertTrue(new File(Csv.getFilePath()).exists());
-        CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
+        Csv.appendIntoCsvFile(testPath, testString);
+        assertTrue(new File(testPath).exists());
+        CSVReader reader = new CSVReader(new FileReader(testPath));
         List<String[]> data = reader.readAll();
         for (int i = 0; i < data.size(); i++) {
             assertTrue(Arrays.deepEquals(testString.get(i), data.get(i)));

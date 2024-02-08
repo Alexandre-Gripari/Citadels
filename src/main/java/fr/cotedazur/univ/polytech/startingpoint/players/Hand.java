@@ -6,6 +6,10 @@ import java.util.List;
 
 public class Hand{ // extends Arraylist ?
 
+    public void setHand(List<Construction> hand) {
+        this.hand = hand;
+    }
+
     private List<Construction> hand;
 
     public Hand(){
