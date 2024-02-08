@@ -5,7 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
@@ -23,26 +23,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StrategyRichardTest {
 
-    Construction temple = new Construction("Temple", Color.RELIGIEUX, 1);
-    Construction eglise = new Construction("Eglise", Color.RELIGIEUX, 2);
-    Construction monastere = new Construction("Monastère", Color.RELIGIEUX, 3);
-    Construction cathedrale = new Construction("Cathédrale", Color.RELIGIEUX, 5);
+    Constructions temple = new Constructions("Temple", Color.RELIGIEUX, 1);
+    Constructions eglise = new Constructions("Eglise", Color.RELIGIEUX, 2);
+    Constructions monastere = new Constructions("Monastère", Color.RELIGIEUX, 3);
+    Constructions cathedrale = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
 
-    Construction manoir = new Construction("Manoir", Color.NOBLE, 3);
-    Construction chateau = new Construction("Château", Color.NOBLE, 4);
-    Construction palais = new Construction("Palais", Color.NOBLE, 5);
+    Constructions manoir = new Constructions("Manoir", Color.NOBLE, 3);
+    Constructions chateau = new Constructions("Château", Color.NOBLE, 4);
+    Constructions palais = new Constructions("Palais", Color.NOBLE, 5);
 
-    Construction tour = new Construction("Tour de guet", Color.SOLDATESQUE, 1);
-    Construction forteresse = new Construction("Forteresse", Color.SOLDATESQUE, 2);
-    Construction prison = new Construction("Prison", Color.SOLDATESQUE, 3);
-    Construction bastion = new Construction("Bastion", Color.SOLDATESQUE, 5);
+    Constructions tour = new Constructions("Tour de guet", Color.SOLDATESQUE, 1);
+    Constructions forteresse = new Constructions("Forteresse", Color.SOLDATESQUE, 2);
+    Constructions prison = new Constructions("Prison", Color.SOLDATESQUE, 3);
+    Constructions bastion = new Constructions("Bastion", Color.SOLDATESQUE, 5);
 
-    Construction taverne = new Construction("Taverne", Color.COMMERCIAL, 1);
-    Construction echoppe = new Construction("Echoppe", Color.COMMERCIAL, 2);
-    Construction marche = new Construction("Marché", Color.COMMERCIAL, 2);
-    Construction comptoir =new Construction("Comptoir", Color.COMMERCIAL, 3);
-    Construction port = new Construction("Port", Color.COMMERCIAL, 4);
-    Construction hotel = new Construction("Hôtel de ville", Color.COMMERCIAL, 5);
+    Constructions taverne = new Constructions("Taverne", Color.COMMERCIAL, 1);
+    Constructions echoppe = new Constructions("Echoppe", Color.COMMERCIAL, 2);
+    Constructions marche = new Constructions("Marché", Color.COMMERCIAL, 2);
+    Constructions comptoir =new Constructions("Comptoir", Color.COMMERCIAL, 3);
+    Constructions port = new Constructions("Port", Color.COMMERCIAL, 4);
+    Constructions hotel = new Constructions("Hôtel de ville", Color.COMMERCIAL, 5);
 
     Wonder cour = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
     Wonder donjon = new Wonder("Donjon", 3, WondersPower.DONJON);
@@ -207,17 +207,17 @@ class StrategyRichardTest {
         p3.setCharacter(Character.ROI);
         p4.setCharacter(Character.CONDOTTIERE);
 
-        p1.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p1.getHand().add(new Construction("Eglise", Color.RELIGIEUX, 2));
-        p1.getHand().add(new Construction("Monastère", Color.RELIGIEUX, 3));
+        p1.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p1.getHand().add(new Constructions("Eglise", Color.RELIGIEUX, 2));
+        p1.getHand().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
 
-        p2.getHand().add(new Construction("Tour de guet", Color.SOLDATESQUE, 1));
-        p3.getHand().add(new Construction("Taverne", Color.COMMERCIAL, 1));
-        p4.getHand().add(new Construction("Comptoir", Color.COMMERCIAL, 3));
+        p2.getHand().add(new Constructions("Tour de guet", Color.SOLDATESQUE, 1));
+        p3.getHand().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
+        p4.getHand().add(new Constructions("Comptoir", Color.COMMERCIAL, 3));
 
-        draw.add(new Construction("Prison", Color.SOLDATESQUE, 3));
-        draw.add(new Construction("Marché", Color.COMMERCIAL, 2));
-        draw.add(new Construction("Port", Color.COMMERCIAL, 4));
+        draw.add(new Constructions("Prison", Color.SOLDATESQUE, 3));
+        draw.add(new Constructions("Marché", Color.COMMERCIAL, 2));
+        draw.add(new Constructions("Port", Color.COMMERCIAL, 4));
 
         strat.magician(players2, draw);
 
@@ -232,19 +232,19 @@ class StrategyRichardTest {
         p3.setCharacter(Character.ROI);
         p4.setCharacter(Character.CONDOTTIERE);
 
-        p1.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p1.getHand().add(new Construction("Eglise", Color.RELIGIEUX, 2));
-        p1.getHand().add(new Construction("Monastère", Color.RELIGIEUX, 3));
-        p1.getHand().add(new Construction("Hôtel de ville", Color.COMMERCIAL, 10));
+        p1.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p1.getHand().add(new Constructions("Eglise", Color.RELIGIEUX, 2));
+        p1.getHand().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
+        p1.getHand().add(new Constructions("Hôtel de ville", Color.COMMERCIAL, 10));
 
-        p2.getHand().add(new Construction("Tour de guet", Color.SOLDATESQUE, 1));
-        p3.getHand().add(new Construction("Taverne", Color.COMMERCIAL, 1));
-        p4.getHand().add(new Construction("Comptoir", Color.COMMERCIAL, 3));
+        p2.getHand().add(new Constructions("Tour de guet", Color.SOLDATESQUE, 1));
+        p3.getHand().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
+        p4.getHand().add(new Constructions("Comptoir", Color.COMMERCIAL, 3));
 
-        draw.add(new Construction("Prison", Color.SOLDATESQUE, 3));
-        draw.add(new Construction("Marché", Color.COMMERCIAL, 2));
-        draw.add(new Construction("Port", Color.COMMERCIAL, 4));
-        draw.add(new Construction("Bastion", Color.SOLDATESQUE, 5));
+        draw.add(new Constructions("Prison", Color.SOLDATESQUE, 3));
+        draw.add(new Constructions("Marché", Color.COMMERCIAL, 2));
+        draw.add(new Constructions("Port", Color.COMMERCIAL, 4));
+        draw.add(new Constructions("Bastion", Color.SOLDATESQUE, 5));
 
         strat.magician(players2, draw);
 
@@ -259,21 +259,21 @@ class StrategyRichardTest {
         p3.setCharacter(Character.ROI);
         p4.setCharacter(Character.CONDOTTIERE);
 
-        p1.getHand().add(new Construction("Echoppe", Color.COMMERCIAL, 2));
-        p1.getHand().add(new Construction("Eglise", Color.RELIGIEUX, 2));
+        p1.getHand().add(new Constructions("Echoppe", Color.COMMERCIAL, 2));
+        p1.getHand().add(new Constructions("Eglise", Color.RELIGIEUX, 2));
 
 
-        p2.getHand().add(new Construction("Tour de guet", Color.SOLDATESQUE, 1));
-        p2.getHand().add(new Construction("Monastère", Color.RELIGIEUX, 3));
-        p2.getHand().add(new Construction("Hôtel de ville", Color.COMMERCIAL, 5));
+        p2.getHand().add(new Constructions("Tour de guet", Color.SOLDATESQUE, 1));
+        p2.getHand().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
+        p2.getHand().add(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5));
 
-        p3.getHand().add(new Construction("Taverne", Color.COMMERCIAL, 1));
-        p4.getHand().add(new Construction("Comptoir", Color.COMMERCIAL, 3));
+        p3.getHand().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
+        p4.getHand().add(new Constructions("Comptoir", Color.COMMERCIAL, 3));
 
-        draw.add(new Construction("Prison", Color.SOLDATESQUE, 3));
-        draw.add(new Construction("Marché", Color.COMMERCIAL, 2));
-        draw.add(new Construction("Port", Color.COMMERCIAL, 4));
-        draw.add(new Construction("Bastion", Color.SOLDATESQUE, 5));
+        draw.add(new Constructions("Prison", Color.SOLDATESQUE, 3));
+        draw.add(new Constructions("Marché", Color.COMMERCIAL, 2));
+        draw.add(new Constructions("Port", Color.COMMERCIAL, 4));
+        draw.add(new Constructions("Bastion", Color.SOLDATESQUE, 5));
 
         assertEquals(2, p1.getHand().size());
         assertEquals(2, p1.getHand().get(0).getValue());
@@ -291,16 +291,16 @@ class StrategyRichardTest {
         p3.setCharacter(Character.ROI);
         p4.setCharacter(Character.MAGICIEN);
 
-        p1.getHand().add(new Construction("Echoppe", Color.COMMERCIAL, 2));
-        p1.getHand().add(new Construction("Eglise", Color.RELIGIEUX, 2));
+        p1.getHand().add(new Constructions("Echoppe", Color.COMMERCIAL, 2));
+        p1.getHand().add(new Constructions("Eglise", Color.RELIGIEUX, 2));
 
 
-        p2.getCity().add(new Construction("Tour de guet", Color.SOLDATESQUE, 1));
-        p2.getCity().add(new Construction("Hôtel de ville", Color.COMMERCIAL, 5));
-        p2.getCity().add(new Construction("Monastère", Color.RELIGIEUX, 3));
+        p2.getCity().add(new Constructions("Tour de guet", Color.SOLDATESQUE, 1));
+        p2.getCity().add(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5));
+        p2.getCity().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
 
-        p3.getCity().add(new Construction("Taverne", Color.COMMERCIAL, 1));
-        p4.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
+        p3.getCity().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
+        p4.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
 
         assertEquals(2, p1.getGold());
         assertEquals(3, p2.getCity().size());
@@ -334,47 +334,47 @@ class StrategyRichardTest {
         p3.setCharacter(Character.ROI);
         p4.setCharacter(Character.CONDOTTIERE);
 
-        p1.getHand().add(new Construction("Echoppe", Color.COMMERCIAL, 2));
-        p1.getHand().add(new Construction("Eglise", Color.RELIGIEUX, 2));
+        p1.getHand().add(new Constructions("Echoppe", Color.COMMERCIAL, 2));
+        p1.getHand().add(new Constructions("Eglise", Color.RELIGIEUX, 2));
 
 
-        p2.getHand().add(new Construction("Tour de guet", Color.SOLDATESQUE, 1));
-        p2.getHand().add(new Construction("Monastère", Color.RELIGIEUX, 3));
-        p2.getHand().add(new Construction("Hôtel de ville", Color.COMMERCIAL, 5));
+        p2.getHand().add(new Constructions("Tour de guet", Color.SOLDATESQUE, 1));
+        p2.getHand().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
+        p2.getHand().add(new Constructions("Hôtel de ville", Color.COMMERCIAL, 5));
 
-        p3.getHand().add(new Construction("Taverne", Color.COMMERCIAL, 1));
-        p4.getHand().add(new Construction("Comptoir", Color.COMMERCIAL, 3));
+        p3.getHand().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
+        p4.getHand().add(new Constructions("Comptoir", Color.COMMERCIAL, 3));
 
         assertEquals(1, strat.playerWithBiggestHandIndex(players2));
 
-        p1.getHand().add(new Construction("Prison", Color.SOLDATESQUE, 3));
-        p1.getHand().add(new Construction("Marché", Color.COMMERCIAL, 2));
+        p1.getHand().add(new Constructions("Prison", Color.SOLDATESQUE, 3));
+        p1.getHand().add(new Constructions("Marché", Color.COMMERCIAL, 2));
 
         assertEquals(0, strat.playerWithBiggestHandIndex(players2));
     }
 
     @Test
     void minCostInCityTest() {
-        p1.buildConstruction(new Construction("Echoppe", Color.COMMERCIAL, 2));
-        p1.buildConstruction(new Construction("Eglise", Color.RELIGIEUX, 2));
-        p1.buildConstruction(new Construction("Comptoir", Color.COMMERCIAL, 3));
+        p1.buildConstruction(new Constructions("Echoppe", Color.COMMERCIAL, 2));
+        p1.buildConstruction(new Constructions("Eglise", Color.RELIGIEUX, 2));
+        p1.buildConstruction(new Constructions("Comptoir", Color.COMMERCIAL, 3));
 
         assertEquals(2, strat.minCostInCity(p1.getCity()));
 
-        p1.buildConstruction(new Construction("Taverne", Color.COMMERCIAL, 1));
+        p1.buildConstruction(new Constructions("Taverne", Color.COMMERCIAL, 1));
 
         assertEquals(1, strat.minCostInCity(p1.getCity()));
     }
 
     @Test
     void minCostInCityIndexTest() {
-        p1.buildConstruction(new Construction("Echoppe", Color.COMMERCIAL, 2));
-        p1.buildConstruction(new Construction("Eglise", Color.RELIGIEUX, 2));
-        p1.buildConstruction(new Construction("Comptoir", Color.COMMERCIAL, 3));
+        p1.buildConstruction(new Constructions("Echoppe", Color.COMMERCIAL, 2));
+        p1.buildConstruction(new Constructions("Eglise", Color.RELIGIEUX, 2));
+        p1.buildConstruction(new Constructions("Comptoir", Color.COMMERCIAL, 3));
 
         assertEquals(0, strat.minCostInCityIndex(p1.getCity()));
 
-        p1.buildConstruction(new Construction("Taverne", Color.COMMERCIAL, 1));
+        p1.buildConstruction(new Constructions("Taverne", Color.COMMERCIAL, 1));
 
         assertEquals(3, strat.minCostInCityIndex(p1.getCity()));
     }

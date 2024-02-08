@@ -1,45 +1,45 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
-import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
 import java.util.*;
 
 public class Draw {
 
-    private Queue<Construction> drawDeck;
+    private Queue<Constructions> drawDeck;
 
     public Draw() {
         drawDeck = new LinkedList<>();
     }
 
-    public void addXConstructions(Construction c, int x) {
+    public void addXConstructions(Constructions c, int x) {
         for (int i = 0; i < x; i++) {
             drawDeck.add(c);
         }
     }
 
     public void shuffle() {
-        Collections.shuffle((List<Construction>) drawDeck);
+        Collections.shuffle((List<Constructions>) drawDeck);
     }
 
 
-    public Queue<Construction> getDeck() {
+    public Queue<Constructions> getDeck() {
         return drawDeck;
     }
 
     public String toString() {
         String s = "";
-        for (Construction c : drawDeck) {
+        for (Constructions c : drawDeck) {
             s += c + "\n";
         }
         return s;
     }
 
-    public Construction draw() {
+    public Constructions draw() {
         return drawDeck.poll();
     }
 
-    public void add(Construction c) {
+    public void add(Constructions c) {
         drawDeck.add(c);
     }
 
@@ -47,11 +47,11 @@ public class Draw {
     	return drawDeck.size();
     }
 
-    public boolean contains(Construction x) {
+    public boolean contains(Constructions x) {
         return drawDeck.contains(x);
     }
 
-    public Construction peek() {
+    public Constructions peek() {
         return drawDeck.peek();
     }
 }

@@ -1,11 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
-public class Construction extends Card {
+public class Constructions extends Card {
 
     private int value;
     private boolean constructed=false;
 
-    public Construction(String name, Color color, int value) {
+    public Constructions(String name, Color color, int value) {
         super(name, color);
         this.value = value;
     }
@@ -18,7 +18,7 @@ public class Construction extends Card {
         this.value = value;
     }
 
-    public boolean equals(Construction c){
+    public boolean equals(Constructions c){
         return this.name.equals(c.getName());
     }
 

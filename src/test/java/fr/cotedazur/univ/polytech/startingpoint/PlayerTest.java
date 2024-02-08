@@ -2,7 +2,7 @@ package fr.cotedazur.univ.polytech.startingpoint;
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
 
@@ -30,11 +30,11 @@ class PlayerTest {
     Player[] opponentOfP2 = new Player[2];
 
 
-    Construction cathédrale = new Construction("Cathédrale", Color.RELIGIEUX, 5);
-    Construction chateau = new Construction("Château", Color.NOBLE, 4);
-    Construction monastère = new Construction("Monastère", Color.RELIGIEUX, 3);
-    Construction marché = new Construction("Marché", Color.COMMERCIAL, 2);
-    Construction comptoir = new Construction("Comptoir", Color.COMMERCIAL, 3);
+    Constructions cathédrale = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
+    Constructions chateau = new Constructions("Château", Color.NOBLE, 4);
+    Constructions monastère = new Constructions("Monastère", Color.RELIGIEUX, 3);
+    Constructions marché = new Constructions("Marché", Color.COMMERCIAL, 2);
+    Constructions comptoir = new Constructions("Comptoir", Color.COMMERCIAL, 3);
 
 
     @BeforeEach
@@ -46,8 +46,8 @@ class PlayerTest {
         hand1 = new Hand();
 
         p1 = new Player(1, hand1);
-        p1.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p1.getHand().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
+        p1.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p1.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         draw = new Draw();
         draw.addXConstructions(cathédrale, 1);
@@ -59,8 +59,8 @@ class PlayerTest {
         hand2 = new Hand();
 
         p2 = new Player(2,1, hand2);
-        p2.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p2.getHand().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
+        p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         opponentOfP2[0] = p2;
         opponentOfP2[1] = p1;
@@ -96,14 +96,14 @@ class PlayerTest {
     @Test
     void takeConstruction() {
         init();
-        assertEquals(new ArrayList<Construction>(Arrays.asList(cathédrale,chateau)), p1.takeConstructions(draw,2));
-        assertEquals(new ArrayList<Construction>(Arrays.asList(monastère,marché, comptoir)), p1.takeConstructions(draw,3));
+        assertEquals(new ArrayList<Constructions>(Arrays.asList(cathédrale,chateau)), p1.takeConstructions(draw,2));
+        assertEquals(new ArrayList<Constructions>(Arrays.asList(monastère,marché, comptoir)), p1.takeConstructions(draw,3));
     }
 
     @Test
     void testPutBack() {
         init();
-        ArrayList<Construction> constructions = p1.takeConstructions(draw, 2);
+        ArrayList<Constructions> constructions = p1.takeConstructions(draw, 2);
         assertEquals(3, draw.size());
         p1.putBack(draw, constructions);
         assertEquals(5, draw.size());
@@ -130,8 +130,8 @@ class PlayerTest {
     @Test
     void buildConstruction() {
         Player p = new Player(1, new Hand());
-        Construction temple = new Construction("Temple", Color.RELIGIEUX, 1);
-        Construction forteresse = new Construction("Forteresse", Color.SOLDATESQUE, 2);
+        Constructions temple = new Constructions("Temple", Color.RELIGIEUX, 1);
+        Constructions forteresse = new Constructions("Forteresse", Color.SOLDATESQUE, 2);
         p.getHand().add(temple);
         p.getHand().add(forteresse);
 
@@ -149,28 +149,21 @@ class PlayerTest {
         p1.setScore(p1.getCity().cityValue());
         p2.setScore(p2.getCity().cityValue());
         assertEquals(0, p1.compareTo(p2));
-        p1.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
+        p1.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p1.setScore(p1.getCity().cityValue());
         p2.setScore(p2.getCity().cityValue());
         assertEquals(1, p1.compareTo(p2));
-        p2.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
+        p2.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p1.setScore(p1.getCity().cityValue());
         p2.setScore(p2.getCity().cityValue());
         assertEquals(0, p1.compareTo(p2));
-        p1.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
+        p1.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
         p1.setScore(p1.getCity().cityValue());
         p2.setScore(p2.getCity().cityValue());
         assertEquals(1, p1.compareTo(p2));
-        p2.getCity().add(new Construction("Monastère", Color.RELIGIEUX, 3));
+        p2.getCity().add(new Constructions("Monastère", Color.RELIGIEUX, 3));
         p1.setScore(p1.getCity().cityValue());
         p2.setScore(p2.getCity().cityValue());
-
-        assertEquals(1, p1.compareTo(p2));
-        p2.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        assertEquals(0, p1.compareTo(p2));
-        p1.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        assertEquals(1, p1.compareTo(p2));
-        p2.getCity().add(new Construction("Monastère", Color.RELIGIEUX, 3));
         assertEquals(-2, p1.compareTo(p2));
     }
 
@@ -227,10 +220,10 @@ class PlayerTest {
     @Test
     void testReset(){
         Player player3 = new Player(3, new Hand());
-        player3.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        player3.getHand().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
-        player3.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        player3.getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
+        player3.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        player3.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        player3.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        player3.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
         player3.addGold(40);
         player3.setCharacter(Character.ASSASSIN);
         player3.buildConstruction(new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES));

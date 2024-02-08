@@ -3,8 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import java.util.*;
 
@@ -39,10 +38,10 @@ public abstract class Strategy {
     }
 
     public abstract void playDefault(Player[] players, Draw draw);
-    public abstract Construction constructionToBuild(Hand hand, int gold);
+    public abstract Constructions constructionToBuild(Hand hand, int gold);
 
     public abstract List<Character> getCharacterPriority(Player[] players);
-    public abstract Construction chooseCard(List<Construction> constructions, Player player);
+    public abstract Constructions chooseCard(List<Constructions> constructions, Player player);
     public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()) {
             case ASSASSIN:
@@ -91,7 +90,7 @@ public abstract class Strategy {
 
     protected double averageCostInHand(Hand hand, int handSize) {
         double avCost = 0;
-        for (Construction c : hand.getHand()) avCost += c.getValue();
+        for (Constructions c : hand.getHand()) avCost += c.getValue();
         avCost/=handSize;
         return avCost;
     }

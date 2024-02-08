@@ -111,14 +111,14 @@ public enum Character{
 
     CONDOTTIERE("Condotière", Color.SOLDATESQUE, 8){
         @Override
-        public Construction ability(Construction c, Player self, Player opponent){
+        public Constructions ability(Constructions c, Player self, Player opponent){
             int gold = 0;
             if (c != null && !c.getName().equals("Donjon")) {
                 opponent.destroyConstruction(c);
                 self.addGold(-c.getValue()+1);
                 MyLogger.log(Level.INFO, "Le joueur " + self.getNumber() + " a détruit la construction " + c.getName() + " du joueur " + opponent.getNumber());
             }
-            for (Construction co : self.getCity().getCity()) {
+            for (Constructions co : self.getCity().getCity()) {
                 if (co.getColor() == Color.SOLDATESQUE) {
                     gold++;
                 }
@@ -142,7 +142,7 @@ public enum Character{
     public void ability(Character character, Player[] players) {/* abilité du joueur sur les autres personages*/}
     public void ability(Player self) {/* abilité du joueur lui-même*/}
     public void ability(Player ... players) {/* abilité du joueur sur les autres joueurs*/}
-    public Construction ability(Construction c, Player self, Player opponent) { return null;/* abilité du joueur sur les autres joueurs et sur une construction*/}
+    public Constructions ability(Constructions c, Player self, Player opponent) { return null;/* abilité du joueur sur les autres joueurs et sur une construction*/}
     public void ability(Draw d, Player ... players) {/* abilité du joueur sur les autres joueurs et sur la pioche*/}
 
     public String getName() { return this.name; }

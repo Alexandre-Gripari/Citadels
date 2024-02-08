@@ -60,17 +60,17 @@ class CharacterTest {
 
     Draw d = new Draw();
     Player p = new Player(1, new Hand());
-    Construction c1 = new Construction("Temple", Color.RELIGIEUX, 1);
-    Construction c2 = new Construction("Forteresse", Color.SOLDATESQUE, 2);
-    Construction c3 = new Construction("Cathédrale", Color.RELIGIEUX, 5);
-    Construction c4 = new Construction("Château", Color.NOBLE, 4);
-    Construction c5 = new Construction("Monastère", Color.RELIGIEUX, 3);
-    Construction c6 = new Construction("Marché", Color.COMMERCIAL, 2);
+    Constructions c1 = new Constructions("Temple", Color.RELIGIEUX, 1);
+    Constructions c2 = new Constructions("Forteresse", Color.SOLDATESQUE, 2);
+    Constructions c3 = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
+    Constructions c4 = new Constructions("Château", Color.NOBLE, 4);
+    Constructions c5 = new Constructions("Monastère", Color.RELIGIEUX, 3);
+    Constructions c6 = new Constructions("Marché", Color.COMMERCIAL, 2);
 
     Player p2_1 = new Player(2, new Hand());
-    Construction c7 = new Construction("Tata", Color.RELIGIEUX, 1);
-    Construction c8 = new Construction("Toto", Color.SOLDATESQUE, 2);
-    Construction c9 = new Construction("Titi", Color.RELIGIEUX, 5);
+    Constructions c7 = new Constructions("Tata", Color.RELIGIEUX, 1);
+    Constructions c8 = new Constructions("Toto", Color.SOLDATESQUE, 2);
+    Constructions c9 = new Constructions("Titi", Color.RELIGIEUX, 5);
 
     @BeforeEach
     void setUp() {
@@ -161,57 +161,57 @@ class CharacterTest {
     Player condottiere;
     Hand h8;
     City ct8;
-    Construction prison = new Construction("Prison", Color.SOLDATESQUE, 3);
+    Constructions prison = new Constructions("Prison", Color.SOLDATESQUE, 3);
 
     void init() {
 
         h1 = new Hand();
         ct1 = new City();
         assassin = new Player(1, 2, h1, ct1, s1);
-        assassin.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
+        assassin.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
 
         h2 = new Hand();
         ct2 = new City();
         king = new Player(2, 2, h2, ct2, s1);
-        king.getCity().add(new Construction("Manoir", Color.NOBLE, 1));
-        king.getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
+        king.getCity().add(new Constructions("Manoir", Color.NOBLE, 1));
+        king.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         h3 = new Hand();
         ct3 = new City();
         bishop = new Player(3, 2, h3, ct3, s1);
-        bishop.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        bishop.getCity().add(new Construction("Eglise", Color.RELIGIEUX, 2));
+        bishop.getCity().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        bishop.getCity().add(new Constructions("Eglise", Color.RELIGIEUX, 2));
 
         h4 = new Hand();
         ct4 = new City();
         merchant = new Player(4, 2, h4, ct4, s1);
-        merchant.getCity().add(new Construction("Taverne", Color.COMMERCIAL, 1));
-        merchant.getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
-        merchant.getCity().add(new Construction("Marché", Color.COMMERCIAL, 2));
+        merchant.getCity().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
+        merchant.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        merchant.getCity().add(new Constructions("Marché", Color.COMMERCIAL, 2));
 
         h5 = new Hand();
         ct5 = new City();
         architect = new Player(5, 2, h5, ct5, s1);
-        architect.getCity().add(new Construction("Taverne", Color.COMMERCIAL, 1));
-        architect.getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
+        architect.getCity().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
+        architect.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         h6 = new Hand();
         ct6 = new City();
         thief = new Player(6, 2, h6, ct6, s1);
-        thief.getCity().add(new Construction("Taverne", Color.COMMERCIAL, 1));
+        thief.getCity().add(new Constructions("Taverne", Color.COMMERCIAL, 1));
 
 
         h7 = new Hand();
         ct7 = new City();
         magician = new Player(7, 2, h7, ct7, s1);
-        magician.getCity().add(new Construction("Port", Color.COMMERCIAL, 4));
+        magician.getCity().add(new Constructions("Port", Color.COMMERCIAL, 4));
         magician.getCity().add(prison);
-        magician.getCity().add(new Construction("Palais", Color.NOBLE, 5));
+        magician.getCity().add(new Constructions("Palais", Color.NOBLE, 5));
 
         h8 = new Hand();
         ct8 = new City();
         condottiere = new Player(8, 3, h8, ct8, s1);
-        condottiere.getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
+        condottiere.getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
 
         List<Character> CharacterList = new ArrayList<>(List.of(Character.values()));
         assassin.setCharacter(Character.ASSASSIN);
@@ -245,7 +245,7 @@ class CharacterTest {
     @Test
     void testCondottiereAbility() {
         init();
-        Construction prison2 = new Construction("Prison", Color.SOLDATESQUE, 2);
+        Constructions prison2 = new Constructions("Prison", Color.SOLDATESQUE, 2);
         assertEquals(3, condottiere.getGold());
         assertEquals(3, magician.getCity().size());
         assertEquals("Prison",Character.CONDOTTIERE.ability(prison, condottiere, magician).getName());

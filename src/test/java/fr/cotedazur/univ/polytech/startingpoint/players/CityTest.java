@@ -1,7 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
+import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.cards.WondersPower;
@@ -13,24 +13,24 @@ import java.util.logging.Level;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CityTest {
-    Construction c1 = new Construction("test", Color.COMMERCIAL, 1);
-    Construction c2 = new Construction("test2", Color.COMMERCIAL, 2);
-    Construction c3 = new Construction("test3", Color.COMMERCIAL, 3);
-    Construction c4 = new Construction("test4", Color.COMMERCIAL, 4);
-    Construction c5 = new Construction("test5", Color.COMMERCIAL, 5);
-    Construction c6 = new Construction("test6", Color.COMMERCIAL, 6);
-    Construction r1 = new Construction("testr1", Color.RELIGIEUX, 1);
-    Construction r2 = new Construction("testr2", Color.RELIGIEUX, 2);
-    Construction r3 = new Construction("testr3", Color.RELIGIEUX, 3);
-    Construction m1 = new Wonder("Dracoport", 6, WondersPower.DRACOPORT); // Pour tester le Dracoport
+    Constructions c1 = new Constructions("test", Color.COMMERCIAL, 1);
+    Constructions c2 = new Constructions("test2", Color.COMMERCIAL, 2);
+    Constructions c3 = new Constructions("test3", Color.COMMERCIAL, 3);
+    Constructions c4 = new Constructions("test4", Color.COMMERCIAL, 4);
+    Constructions c5 = new Constructions("test5", Color.COMMERCIAL, 5);
+    Constructions c6 = new Constructions("test6", Color.COMMERCIAL, 6);
+    Constructions r1 = new Constructions("testr1", Color.RELIGIEUX, 1);
+    Constructions r2 = new Constructions("testr2", Color.RELIGIEUX, 2);
+    Constructions r3 = new Constructions("testr3", Color.RELIGIEUX, 3);
+    Constructions m1 = new Wonder("Dracoport", 6, WondersPower.DRACOPORT); // Pour tester le Dracoport
 
     //Test cour des miracles
-    Construction m2 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
-    Construction m3 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
+    Constructions m2 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
+    Constructions m3 = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
 
-    Construction c7 = new Construction("religieux", Color.RELIGIEUX, 1);
-    Construction c8 = new Construction("noble", Color.NOBLE, 1);
-    Construction c9 = new Construction("soldatesque", Color.SOLDATESQUE, 1);
+    Constructions c7 = new Constructions("religieux", Color.RELIGIEUX, 1);
+    Constructions c8 = new Constructions("noble", Color.NOBLE, 1);
+    Constructions c9 = new Constructions("soldatesque", Color.SOLDATESQUE, 1);
 
     City city1 = new City();
     City city2 = new City();
@@ -110,11 +110,11 @@ class CityTest {
         assertEquals(Color.RELIGIEUX, city2.missingColor());
         assertEquals(Color.NOBLE, city3.missingColor());
         City city4 = new City();
-        Construction c7 = new Construction("test7", Color.RELIGIEUX, 7);
-        Construction c8 = new Construction("test8", Color.NOBLE, 8);
-        Construction c9 = new Construction("test9", Color.SOLDATESQUE, 9);
-        Construction c10 = new Construction("test10", Color.COMMERCIAL, 10);
-        Construction c11 = new Construction("test11", Color.MERVEILLEUX, 11);
+        Constructions c7 = new Constructions("test7", Color.RELIGIEUX, 7);
+        Constructions c8 = new Constructions("test8", Color.NOBLE, 8);
+        Constructions c9 = new Constructions("test9", Color.SOLDATESQUE, 9);
+        Constructions c10 = new Constructions("test10", Color.COMMERCIAL, 10);
+        Constructions c11 = new Constructions("test11", Color.MERVEILLEUX, 11);
         Wonder w1 = new Wonder("Cour des miracles", 1, WondersPower.COUR_DES_MIRACLES);
         Wonder w2 = new Wonder("testw2", 2, WondersPower.DONJON);
         city4.add(c7);

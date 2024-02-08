@@ -27,27 +27,27 @@ class StrategyEcoTest {
     StrategyEco strat = new StrategyEco("oui");
 
     List<Character> charactersList = new ArrayList<Character>();
-    Construction temple = new Construction("Temple", Color.RELIGIEUX, 1);
-    Construction eglise = new Construction("Eglise", Color.RELIGIEUX, 2);
-    Construction monastere = new Construction("Monastère", Color.RELIGIEUX, 3);
-    Construction cathedrale = new Construction("Cathédrale", Color.RELIGIEUX, 5);
+    Constructions temple = new Constructions("Temple", Color.RELIGIEUX, 1);
+    Constructions eglise = new Constructions("Eglise", Color.RELIGIEUX, 2);
+    Constructions monastere = new Constructions("Monastère", Color.RELIGIEUX, 3);
+    Constructions cathedrale = new Constructions("Cathédrale", Color.RELIGIEUX, 5);
 
-    Construction manoir = new Construction("Manoir", Color.NOBLE, 3);
-    Construction chateau = new Construction("Château", Color.NOBLE, 4);
-    Construction palais = new Construction("Palais", Color.NOBLE, 5);
-    Construction lidl = new Construction("Lidl",Color.NEUTRE,99);
+    Constructions manoir = new Constructions("Manoir", Color.NOBLE, 3);
+    Constructions chateau = new Constructions("Château", Color.NOBLE, 4);
+    Constructions palais = new Constructions("Palais", Color.NOBLE, 5);
+    Constructions lidl = new Constructions("Lidl",Color.NEUTRE,99);
 
-    Construction tour = new Construction("Tour de guet", Color.SOLDATESQUE, 1);
-    Construction forteresse = new Construction("Forteresse", Color.SOLDATESQUE, 2);
-    Construction prison = new Construction("Prison", Color.SOLDATESQUE, 3);
-    Construction bastion = new Construction("Bastion", Color.SOLDATESQUE, 5);
+    Constructions tour = new Constructions("Tour de guet", Color.SOLDATESQUE, 1);
+    Constructions forteresse = new Constructions("Forteresse", Color.SOLDATESQUE, 2);
+    Constructions prison = new Constructions("Prison", Color.SOLDATESQUE, 3);
+    Constructions bastion = new Constructions("Bastion", Color.SOLDATESQUE, 5);
 
-    Construction taverne = new Construction("Taverne", Color.COMMERCIAL, 1);
-    Construction echoppe = new Construction("Echoppe", Color.COMMERCIAL, 2);
-    Construction marche = new Construction("Marché", Color.COMMERCIAL, 2);
-    Construction comptoir =new Construction("Comptoir", Color.COMMERCIAL, 3);
-    Construction port = new Construction("Port", Color.COMMERCIAL, 4);
-    Construction hotel = new Construction("Hôtel de ville", Color.COMMERCIAL, 5);
+    Constructions taverne = new Constructions("Taverne", Color.COMMERCIAL, 1);
+    Constructions echoppe = new Constructions("Echoppe", Color.COMMERCIAL, 2);
+    Constructions marche = new Constructions("Marché", Color.COMMERCIAL, 2);
+    Constructions comptoir =new Constructions("Comptoir", Color.COMMERCIAL, 3);
+    Constructions port = new Constructions("Port", Color.COMMERCIAL, 4);
+    Constructions hotel = new Constructions("Hôtel de ville", Color.COMMERCIAL, 5);
 
     Wonder cour = new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES);
     Wonder donjon = new Wonder("Donjon", 3, WondersPower.DONJON);
@@ -68,22 +68,22 @@ class StrategyEcoTest {
         hand1 = new Hand();
 
         p1 = new Player(1, hand1);
-        p1.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p1.getHand().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
-        p1.getCity().add(new Construction("Gros château", Color.NOBLE, 284));
+        p1.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p1.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
+        p1.getCity().add(new Constructions("Gros château", Color.NOBLE, 284));
 
         draw = new Draw();
-        draw.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 1);
-        draw.addXConstructions(new Construction("Château", Color.NOBLE, 4), 1);
-        draw.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 1);
-        draw.addXConstructions(new Construction("Marché", Color.COMMERCIAL, 2), 1);
-        draw.addXConstructions(new Construction("Comptoir", Color.COMMERCIAL, 3), 1);
+        draw.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
+        draw.addXConstructions(new Constructions("Château", Color.NOBLE, 4), 1);
+        draw.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
+        draw.addXConstructions(new Constructions("Marché", Color.COMMERCIAL, 2), 1);
+        draw.addXConstructions(new Constructions("Comptoir", Color.COMMERCIAL, 3), 1);
 
         hand2 = new Hand();
 
         p2 = new Player(2, 1, hand2, new City());
-        p2.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p2.getHand().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
+        p2.getHand().add(new Constructions("Temple", Color.RELIGIEUX, 1));
+        p2.getHand().add(new Constructions("Forteresse", Color.SOLDATESQUE, 2));
         charactersList.addAll(List.of(Character.ROI,Character.MARCHAND));
     }
     @Test
@@ -109,7 +109,7 @@ class StrategyEcoTest {
     @Test
     void testConstructionToBuild() {
         Hand hand = new Hand();
-        List<Construction> c = new ArrayList<>();
+        List<Constructions> c = new ArrayList<>();
         c.add(universite);
         c.add(dracoport);
         c.add(ecole);
