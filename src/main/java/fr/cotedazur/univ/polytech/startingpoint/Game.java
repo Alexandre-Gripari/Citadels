@@ -125,10 +125,14 @@ public class Game {
     public void playerHasFinished(Player player) {
         if (player.getCity().size() >= 8) {
             if (!someoneFinished) {
+                MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " a terminé sa ville en premier.\n");
                 someoneFinished = true;
                 player.setScore(player.getScore()+4);
             }
-            else player.setScore(player.getScore()+2);
+            else {
+                player.setScore(player.getScore()+2);
+                MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " a terminé sa ville\n");
+            }
         }
     }
 
