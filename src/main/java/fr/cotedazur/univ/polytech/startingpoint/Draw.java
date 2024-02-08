@@ -45,8 +45,8 @@ public class Draw {
         return drawDeck.poll();
     }
 
-    public void add(Constructions c) {
-        drawDeck.add(c);
+    public void add(Constructions ... c) {
+        drawDeck.addAll(List.of(c));
     }
 
     public int size() {
@@ -57,7 +57,4 @@ public class Draw {
         return drawDeck.contains(x);
     }
 
-    public Constructions peek() {
-        return drawDeck.peek();
-    }
 }

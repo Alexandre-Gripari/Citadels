@@ -97,10 +97,6 @@ public class Player implements Comparable<Player> {
         return wonders;
     }
 
-    public void setWonders(List<Wonder> wonders) {
-        this.wonders = wonders;
-    }
-
     public void setStrategy(Strategy strategy) {
         this.strategy = strategy;
     }
@@ -116,21 +112,6 @@ public class Player implements Comparable<Player> {
         }
         MyLogger.log(Level.INFO, "Le joueur " + number + " est le " + character.getName());
         strategy.play(players, draw);
-
-
-
-        /*if (hand.isEmpty()) {
-            hand.add(takeConstruction(draw));
-            for (Wonder w : getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) useWonder(draw, w.getWondersPower());
-            }
-        }
-        else takeGold();
-        for (Wonder w : getWonders()) {
-            if (w.getName().equals("Laboratoire") || w.getName().equals("Manufacture") || w.getName().equals("Ecole de magie")) useWonder(draw, w.getWondersPower());
-        }
-        buildConstruction();
-        useAbility(draw, players);*/
     }
 
     public void drawConstruction(Draw d, int n) {
@@ -168,51 +149,6 @@ public class Player implements Comparable<Player> {
         else if (n == 1) takeGold();
         else drawConstruction(d, n);
     }
-
-    /*public void useAbility(Draw draw, Player self, Player opponent, Constructions c, Player[] players){
-        switch (character.getNumber()){
-            case 1:
-                character.ability(opponent);
-                break;
-            case 2:
-                character.ability(self, opponent);
-                break;
-            case 3:
-                if (opponent == null) character.ability(self);
-                else character.ability(self, opponent);
-                break;
-            case 4, 5, 6:
-                character.ability(this);
-                break;
-            case 7:
-                character.ability(draw, self);
-                break;
-            case 8:
-                Constructions destroyedCons = character.ability(c ,self, opponent);
-                if (destroyedCons != null) WondersPower.CIMETIERE.power(destroyedCons, players);
-                break;
-        }
-    }
-
-    public void useWonder(Wonder wonder, Player player, Draw d, Constructions c ) {
-        switch (wonder.getName()){
-            case "Laboratoire":
-                WondersPower.LABORATOIRE.power(c, player, d);
-                break;
-            case "Manufacture":
-                WondersPower.MANUFACTURE.power(player, d);
-                break;
-            case "Observatoire":
-                WondersPower.OBSERVATOIRE.power(player, d);
-                break;
-            case "Bibliothèque":
-                WondersPower.BIBLIOTHEQUE.power(player, d);
-                break;
-            case "Ecole de magie":
-                WondersPower.ECOLE_DE_MAGIE.power(player);
-                break;
-        }
-    }*/
 
     public void takeGold(){
         gold += 2;

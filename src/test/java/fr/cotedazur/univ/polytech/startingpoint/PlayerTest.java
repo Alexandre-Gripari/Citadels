@@ -41,6 +41,7 @@ class PlayerTest {
         MyLogger.setLogLevel(Level.OFF);
     }
 
+    @BeforeEach
     void init() {
         hand1 = new Hand();
 
@@ -65,32 +66,59 @@ class PlayerTest {
         opponentOfP2[1] = p1;
     }
 
-    /*@Test
-    void play() {
-        init();
-        assertEquals(2, p2.getGold());
-        p2.play(draw, opponentOfP2);
-        assertEquals(2, p2.getGold());
-        assertEquals("Temple", p2.getCity().get(0).getName());
-        assertEquals("Forteresse", p2.getHand().get(0).getName());
-        p2.play(draw, opponentOfP2);
-        assertEquals(2, p2.getGold());
-        assertEquals("Forteresse", p2.getCity().get(1).getName());
-        assertTrue(p2.getHand().isEmpty());
-        p2.play(draw, opponentOfP2);
-        assertEquals(2, p2.getGold());
-        assertEquals("Château", p2.getHand().get(0).getName());
-        p2.play(draw, opponentOfP2);
-        assertEquals(0, p2.getGold());
-        assertEquals(0, p2.getHand().size());
-        assertEquals(3, p2.getCity().size());
-        p2.play(draw, opponentOfP2);
-        assertEquals(0, p2.getGold());
-        assertEquals("Marché", p2.getHand().get(0).getName());
-        assertEquals("Château", p2.getCity().get(2).getName());
-        assertEquals(1, p2.getHand().size());
-        assertEquals(3, p2.getCity().size());
-    }*/
+    @Test
+    void getNumberOfVictoryTest() {
+        p1.setNumberOfVictory(4);
+        assertEquals(4, p1.getNumberOfVictory());
+    }
+
+    @Test
+    void setNumberOfVictoryTest() {
+        p1.setNumberOfVictory(2);
+        assertEquals(2, p1.getNumberOfVictory());
+    }
+
+    @Test
+    void getNumberOfDefeatTest() {
+        p1.setNumberOfDefeat(4);
+        assertEquals(4, p1.getNumberOfDefeat());
+    }
+
+    @Test
+    void setNumberOfDefeatTest() {
+        p1.setNumberOfDefeat(2);
+        assertEquals(2, p1.getNumberOfDefeat());
+    }
+
+    @Test
+    void getNumberOfDrawTest() {
+        p1.setNumberOfDraw(4);
+        assertEquals(4, p1.getNumberOfDraw());
+    }
+
+    @Test
+    void setNumberOfDrawTest() {
+        p1.setNumberOfDraw(2);
+        assertEquals(2, p1.getNumberOfDraw());
+    }
+
+    @Test
+    void getCumulatedScoreTest() {
+        p1.setCumulatedScore(4);
+        assertEquals(4, p1.getCumulatedScore());
+    }
+
+    @Test
+    void setCumulatedScoreTest() {
+        p1.setCumulatedScore(2);
+        assertEquals(2, p1.getCumulatedScore());
+    }
+
+    @Test
+    void getAverageScore() {
+        p1.setCumulatedScore(20000);
+        assertEquals(20, p1.getAverageScore());
+    }
 
     @Test
     void takeConstruction() {
@@ -207,11 +235,11 @@ class PlayerTest {
         Strategy1 s = new Strategy1("Test");
         Player p = new Player(0, 2, new Hand(), new City(), s);
 
-        p.pick(draw, s.goldOrCard(new Player[]{p}, draw));
+        p.pick(draw, s.goldOrCard(new Player[]{p}));
         assertEquals(1, p.getHand().size() );
         assertEquals(2, p.getGold());
 
-        p.pick(draw, s.goldOrCard(new Player[]{p}, draw));
+        p.pick(draw, s.goldOrCard(new Player[]{p}));
         assertEquals(1, p.getHand().size() );
         assertEquals(4, p.getGold());
     }

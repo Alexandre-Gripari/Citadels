@@ -16,10 +16,6 @@ import java.util.List;
 public class StrategyRichard extends Strategy1{
     private List<Character> characters = new ArrayList<>();
 
-    public List<Character> getCharacters() {
-        return characters;
-    }
-
     public void setCharacters(List<Character> characters) {
         this.characters = characters;
     }
@@ -102,11 +98,6 @@ public class StrategyRichard extends Strategy1{
     @Override
     public Constructions chooseCard(List<Constructions> constructions, Player player) {
         return super.chooseCard(constructions, player);
-    }
-
-    @Override
-    public void play(Player[] players, Draw draw) {
-        super.play(players, draw);
     }
 
     @Override
@@ -203,28 +194,5 @@ public class StrategyRichard extends Strategy1{
         }
 
         super.magician(players, draw);
-    }
-
-    @Override
-    public void king(Player[] players, Draw draw) {super.king(players, draw);}
-
-    @Override
-    public void bishop(Player[] players, Draw draw) {
-        super.bishop(players, draw);
-    }
-
-    @Override
-    public void merchant(Player[] players, Draw draw) {
-        super.merchant(players, draw);
-    }
-
-    @Override
-    public void architect(Player[] players, Draw draw) {
-        super.architect(players, draw);
-    }
-
-    @Override
-    public void condottiere(Player[] players, Draw draw) {
-        super.condottiere(players, draw);
     }
 }

@@ -101,16 +101,16 @@ class StrategyRichardTest {
         d.add(ecole);
         d.add(echoppe);
 
-        assertEquals(2, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(2, s.goldOrCard(new Player[]{p}));
 
         p.getWonders().add(observatoire);
-        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}));
 
         p.getWonders().add(bibliotheque);
-        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}));
 
         p.getHand().add(manoir);
-        assertEquals(1, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(1, s.goldOrCard(new Player[]{p}));
     }
 
     StrategyRichard strat;

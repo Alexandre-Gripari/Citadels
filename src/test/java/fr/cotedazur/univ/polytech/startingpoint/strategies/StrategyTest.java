@@ -46,6 +46,12 @@ class StrategyTest {
     }
 
     @Test
+    void getDescriptionTest() {
+        Strategy s = new Strategy1("la description");
+        assertEquals("la description", s.getDescription());
+    }
+
+    @Test
     void testChoiceCharacter(){
         List<Character> characters = new ArrayList<>();
 

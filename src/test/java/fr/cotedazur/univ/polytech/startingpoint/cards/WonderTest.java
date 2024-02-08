@@ -118,5 +118,9 @@ class WonderTest {
         assertEquals(Color.SOLDATESQUE, wonder5.getColor());
     }
 
-
+    @Test
+    void testHashCode() {
+        Wonder w = new Wonder("test hashcode", 3, WondersPower.MANUFACTURE);
+        assertEquals(WondersPower.MANUFACTURE.hashCode(), w.hashCode());
+    }
 }

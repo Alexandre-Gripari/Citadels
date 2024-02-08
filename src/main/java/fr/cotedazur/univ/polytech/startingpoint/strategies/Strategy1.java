@@ -44,8 +44,6 @@ public class Strategy1 extends Strategy{
         return characterPriority;
     }
 
-    public void useWonder(List<Wonder> wonders) {return;}
-
     @Override
     public Constructions chooseCard(List<Constructions> constructions, Player player) {
         Constructions c = new Constructions("null", Color.NEUTRE, 10);
@@ -91,13 +89,13 @@ public class Strategy1 extends Strategy{
     }
 
     public void playDefault(Player[] players, Draw draw) {
-        players[0].pick(draw, goldOrCard(players, draw));
+        players[0].pick(draw, goldOrCard(players));
         players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
     // Elle sera utilisée dans les méthodes de caractères.
-    public int goldOrCard(Player[] players, Draw draw) {
+    public int goldOrCard(Player[] players) {
         if (players[0].getHand().isEmpty()) {
             for (Wonder w : players[0].getWonders()) {
                 if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) {

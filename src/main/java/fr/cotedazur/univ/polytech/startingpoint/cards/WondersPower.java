@@ -87,7 +87,6 @@ public enum WondersPower {
     public void power(){}
     public void power(Player p, Draw d) {}
     public void power(Constructions c, Player ... players){}
-    public void power(Player player){}
     public void power(Constructions c, Player player, Draw d){}
     public void power(City city, Wonder wonder){}
     public void power(Player player, Color color){}

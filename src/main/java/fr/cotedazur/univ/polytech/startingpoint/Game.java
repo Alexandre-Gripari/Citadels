@@ -24,6 +24,10 @@ public class Game {
         this.draw = new Draw();
     }
 
+    public double getNbTurn() {
+        return nbTurn;
+    }
+
     public void init() {
 
         draw.addXConstructions(new Constructions("Temple", Color.RELIGIEUX, 1), 3);
@@ -87,16 +91,8 @@ public class Game {
         return players;
     }
 
-    public double getNbTurn() {
-        return nbTurn;
-    }
-
     public List<Character> getCharacters() {
         return characters;
-    }
-
-    public Character[] getCharactersDiscarded() {
-        return charactersDiscarded;
     }
 
 
@@ -224,6 +220,4 @@ public class Game {
         }
         nbTurn = 0;
     }
-
-
 }
