@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
+import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,10 +41,6 @@ public class Hand{ // extends Arraylist ?
         this.hand = (ArrayList<Constructions>) hand.getHand();
     }
 
-    public void set(int i, Constructions c) {
-        hand.set(i, c);
-    }
-
     public void remove(Constructions c) {
         hand.remove(c);
 
@@ -55,6 +52,19 @@ public class Hand{ // extends Arraylist ?
         for (Constructions construction : hand)
             if (c.getValue() >= construction.getValue()) c = construction;
 
+        if (c.getName().equals("null")) return null;
+        return c;
+    }
+
+    public Constructions minNotInCity(Player player) {
+        Constructions c = new Constructions("null", null, 110);
+
+        if (player.getHand().isEmpty()) return null;
+        for (Constructions construction : hand)
+            if (construction != null && c.getValue() >= construction.getValue()
+                    && !player.getCity().getCity().contains(construction)) c = construction;
+
+        if (c.getName().equals("null")) return null;
         return c;
     }
 
@@ -64,6 +74,7 @@ public class Hand{ // extends Arraylist ?
         for (Constructions construction : hand)
             if (c.getValue() <= construction.getValue()) c = construction;
 
+        if (c.getName().equals("null")) return null;
         return c;
     }
 }

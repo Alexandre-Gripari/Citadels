@@ -9,6 +9,7 @@ import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Strategy1 extends Strategy{
 
@@ -16,6 +17,7 @@ public class Strategy1 extends Strategy{
         super(description);
     }
 
+    @Override
     public Character chooseCharacter(Player player,List<Character> characters, Player[] players){
         Character character = super.chooseCharacter(player, characters, players);
         if (character != null) return character;
@@ -57,8 +59,10 @@ public class Strategy1 extends Strategy{
         return c;
     }
 
-    public Constructions constructionToBuild(Hand hand, int gold) {
-        if (hand.min().getValue() <= gold) return hand.min();
+    public Constructions constructionToBuild(Player player) {
+
+        if (player.getHand().getHand().isEmpty()) return null;
+        if (player.getHand().minNotInCity(player) != null && player.getHand().minNotInCity(player).getValue() <= player.getGold()) return player.getHand().minNotInCity(player);
         else return null;
     }
 
@@ -85,13 +89,13 @@ public class Strategy1 extends Strategy{
     }
 
     public void playDefault(Player[] players, Draw draw) {
-        players[0].pick(draw, goldOrCard(players, draw));
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
+        players[0].pick(draw, goldOrCard(players));
+        players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
     // Elle sera utilisée dans les méthodes de caractères.
-    public int goldOrCard(Player[] players, Draw draw) {
+    public int goldOrCard(Player[] players) {
         if (players[0].getHand().isEmpty()) {
             for (Wonder w : players[0].getWonders()) {
                 if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) {
@@ -106,25 +110,14 @@ public class Strategy1 extends Strategy{
     // Le joueur cible l'architecte en tant qu'assassin
     public void assassin(Player[] players, Draw draw) {
         playDefault(players, draw);
-        int size = players.length;
-        for (int i = 1; i < size; i++) {
-            if (players[i].getCharacter().equals(Character.ARCHITECTE)) {
-                Character.ASSASSIN.ability(players[i]);
-                break;
-            }
-        }
+        Character.ASSASSIN.ability(Character.ARCHITECTE, players);
     }
 
     // Le joueur cible l'architecte en tant que voleur
     public void thief(Player[] players, Draw draw) {
         playDefault(players, draw);
-        int size = players.length;
-        for (int i = 1; i < size; i++) {
-            if (players[i].getCharacter().equals(Character.ARCHITECTE) && !players[i].isDead()) {
-                Character.VOLEUR.ability(players[0], players[i]);
-                break;
-            }
-        }
+        if (!Character.ARCHITECTE.isDead(players)) Character.VOLEUR.ability(Character.ARCHITECTE, players);
+        else Character.VOLEUR.ability(Character.ROI, players);
     }
 
     // Le joueur échange sa main avec un joueur ayant plus de carte que lui sinon la pioche si sa main est trop vide et/ou trop coûteuse
@@ -168,8 +161,8 @@ public class Strategy1 extends Strategy{
     public void architect(Player[] players, Draw draw) {
         Character.ARCHITECTE.ability(draw, players[0]);
         playDefault(players, draw);
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
-        players[0].buildConstruction(constructionToBuild(players[0].getHand(), players[0].getGold()));
+        players[0].buildConstruction(constructionToBuild(players[0]));
+        players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     public void condottiere(Player[] players, Draw draw) {
@@ -189,7 +182,7 @@ public class Strategy1 extends Strategy{
         if (biggestCitySize == 0) Character.CONDOTTIERE.ability(null, players[0], null); // On récupère juste l'or
         else {
             int consToDestructIndex = minCostInCityIndex(players[biggestCityIndex].getCity());
-            if (players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue()) {
+            if ( consToDestructIndex != -1 && players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue()) {
                 WondersPower.CIMETIERE.power(players[biggestCityIndex].getCity().get(consToDestructIndex), players);
                 Character.CONDOTTIERE.ability(players[biggestCityIndex].getCity().get(consToDestructIndex), players[0], players[biggestCityIndex]);
             }
@@ -199,7 +192,7 @@ public class Strategy1 extends Strategy{
     public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
         for (Constructions c : city.getCity()) {
-            if (c.getValue() < minCost && c.getName() != "Donjon") minCost = c.getValue();
+            if (c.getValue() < minCost && !Objects.equals(c.getName(), "Donjon")) minCost = c.getValue();
         }
         return minCost;
     }
@@ -209,7 +202,7 @@ public class Strategy1 extends Strategy{
         int index = -1;
         for (int i = 0; i < city.size(); i++) {
             int cityValue = city.get(i).getValue();
-            if (cityValue < minCost && city.get(i).getName() != "Donjon") {
+            if (cityValue < minCost && !Objects.equals(city.get(i).getName(), "Donjon")) {
                 index = i;
                 minCost = cityValue;
             }
@@ -219,7 +212,9 @@ public class Strategy1 extends Strategy{
 
     public void capacityLaboratoire(Player[] players, Draw draw) {
         Constructions max = players[0].getHand().max();
-        if (max.getValue() >= 4) WondersPower.LABORATOIRE.power(max, players[0], draw);
+        if (max != null && max.getValue() >= 4) {
+            WondersPower.LABORATOIRE.power(max, players[0], draw);
+        }
     }
 
     public void capacityManufacture(Player[] players, Draw draw) {

@@ -17,7 +17,7 @@ public class City{
 
     public List<Constructions> getCity() { return city; }
 
-    public void add(Constructions c) { city.add(c); }
+    public void add(Constructions ... c) { city.addAll(List.of(c)); }
 
     public void remove(int i) { city.remove(i); }
 
@@ -65,5 +65,13 @@ public class City{
             if (!color) return c;
         }
         return Color.NEUTRE;
+    }
+
+    public int getNumberOfColor(Color color){
+        int count = 0;
+        for (Constructions c : city) {
+            if (c.getColor() == color) count++;
+        }
+        return count;
     }
 }

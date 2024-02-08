@@ -5,6 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
+import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,16 @@ public class StrategyEco extends Strategy{
             }
         }
         return Character.ROI;
+    }
+
+    @Override
+    public void playDefault(Player[] players, Draw draw) {
+
+    }
+
+    @Override
+    public Constructions constructionToBuild(Player player) {
+        return null;
     }
 
     public void useWonder(List<Wonder> wonders) {return;}

@@ -1,11 +1,8 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
-
 public class Constructions extends Card {
 
     private int value;
-    private boolean constructed=false;
 
     public Constructions(String name, Color color, int value) {
         super(name, color);
