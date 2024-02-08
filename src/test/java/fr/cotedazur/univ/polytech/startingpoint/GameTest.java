@@ -97,6 +97,8 @@ class GameTest {
         game.playerHasFinished(game.getPlayers()[0]);
         assertFalse(game.isFinished());
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
+        assertFalse(game.isFinished());
+        game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));
         game.getPlayers()[0].getCity().add(new Constructions("Forteresse", Color.SOLDATESQUE, 5));

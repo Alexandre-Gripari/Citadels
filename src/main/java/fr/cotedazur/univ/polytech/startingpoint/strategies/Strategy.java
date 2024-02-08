@@ -4,7 +4,6 @@ import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
-import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import java.util.*;
 
@@ -43,7 +42,6 @@ public abstract class Strategy {
     public abstract Constructions constructionToBuild(Player player);
 
     public abstract List<Character> getCharacterPriority(Player[] players);
-
     public abstract Constructions chooseCard(List<Constructions> constructions, Player player);
     public void play(Player[] players, Draw draw) {
         switch (players[0].getCharacter()) {
