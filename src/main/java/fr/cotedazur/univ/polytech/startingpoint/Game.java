@@ -118,7 +118,7 @@ public class Game {
         sortPlayersByPoints();
         for (int i= players.length-1,j=1;i>=0;i--,j++ ){
             if(i<players.length-1 && players[i].getScore() == players[i+1].getScore()) j--;
-            MyLogger.log(Level.INFO, "Le joueur " + players[i].getNumber() + " termine à la " + j + "ème place avec " + players[i].getScore() + " points.");
+            MyLogger.log(Level.INFO, "Le joueur " + players[i].getNumber() +"de stratégie" + players[i].getStrategy().getDescription()+ " termine à la " + j + "ème place avec " + players[i].getScore() + " points.");
         }
 
     }

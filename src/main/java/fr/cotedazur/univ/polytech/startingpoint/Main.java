@@ -62,7 +62,7 @@ public class Main {
             }
             MyLogger.setLogLevel(Level.INFO);
             for (Player player : players) {
-                MyLogger.log(Level.INFO, "Player " + player.getNumber() + " V:" + player.getNumberOfVictory()
+                MyLogger.log(Level.INFO, "Player " + player.getStrategy().getDescription() + " V:" + player.getNumberOfVictory()
                         + "(" + player.getNumberOfVictory() / 10 + "%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat() / 10 + "%)" +
                         " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw() / 10 + "%)" + " SM:" + player.getAverageScore());
             }
@@ -76,7 +76,7 @@ public class Main {
             }
             MyLogger.setLogLevel(Level.INFO);
             for (Player player : playersRichard) {
-                MyLogger.log(Level.INFO, "Player " + player.getNumber() + " V:" + player.getNumberOfVictory()
+                MyLogger.log(Level.INFO, "Player " + player.getStrategy().getDescription() + " V:" + player.getNumberOfVictory()
                         +"("+player.getNumberOfVictory()/10+"%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat()/10 + "%)"+
                         " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw()/10 + "%)" + " SM:" + player.getAverageScore());
             }
