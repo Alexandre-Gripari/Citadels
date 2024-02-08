@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Constructions;
 
 import java.util.*;
@@ -36,11 +37,14 @@ public class Draw {
     }
 
     public Constructions draw() {
+        if (drawDeck.isEmpty()) {
+            return new Constructions("pioche vide", Color.NEUTRE, 0);
+        }
         return drawDeck.poll();
     }
 
-    public void add(Constructions c) {
-        drawDeck.add(c);
+    public void add(Constructions ... c) {
+        drawDeck.addAll(List.of(c));
     }
 
     public int size() {
@@ -51,7 +55,4 @@ public class Draw {
         return drawDeck.contains(x);
     }
 
-    public Constructions peek() {
-        return drawDeck.peek();
-    }
 }

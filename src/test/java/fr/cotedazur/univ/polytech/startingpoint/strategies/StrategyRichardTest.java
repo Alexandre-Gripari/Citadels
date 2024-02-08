@@ -77,10 +77,17 @@ class StrategyRichardTest {
         hand.add(ecole);
         hand.add(cour);
         hand.add(hotel);
-        StrategyRichard s = new StrategyRichard("Test");
 
-        assertEquals(cour, s.constructionToBuild(hand, 5));
-        assertEquals(null, s.constructionToBuild(hand, 0));
+        City city = new City();
+
+        Strategy1 s = new Strategy1("Test");
+
+        Player player = new Player(1, 2, hand, city,s);
+
+        assertEquals(cour, s.constructionToBuild(player));
+
+        player.setGold(0);
+        assertNull(s.constructionToBuild(player));
     }
 
     @Test
@@ -94,16 +101,16 @@ class StrategyRichardTest {
         d.add(ecole);
         d.add(echoppe);
 
-        assertEquals(2, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(2, s.goldOrCard(new Player[]{p}));
 
         p.getWonders().add(observatoire);
-        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}));
 
         p.getWonders().add(bibliotheque);
-        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}));
 
         p.getHand().add(manoir);
-        assertEquals(1, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(1, s.goldOrCard(new Player[]{p}));
     }
 
     StrategyRichard strat;
@@ -124,12 +131,16 @@ class StrategyRichardTest {
         strat = new StrategyRichard("rush");
         h1 = new Hand();
         p1 = new Player(1, h1);
+        p1.setStrategy(strat);
         h2 = new Hand();
         p2 = new Player(2, h2);
+        p2.setStrategy(strat);
         h3 = new Hand();
         p3 = new Player(3, h3);
+        p3.setStrategy(strat);
         h4 = new Hand();
         p4 = new Player(4, h4);
+        p4.setStrategy(strat);
         players2 = new Player[4];
         players2[0] = p1; players2[1] = p2; players2[2] = p3; players2[3] = p4;
         draw = new Draw();
@@ -142,7 +153,7 @@ class StrategyRichardTest {
 
     @Test
     void assassinTestRichard() {
-        Strategy strategyRichard = new StrategyRichard("Richard");
+        StrategyRichard strategyRichard = new StrategyRichard("Richard");
         Player player10 = new Player(1,2,new Hand(), new City(), strategyRichard);
         Player player20 = new Player(2,2,new Hand(), new City(), strategyRichard);
         Player player30 = new Player(3,2,new Hand(), new City(), strategyRichard);
@@ -161,12 +172,19 @@ class StrategyRichardTest {
         draw.add(forteresse);
         draw.add(prison);
         draw.add(bastion);
+        strategyRichard.setCharacters(new ArrayList<>(List.of(Character.CONDOTTIERE, Character.ARCHITECTE, Character.ASSASSIN, Character.VOLEUR)));
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
         assertTrue(player20.isDead());
+        assertFalse(player30.isDead());
+        assertFalse(player40.isDead());
         player20.resurrect();
         player20.addGold(10);
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
         assertTrue(player30.isDead());
+        assertFalse(player40.isDead());
         player30.resurrect();
         player10.getCity().add(temple); // p1 points = 3
         player10.getCity().add(eglise);
@@ -175,18 +193,40 @@ class StrategyRichardTest {
         player30.getCity().add(tour); // p3 points = 3
         player30.getCity().add(forteresse);
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
         assertTrue(player30.isDead());
+        assertFalse(player40.isDead());
         player30.resurrect();
         player10.getCity().add(prison); // p1 points = 6
         player10.getCity().add(bastion); // p1 points = 11
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
+        assertFalse(player30.isDead());
         assertTrue(player40.isDead());
         player40.resurrect();
         player40.getCity().add(prison);
         player40.getCity().add(forteresse);
         player40.getCity().add(bastion);
         strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
+        assertFalse(player30.isDead());
         assertTrue(player40.isDead());
+        player40.resurrect();
+
+        player20.setCharacter(Character.ROI);
+        player20.getCity().add(manoir);
+        player20.getCity().add(palais);
+        player20.getCity().add(prison);
+        player20.getCity().add(bastion);
+        strategyRichard.assassin(playersList, draw);
+        assertFalse(player10.isDead());
+        assertFalse(player20.isDead());
+        assertFalse(player30.isDead());
+        assertTrue(player40.isDead());
+
     }
 
     @Test
@@ -196,8 +236,17 @@ class StrategyRichardTest {
         p3.setCharacter(Character.ROI);
         p4.setCharacter(Character.CONDOTTIERE);
 
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p3.getCity().add(bastion);
+        p1.setGold(0);
+        p1.getStrategy().thief(new Player[]{p1,p2,p3,p4}, draw);
+
         assertEquals(2, p1.getGold());
-        assertEquals(2, p2.getGold());
+        assertEquals(0, p3.getGold());
     }
 
     @Test
@@ -282,6 +331,35 @@ class StrategyRichardTest {
 
         assertEquals(2, p1.getHand().size());
         assertEquals(3, p1.getHand().get(0).getValue());
+    }
+
+    @Test
+    void magicianTestSwapWithAPlayerSpecialKing() {
+        p1.setCharacter(Character.MAGICIEN);
+        p2.setCharacter(Character.ARCHITECTE);
+        p3.setCharacter(Character.ROI);
+        p4.setCharacter(Character.CONDOTTIERE);
+
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+        p3.getCity().add(marche);
+
+        p1.setGold(0);
+        p3.setGold(0);
+
+        p1.getHand().add(chateau);
+        p1.getHand().add(monastere);
+        p1.getHand().add(manoir);
+
+        Player[] players = new Player[]{p1, p2, p3, p4};
+
+        p1.getStrategy().magician(players, draw);
+
+        assertEquals(1, p1.getHand().size());
+        assertEquals(3,p3.getHand().size());
     }
 
     @Test
@@ -384,18 +462,6 @@ class StrategyRichardTest {
     Player[] players3 = new Player[]{player, player2};
     List<Character> characters = new ArrayList<>(List.of(Character.values()));
 
-    @Test
-    void testChooseCharacter() {
-        StrategyRichard StrategyRichard = new StrategyRichard("Agressif");
-        assertEquals(Character.MAGICIEN, StrategyRichard.chooseCharacter(player, characters, players3));
-        player.getHand().add(cathedrale);
-        player.getHand().add(chateau);
-        player.getHand().add(monastere);
-        assertEquals(Character.ARCHITECTE, StrategyRichard.chooseCharacter(player, characters, players3));
-        characters.remove(Character.ARCHITECTE);
-        assertEquals(Character.ROI, StrategyRichard.chooseCharacter(player, characters, players3));
-
-    }
 
     @Test
     void testGetCharacterPriority() {
@@ -409,6 +475,101 @@ class StrategyRichardTest {
         assertEquals(Character.ASSASSIN, characterPriority.get(5));
         assertEquals(Character.VOLEUR, characterPriority.get(6));
         assertEquals(Character.MAGICIEN, characterPriority.get(7));
+    }
+
+    @Test
+    void testGetCharacterPriorityRichard(){
+        StrategyRichard strategyRichard = new StrategyRichard("Richard");
+        Player player1 = new Player(1,2,new Hand(), new City(), strategyRichard);
+        Player player2 = new Player(2,2,new Hand(), new City(), strategyRichard);
+        Player player3 = new Player(3,2,new Hand(), new City(), strategyRichard);
+        Player player4 = new Player(4,2,new Hand(), new City(), strategyRichard);
+        player2.getCity().add(temple);
+        player2.getCity().add(eglise);
+        player2.getCity().add(marche);
+        player2.getCity().add(prison);
+        player2.getCity().add(tour);
+        player2.getCity().add(forteresse);
+        Player[] players = new Player[]{player1, player2, player3, player4};
+        Player[] players2 = new Player[]{player2, player3, player1, player4};
+        List<Character> listCharacters = new ArrayList<>(List.of(Character.values()));
+        assertEquals(Character.ROI, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(1));
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(2));
+        assertEquals(Character.EVEQUE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(3));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        player2.setGold(5);
+        assertEquals(Character.ROI, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(1));
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(2));
+        assertEquals(Character.EVEQUE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(3));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        player2.getHand().add(echoppe);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        assertEquals(Character.ARCHITECTE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(1));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        assertEquals(Character.ARCHITECTE, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).get(0));
+        assertEquals(8, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).size());
+        player2.getCity().add(prison);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players2, listCharacters).get(0));
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, listCharacters).get(0));
+        characters.remove(Character.EVEQUE);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, characters).get(0));
+        characters.add(Character.EVEQUE);
+        characters.remove(Character.CONDOTTIERE);
+        assertEquals(Character.ASSASSIN, strategyRichard.getCharacterPriorityRichard(players, characters).get(0));
+        characters.add(Character.CONDOTTIERE);
+        characters.remove(Character.ASSASSIN);
+        assertEquals(Character.CONDOTTIERE, strategyRichard.getCharacterPriorityRichard(players, characters).get(0));
+    }
+
+    @Test
+    void testChooseCharacterRichard(){
+        StrategyRichard strategyRichard = new StrategyRichard("Richard");
+        Player player1 = new Player(1,2,new Hand(), new City(), strategyRichard);
+        Player player2 = new Player(2,2,new Hand(), new City(), strategyRichard);
+        Player player3 = new Player(3,2,new Hand(), new City(), strategyRichard);
+        Player player4 = new Player(4,2,new Hand(), new City(), strategyRichard);
+        player2.getCity().add(temple);
+        player2.getCity().add(eglise);
+        player2.getCity().add(marche);
+        player2.getCity().add(prison);
+        player2.getCity().add(tour);
+        player2.getCity().add(forteresse);
+        player2.getHand().add(echoppe);
+        player2.setGold(4);
+        Player[] players = new Player[]{player2, player1, player3, player4};
+        Player[] players2 = new Player[]{player1, player2, player3, player4};
+
+        characters = new ArrayList<>(List.of(Character.values()));
+        player2.chooseCharacter(characters, players);
+        assertEquals(Character.ARCHITECTE, player2.getCharacter());
+        player2.getCity().add(chateau);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.CONDOTTIERE, player1.getCharacter());
+        assertEquals(Character.ASSASSIN, player3.getCharacter());
+
+        characters = new ArrayList<>(List.of(Character.values()));
+        characters.remove(Character.EVEQUE);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.ASSASSIN, player1.getCharacter());
+        assertEquals(Character.CONDOTTIERE, player3.getCharacter());
+
+        characters = new ArrayList<>(List.of(Character.values()));
+        characters.remove(Character.CONDOTTIERE);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.ASSASSIN, player1.getCharacter());
+        assertEquals(Character.MAGICIEN, player3.getCharacter());
+
+        characters = new ArrayList<>(List.of(Character.values()));
+        characters.remove(Character.ASSASSIN);
+        player1.chooseCharacter(characters, players2);
+        player3.chooseCharacter(characters, players2);
+        assertEquals(Character.CONDOTTIERE, player1.getCharacter());
+        assertEquals(Character.MAGICIEN, player3.getCharacter());
     }
 
 }

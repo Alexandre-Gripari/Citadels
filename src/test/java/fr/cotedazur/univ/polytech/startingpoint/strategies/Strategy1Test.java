@@ -77,10 +77,17 @@ class Strategy1Test {
         hand.add(ecole);
         hand.add(cour);
         hand.add(hotel);
+
+        City city = new City();
+
         Strategy1 s = new Strategy1("Test");
 
-        assertEquals(cour, s.constructionToBuild(hand, 5));
-        assertEquals(null, s.constructionToBuild(hand, 0));
+        Player player = new Player(1, 2, hand, city,s);
+
+        assertEquals(cour, s.constructionToBuild(player));
+
+        player.setGold(0);
+        assertNull(s.constructionToBuild(player));
     }
 
     @Test
@@ -94,16 +101,16 @@ class Strategy1Test {
         d.add(ecole);
         d.add(echoppe);
 
-        assertEquals(2, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(2, s.goldOrCard(new Player[]{p}));
 
         p.getWonders().add(observatoire);
-        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}));
 
         p.getWonders().add(bibliotheque);
-        assertEquals(0, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(0, s.goldOrCard(new Player[]{p}));
 
         p.getHand().add(manoir);
-        assertEquals(1, s.goldOrCard(new Player[]{p}, d));
+        assertEquals(1, s.goldOrCard(new Player[]{p}));
     }
 
     Strategy1 strat;
@@ -272,6 +279,21 @@ class Strategy1Test {
 
         assertEquals(2, p1.getHand().size());
         assertEquals(3, p1.getHand().get(0).getValue());
+    }
+
+    @Test
+    void architectTest() {
+        Player p1 = new Player(1, new Hand());
+        p1.setCharacter(Character.ARCHITECTE);
+
+        Draw draw = new Draw();
+        draw.add(cathedrale, bastion, palais);
+
+        p1.getStrategy().architect(new Player[]{p1}, draw);
+
+        assertEquals(4, p1.getGold());
+        assertEquals(2, p1.getHand().size());
+        assertEquals(0, p1.getCity().size());
     }
 
     @Test

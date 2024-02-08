@@ -103,7 +103,6 @@ public enum Character{
     ARCHITECTE("Architecte", Color.NEUTRE, 7){
         @Override
         public void ability(Draw draw, Player ... players){
-            //players = reorganizePlayers(ARCHITECTE, players);
             players[0].draw(draw,2);
             MyLogger.log(Level.INFO, "Le joueur " + players[0].getNumber() + " a pioché 2 cartes grace au pouvoir de l'architecte");
         }
@@ -141,7 +140,6 @@ public enum Character{
 
     public void ability(Character character, Player[] players) {/* abilité du joueur sur les autres personages*/}
     public void ability(Player self) {/* abilité du joueur lui-même*/}
-    public void ability(Player ... players) {/* abilité du joueur sur les autres joueurs*/}
     public Constructions ability(Constructions c, Player self, Player opponent) { return null;/* abilité du joueur sur les autres joueurs et sur une construction*/}
     public void ability(Draw d, Player ... players) {/* abilité du joueur sur les autres joueurs et sur la pioche*/}
 

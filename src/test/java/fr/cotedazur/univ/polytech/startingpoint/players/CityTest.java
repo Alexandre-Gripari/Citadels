@@ -143,4 +143,11 @@ class CityTest {
         city4.add(w1);
         assertEquals(Color.NEUTRE, city4.missingColor());
     }
+
+    @Test
+    void getNumberOfColorTest() {
+        City c = new City();
+        c.add(c1,c2,c4,r3);
+        assertEquals(3, c.getNumberOfColor(Color.COMMERCIAL));
+    }
 }

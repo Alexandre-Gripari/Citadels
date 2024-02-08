@@ -17,7 +17,7 @@ public class City{
 
     public List<Constructions> getCity() { return city; }
 
-    public void add(Constructions c) { city.add(c); }
+    public void add(Constructions ... c) { city.addAll(List.of(c)); }
 
     public void remove(int i) { city.remove(i); }
 

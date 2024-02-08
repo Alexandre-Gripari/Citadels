@@ -175,33 +175,35 @@ class GameTest {
         assertEquals(p4, opponents2[3]);
     }
 
-    /*@Test
+    @Test
     void testGameReset(){
-        Player player1 = new Player(1, new Hand());
-        Player player2 = new Player(2, new Hand());
-        Player player3 = new Player(3, new Hand());
-        Player player4 = new Player(4, new Hand());
+        Player p1 = new Player(1, new Hand());
+        Player p2 = new Player(2, new Hand());
+        Player p3 = new Player(3, new Hand());
+        Player p4 = new Player(4, new Hand());
 
-        Game game = new Game(new Player[]{player1, player2, player3, player4});
-        game.init();
-        game.play();
-        assertTrue(game.isFinished());
-        game.resetGame();
-        assertFalse(game.isFinished());
-        assertEquals(0, game.getPlayers()[0].getCity().size());
-        assertEquals(0, game.getPlayers()[1].getCity().size());
-        assertEquals(0, game.getPlayers()[2].getCity().size());
-        assertEquals(0, game.getPlayers()[3].getCity().size());
-        assertEquals(2, game.getPlayers()[0].getGold());
-        assertEquals(2, game.getPlayers()[1].getGold());
-        assertEquals(2, game.getPlayers()[2].getGold());
-        assertEquals(2, game.getPlayers()[3].getGold());
-        assertEquals(0, game.getPlayers()[0].getHand().size());
-        assertEquals(0, game.getPlayers()[1].getHand().size());
-        assertEquals(0, game.getPlayers()[2].getHand().size());
-        assertEquals(0, game.getPlayers()[3].getHand().size());
+        Game g = new Game(new Player[]{p1, p2});
 
-        assertEquals(0, game.getNbTurn());
+        g.play();
 
-    }*/
+        g.resetGame();
+
+        assertEquals(0, g.getNbTurn());
+
+        assertEquals(0, p1.getCity().size());
+        assertEquals(0, p1.getHand().size());
+        assertEquals(2, p1.getGold());
+
+        assertEquals(0, p2.getCity().size());
+        assertEquals(0, p2.getHand().size());
+        assertEquals(2, p2.getGold());
+
+        assertEquals(0, p3.getCity().size());
+        assertEquals(0, p3.getHand().size());
+        assertEquals(2, p3.getGold());
+
+        assertEquals(0, p4.getCity().size());
+        assertEquals(0, p4.getHand().size());
+        assertEquals(2, p4.getGold());
+    }
 }
