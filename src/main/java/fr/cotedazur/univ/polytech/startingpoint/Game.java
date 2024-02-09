@@ -18,6 +18,7 @@ public class Game {
     private Character[] charactersDiscarded = new Character[3];
     private boolean someoneFinished = false;
     private boolean noDraw = false;
+    private Random random = new Random();
 
     public Game(Player[] players) {
         this.players = players;
@@ -181,7 +182,6 @@ public class Game {
     }
 
     public void discardCharacter(){
-        Random random = new Random();
         for (int i = 0; i < 2; i++) {
             int randoms = random.nextInt(characters.size());
             Character characterDiscarded = characters.get(randoms);
