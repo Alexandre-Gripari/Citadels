@@ -70,7 +70,7 @@ public class StrategyEco extends Strategy{
                     || (mostProfitableColor.indexOf(c.getColor()) == mostProfitableColor.indexOf(choix.getColor())
                     && c.getValue() > choix.getValue())) choix = c;
         }
-        if(choix.getName().equals("Lidl")) choix=constructions.get(0);
+        if(choix.getName().equals(CardsName.NO_NAME)) choix=constructions.get(0);
         return choix;
     }
 
@@ -92,22 +92,22 @@ public class StrategyEco extends Strategy{
         }
         super.play(players, draw);
         for (Wonder wonder : players[0].getWonders()) {
-            if (wonder.getName().equals("Ecole de magie")) wonder.setColor(Color.MERVEILLEUX);
+            if (wonder.getName().equals(CardsName.ECOLE_DE_MAGIE)) wonder.setColor(Color.MERVEILLEUX);
         }
     }
 
     @Override
     public void playDefault(Player[] players, Draw draw) {
-        players[0].pick(draw, goldOrCard(players, draw));
+        players[0].pick(draw, goldOrCard(players));
         players[0].buildConstruction(constructionToBuild(players[0]));
     }
 
     // Ajouter une méthode qui gère le début de tour : firstChoice(String s) s pouvant être "gold" pour prendre de l'or ou "pick" pour piocher.
     // Elle sera utilisée dans les méthodes de caractères.
-    public int goldOrCard(Player[] players, Draw draw) {
+    public int goldOrCard(Player[] players) {
         if (players[0].getHand().isEmpty()) {
             for (Wonder w : players[0].getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) {
+                if (w.getName().equals(CardsName.OBSERVATOIRE) || w.getName().equals(CardsName.BIBLIOTHEQUE)) {
                     return -players[0].getWonders().indexOf(w);
                 }
             }
@@ -201,7 +201,7 @@ public class StrategyEco extends Strategy{
     public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
         for (Construction c : city.getCity()) {
-            if (c.getValue() < minCost && !Objects.equals(c.getName(), "Donjon")) minCost = c.getValue();
+            if (c.getValue() < minCost && !Objects.equals(c.getName(), CardsName.DONJON)) minCost = c.getValue();
         }
         return minCost;
     }
@@ -211,7 +211,7 @@ public class StrategyEco extends Strategy{
         int index = -1;
         for (int i = 0; i < city.size(); i++) {
             int cityValue = city.get(i).getValue();
-            if (cityValue < minCost && !Objects.equals(city.get(i).getName(), "Donjon")) {
+            if (cityValue < minCost && !Objects.equals(city.get(i).getName(), CardsName.DONJON)) {
                 index = i;
                 minCost = cityValue;
             }
