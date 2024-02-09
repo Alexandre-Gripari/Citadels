@@ -4,7 +4,7 @@ public class Construction extends Card {
 
     private int value;
 
-    public Construction(String name, Color color, int value) {
+    public Construction(CardsName name, Color color, int value) {
         super(name, color);
         this.value = value;
     }

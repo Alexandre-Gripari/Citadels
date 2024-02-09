@@ -3,6 +3,7 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.MyLogger;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.cards.CardsName;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
@@ -23,12 +24,12 @@ class StrategyTest {
     Player p2 = new Player(2, new Hand());
 
     Strategy strategy = new Strategy1("Agressif");
-    Construction cathédrale = new Construction("Cathédrale", Color.RELIGIEUX, 5);
-    Construction chateau = new Construction("Château", Color.NOBLE, 4);
-    Construction monastère = new Construction("Monastère", Color.RELIGIEUX, 3);
-    Construction marché = new Construction("Marché", Color.COMMERCIAL, 2);
-    Construction comptoir = new Construction("Comptoir", Color.COMMERCIAL, 3);
-    Construction temple = new Construction("Temple", Color.RELIGIEUX, 1);
+    Construction cathédrale = new Construction(CardsName.CATHEDRALE, Color.RELIGIEUX, 5);
+    Construction chateau = new Construction(CardsName.CHATEAU, Color.NOBLE, 4);
+    Construction monastère = new Construction(CardsName.MONASTERE, Color.RELIGIEUX, 3);
+    Construction marché = new Construction(CardsName.MARCHE, Color.COMMERCIAL, 2);
+    Construction comptoir = new Construction(CardsName.COMPTOIR, Color.COMMERCIAL, 3);
+    Construction temple = new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1);
 
     @Test
     void testAverageCostInHand() {
@@ -94,30 +95,30 @@ class StrategyTest {
         hand1 = new Hand();
 
         p11 = new Player(1, hand1);
-        p11.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p11.getHand().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
-        p11.getCity().add(new Construction("Gros château", Color.NOBLE, 284));
-        p11.getHand().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p11.getHand().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
-        p11.getCity().add(new Construction("Big château", Color.NOBLE, 284));
-        p11.getCity().add(new Construction("Big église", Color.RELIGIEUX, 284));
-        p11.getCity().add(new Construction("Giga base militaire", Color.SOLDATESQUE, 284));
-        p11.getCity().add(new Construction("Hypermarché", Color.COMMERCIAL, 284));
+        p11.getHand().add(new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1));
+        p11.getHand().add(new Construction(CardsName.FORTERESSE, Color.SOLDATESQUE, 2));
+        p11.getCity().add(new Construction(CardsName.NO_NAME, Color.NOBLE, 284));
+        p11.getHand().add(new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1));
+        p11.getHand().add(new Construction(CardsName.FORTERESSE, Color.SOLDATESQUE, 2));
+        p11.getCity().add(new Construction(CardsName.NO_NAME, Color.NOBLE, 284));
+        p11.getCity().add(new Construction(CardsName.NO_NAME, Color.RELIGIEUX, 284));
+        p11.getCity().add(new Construction(CardsName.NO_NAME, Color.SOLDATESQUE, 284));
+        p11.getCity().add(new Construction(CardsName.NO_NAME, Color.COMMERCIAL, 284));
 
         draw = new Draw();
-        draw.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 1);
-        draw.addXConstructions(new Construction("Château", Color.NOBLE, 4), 1);
-        draw.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 1);
-        draw.addXConstructions(new Construction("Marché", Color.COMMERCIAL, 2), 1);
-        draw.addXConstructions(new Construction("Comptoir", Color.COMMERCIAL, 3), 1);
+        draw.addXConstructions(new Construction(CardsName.CATHEDRALE, Color.RELIGIEUX, 5), 1);
+        draw.addXConstructions(new Construction(CardsName.CHATEAU, Color.NOBLE, 4), 1);
+        draw.addXConstructions(new Construction(CardsName.MONASTERE, Color.RELIGIEUX, 3), 1);
+        draw.addXConstructions(new Construction(CardsName.MARCHE, Color.COMMERCIAL, 2), 1);
+        draw.addXConstructions(new Construction(CardsName.COMPTOIR, Color.COMMERCIAL, 3), 1);
 
         hand2 = new Hand();
 
         p22 = new Player(2, 1, hand2, new City());
-        p22.getCity().add(new Construction("Temple", Color.RELIGIEUX, 1));
-        p22.getCity().add(new Construction("Forteresse", Color.SOLDATESQUE, 2));
-        p22.getCity().add(new Construction("Big château", Color.NOBLE, 284));
-        p22.getCity().add(new Construction("Big église", Color.COMMERCIAL, 284));
+        p22.getCity().add(new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1));
+        p22.getCity().add(new Construction(CardsName.FORTERESSE, Color.SOLDATESQUE, 2));
+        p22.getCity().add(new Construction(CardsName.NO_NAME, Color.NOBLE, 284));
+        p22.getCity().add(new Construction(CardsName.NO_NAME, Color.COMMERCIAL, 284));
 
 
 

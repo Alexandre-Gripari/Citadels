@@ -1,6 +1,7 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
 import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.cards.CardsName;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,34 +50,34 @@ public class Hand{ // extends Arraylist ?
     }
 
     public Construction min() {
-        Construction c = new Construction("null", null, 110);
+        Construction c = new Construction(CardsName.NO_NAME, null, 110);
       
         for (Construction construction : hand)
             if (c.getValue() >= construction.getValue()) c = construction;
         
-        if (c.getName().equals("null")) return null;
+        if (c.getName().equals(CardsName.NO_NAME)) return null;
         return c;
     }
 
     public Construction minNotInCity(Player player) {
-        Construction c = new Construction("null", null, 110);
+        Construction c = new Construction(CardsName.NO_NAME, null, 110);
 
         if (player.getHand().isEmpty()) return null;
         for (Construction construction : hand)
             if (construction != null && c.getValue() >= construction.getValue()
                     && !player.getCity().getCity().contains(construction)) c = construction;
 
-        if (c.getName().equals("null")) return null;
+        if (c.getName().getCardName().equals("no name")) return null;
         return c;
     }
 
     public Construction max() {
-        Construction c = new Construction("null", null, -1);
+        Construction c = new Construction(CardsName.NO_NAME, null, -1);
 
         for (Construction construction : hand)
             if (c.getValue() <= construction.getValue()) c = construction;
 
-        if (c.getName().equals("null")) return null;
+        if (c.getName().getCardName().equals("no name")) return null;
       
         return c;
     }

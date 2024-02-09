@@ -55,7 +55,7 @@ public class StrategyEco extends Strategy{
     /*Choisis en priorité l'école de magie, sinon une merveille, sinon la carte dont la couleur est la plus représentée dans sa ville*/
     @Override
     public Construction chooseCard(List<Construction> constructions, Player player) {
-        Construction choix = new Construction("Lidl",Color.NEUTRE,10);
+        Construction choix = new Construction(CardsName.NO_NAME,Color.NEUTRE,10);
         List<Character> mostProfitableCharacters = super.mostProfitableCharacters(player);
         List<Color> mostProfitableColor = new ArrayList<>();
         mostProfitableColor.add(Color.MERVEILLEUX);
@@ -65,7 +65,7 @@ public class StrategyEco extends Strategy{
         mostProfitableColor.add(Color.NEUTRE);
         if (constructions.isEmpty()) return null ;
         for (Construction c : constructions) {
-            if (c.getName().equals("Ecole de magie")) return c;
+            if (c.getName().equals(CardsName.ECOLE_DE_MAGIE)) return c;
             if (mostProfitableColor.indexOf(c.getColor()) < mostProfitableColor.indexOf(choix.getColor())
                     || (mostProfitableColor.indexOf(c.getColor()) == mostProfitableColor.indexOf(choix.getColor())
                     && c.getValue() > choix.getValue())) choix = c;
@@ -77,13 +77,13 @@ public class StrategyEco extends Strategy{
     public void play(Player[] players, Draw draw) {
         for (Wonder wonder : players[0].getWonders()) {
             switch (wonder.getName()) {
-                case "Laboratoire":
+                case LABORATOIRE:
                     capacityLaboratoire(players, draw);
                     break;
-                case "Manufacture":
+                case MANUFACTURE:
                     capacityManufacture(players, draw);
                     break;
-                case "Ecole de magie":
+                case ECOLE_DE_MAGIE:
                     capacityEcoleDeMagie(players);
                     break;
                 default:

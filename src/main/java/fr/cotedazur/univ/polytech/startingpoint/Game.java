@@ -31,37 +31,37 @@ public class Game {
 
     public void init() {
 
-        draw.addXConstructions(new Construction("Temple", Color.RELIGIEUX, 1), 3);
-        draw.addXConstructions(new Construction("Eglise", Color.RELIGIEUX, 2), 4);
-        draw.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 3);
-        draw.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 2);
+        draw.addXConstructions(new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1), 3);
+        draw.addXConstructions(new Construction(CardsName.EGLISE, Color.RELIGIEUX, 2), 4);
+        draw.addXConstructions(new Construction(CardsName.MONASTERE, Color.RELIGIEUX, 3), 3);
+        draw.addXConstructions(new Construction(CardsName.CATHEDRALE, Color.RELIGIEUX, 5), 2);
 
-        draw.addXConstructions(new Construction("Manoir", Color.NOBLE, 3), 5);
-        draw.addXConstructions(new Construction("Château", Color.NOBLE, 4), 4);
-        draw.addXConstructions(new Construction("Palais", Color.NOBLE, 5), 2);
+        draw.addXConstructions(new Construction(CardsName.MANOIR, Color.NOBLE, 3), 5);
+        draw.addXConstructions(new Construction(CardsName.CHATEAU, Color.NOBLE, 4), 4);
+        draw.addXConstructions(new Construction(CardsName.PALAIS, Color.NOBLE, 5), 2);
 
-        draw.addXConstructions(new Construction("Tour de guet", Color.SOLDATESQUE, 1), 3);
-        draw.addXConstructions(new Construction("Forteresse", Color.SOLDATESQUE, 2), 3);
-        draw.addXConstructions(new Construction("Prison", Color.SOLDATESQUE, 3), 3);
-        draw.addXConstructions(new Construction("Bastion", Color.SOLDATESQUE, 5), 2);
+        draw.addXConstructions(new Construction(CardsName.TOUR_DE_GUET, Color.SOLDATESQUE, 1), 3);
+        draw.addXConstructions(new Construction(CardsName.FORTERESSE, Color.SOLDATESQUE, 2), 3);
+        draw.addXConstructions(new Construction(CardsName.PRISON, Color.SOLDATESQUE, 3), 3);
+        draw.addXConstructions(new Construction(CardsName.BASTION, Color.SOLDATESQUE, 5), 2);
 
-        draw.addXConstructions(new Construction("Taverne", Color.COMMERCIAL, 1), 5);
-        draw.addXConstructions(new Construction("Echoppe", Color.COMMERCIAL, 2), 3);
-        draw.addXConstructions(new Construction("Marché", Color.COMMERCIAL, 2), 4);
-        draw.addXConstructions(new Construction("Comptoir", Color.COMMERCIAL, 3), 3);
-        draw.addXConstructions(new Construction("Port", Color.COMMERCIAL, 4), 3);
-        draw.addXConstructions(new Construction("Hôtel de ville", Color.COMMERCIAL, 5), 2);
+        draw.addXConstructions(new Construction(CardsName.TAVERNE, Color.COMMERCIAL, 1), 5);
+        draw.addXConstructions(new Construction(CardsName.ECHOPPE, Color.COMMERCIAL, 2), 3);
+        draw.addXConstructions(new Construction(CardsName.MARCHE, Color.COMMERCIAL, 2), 4);
+        draw.addXConstructions(new Construction(CardsName.COMPTOIR, Color.COMMERCIAL, 3), 3);
+        draw.addXConstructions(new Construction(CardsName.PORT, Color.COMMERCIAL, 4), 3);
+        draw.addXConstructions(new Construction(CardsName.HOTEL_DE_VILLE, Color.COMMERCIAL, 5), 2);
 
-        draw.add(new Wonder("Cour des miracles", 2, WondersPower.COUR_DES_MIRACLES));
-        draw.add(new Wonder("Donjon", 3, WondersPower.DONJON));
-        draw.add(new Wonder("Laboratoire", 5, WondersPower.LABORATOIRE));
-        draw.add(new Wonder("Manufacture", 5, WondersPower.MANUFACTURE));
-        draw.add(new Wonder("Observatoire", 5, WondersPower.OBSERVATOIRE));
-        draw.add(new Wonder("Cimetière", 5, WondersPower.CIMETIERE));
-        draw.add(new Wonder("Bibliothèque", 6, WondersPower.BIBLIOTHEQUE));
-        draw.add(new Wonder("Ecole de magie", 6, WondersPower.ECOLE_DE_MAGIE));
-        draw.add(new Wonder("Université", 6, WondersPower.UNIVERSITE));
-        draw.add(new Wonder("Dracoport", 6, WondersPower.DRACOPORT));
+        draw.add(new Wonder(CardsName.COUR_DES_MIRACLES, 2, WondersPower.COUR_DES_MIRACLES));
+        draw.add(new Wonder(CardsName.DONJON, 3, WondersPower.DONJON));
+        draw.add(new Wonder(CardsName.LABORATOIRE, 5, WondersPower.LABORATOIRE));
+        draw.add(new Wonder(CardsName.MANUFACTURE, 5, WondersPower.MANUFACTURE));
+        draw.add(new Wonder(CardsName.OBSERVATOIRE, 5, WondersPower.OBSERVATOIRE));
+        draw.add(new Wonder(CardsName.CIMETIERE, 5, WondersPower.CIMETIERE));
+        draw.add(new Wonder(CardsName.BIBLIOTHEQUE, 6, WondersPower.BIBLIOTHEQUE));
+        draw.add(new Wonder(CardsName.ECOLE_DE_MAGIE, 6, WondersPower.ECOLE_DE_MAGIE));
+        draw.add(new Wonder(CardsName.UNIVERSITE, 6, WondersPower.UNIVERSITE));
+        draw.add(new Wonder(CardsName.DRACOPORT, 6, WondersPower.DRACOPORT));
 
         draw.shuffle();
 
@@ -108,8 +108,8 @@ public class Game {
                 player.play(draw, getOpponents(player));
                 MyLogger.log(Level.INFO, "Le joueur " + player.getNumber() + " a dans sa ville : " + player.getCity() + player.getGold() + " d'or. \nLe joueur " + player.getNumber() + " a dans sa main : " + player.getHand() + "\n"); //+ " cartes dans sa main.\n");
                 playerHasFinished(player);
-                if (player.getCity().getCity().contains(new Construction("pioche vide", Color.NEUTRE, 0)) || player.getHand().getHand().contains(new Construction("pioche vide", Color.NEUTRE, 0))) {
-                    player.getCity().getCity().removeAll(Collections.singleton(new Construction("pioche vide", Color.NEUTRE, 0)));
+                if (player.getCity().getCity().contains(new Construction(CardsName.EMPTY_DRAW, Color.NEUTRE, 0)) || player.getHand().getHand().contains(new Construction(CardsName.EMPTY_DRAW, Color.NEUTRE, 0))) {
+                    player.getCity().getCity().removeAll(Collections.singleton(new Construction(CardsName.EMPTY_DRAW, Color.NEUTRE, 0)));
                     noDraw = true;
                     break;
                 }

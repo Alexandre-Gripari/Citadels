@@ -70,7 +70,7 @@ public enum WondersPower {
         @Override
         public void power(Player player, Color color) {
             for (Wonder wonder : player.getWonders()) {
-                if (wonder.getName().equals("Ecole de magie")) wonder.setColor(color);
+                if (wonder.getName().equals(CardsName.ECOLE_DE_MAGIE)) wonder.setColor(color);
             }
         }
     },
@@ -94,7 +94,7 @@ public enum WondersPower {
   
 
     public Wonder getWonder(){
-        return new Wonder(this.name(), 0, this);
+        return new Wonder(CardsName.NO_NAME, 0, this);
     }
 
 }

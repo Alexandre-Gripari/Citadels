@@ -7,7 +7,7 @@ public class Wonder extends Construction {
 
     private final WondersPower power;
 
-    public Wonder (String name, int value, WondersPower power) {
+    public Wonder (CardsName name, int value, WondersPower power) {
 
         super(name, Color.MERVEILLEUX, value);
         this.power = power;

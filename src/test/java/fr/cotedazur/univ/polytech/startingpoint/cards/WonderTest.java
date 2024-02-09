@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 class WonderTest {
 
     Player player1 = new Player(1, new Hand());
-    Wonder wonder = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
-    Wonder wonder2 = new Wonder("Donjon", 3, WondersPower.DONJON);
+    Wonder wonder = new Wonder(CardsName.COUR_DES_MIRACLES, 3, WondersPower.COUR_DES_MIRACLES);
+    Wonder wonder2 = new Wonder(CardsName.DONJON, 3, WondersPower.DONJON);
 
 
     @BeforeEach
@@ -47,14 +47,14 @@ class WonderTest {
     @Test
     void libraryTest() {
         Player player = new Player(0, new Hand());
-        Wonder library = new Wonder("Biblioothèque", 6, WondersPower.BIBLIOTHEQUE);
+        Wonder library = new Wonder(CardsName.BIBLIOTHEQUE, 6, WondersPower.BIBLIOTHEQUE);
         player.getCity().add(library);
 
         Draw d = new Draw();
-        d.addXConstructions(new Construction("Temple", Color.RELIGIEUX, 1), 1);
-        d.addXConstructions(new Construction("Eglise", Color.RELIGIEUX, 2), 1);
-        d.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 1);
-        d.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 1);
+        d.addXConstructions(new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1), 1);
+        d.addXConstructions(new Construction(CardsName.EGLISE, Color.RELIGIEUX, 2), 1);
+        d.addXConstructions(new Construction(CardsName.MANOIR, Color.RELIGIEUX, 3), 1);
+        d.addXConstructions(new Construction(CardsName.CATHEDRALE, Color.RELIGIEUX, 5), 1);
 
         assertEquals(0, player.getHand().size());
         assertEquals(4,d.size());
@@ -66,14 +66,14 @@ class WonderTest {
     @Test
     void manufactureTest() {
         Player player = new Player(0, new Hand());
-        Wonder manufacture = new Wonder("Manufacture", 5, WondersPower.MANUFACTURE);
+        Wonder manufacture = new Wonder(CardsName.MANUFACTURE, 5, WondersPower.MANUFACTURE);
         player.getCity().add(manufacture);
 
         Draw d = new Draw();
-        d.addXConstructions(new Construction("Temple", Color.RELIGIEUX, 1), 3);
-        d.addXConstructions(new Construction("Eglise", Color.RELIGIEUX, 2), 4);
-        d.addXConstructions(new Construction("Monastère", Color.RELIGIEUX, 3), 3);
-        d.addXConstructions(new Construction("Cathédrale", Color.RELIGIEUX, 5), 2);
+        d.addXConstructions(new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1), 3);
+        d.addXConstructions(new Construction(CardsName.EGLISE, Color.RELIGIEUX, 2), 4);
+        d.addXConstructions(new Construction(CardsName.MONASTERE, Color.RELIGIEUX, 3), 3);
+        d.addXConstructions(new Construction(CardsName.CATHEDRALE, Color.RELIGIEUX, 5), 2);
 
         manufacture.power(player, d);
         assertEquals(0,player.getHand().size());
@@ -91,7 +91,7 @@ class WonderTest {
         player.getCity().add(observatoire);
 
         Draw d = new Draw();
-        d.addXConstructions(new Constructions("Temple", Color.RELIGIEUX, 1), 1);
+        d.addXConstructions(new Constructions(CardsName.TEMPLE, Color.RELIGIEUX, 1), 1);
         d.addXConstructions(new Constructions("Eglise", Color.RELIGIEUX, 2), 1);
         d.addXConstructions(new Constructions("Monastère", Color.RELIGIEUX, 3), 1);
         d.addXConstructions(new Constructions("Cathédrale", Color.RELIGIEUX, 5), 1);
@@ -104,8 +104,8 @@ class WonderTest {
 
     @Test
     void testEquals() {
-        Wonder wonder3 = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
-        Wonder wonder4 = new Wonder("JE TEST OK ?", 3, WondersPower.COUR_DES_MIRACLES);
+        Wonder wonder3 = new Wonder(CardsName.COUR_DES_MIRACLES, 3, WondersPower.COUR_DES_MIRACLES);
+        Wonder wonder4 = new Wonder(CardsName.NO_NAME, 3, WondersPower.COUR_DES_MIRACLES);
         assertEquals(wonder, wonder3);
         assertNotEquals(wonder, wonder2);
         assertEquals(wonder, wonder4);
@@ -113,14 +113,14 @@ class WonderTest {
 
     @Test
     void testSetColor(){
-        Wonder wonder5 = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
+        Wonder wonder5 = new Wonder(CardsName.COUR_DES_MIRACLES, 3, WondersPower.COUR_DES_MIRACLES);
         wonder5.setColor(Color.SOLDATESQUE);
         assertEquals(Color.SOLDATESQUE, wonder5.getColor());
     }
 
     @Test
     void testHashCode() {
-        Wonder w = new Wonder("test hashcode", 3, WondersPower.MANUFACTURE);
+        Wonder w = new Wonder(CardsName.NO_NAME, 3, WondersPower.MANUFACTURE);
         assertEquals(WondersPower.MANUFACTURE.hashCode(), w.hashCode());
     }
 }

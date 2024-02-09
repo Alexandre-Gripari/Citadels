@@ -112,7 +112,7 @@ public enum Character{
         @Override
         public Construction ability(Construction c, Player self, Player opponent){
             int gold = 0;
-            if (c != null && !c.getName().equals("Donjon")) {
+            if (c != null && !c.getName().equals(CardsName.DONJON)) {
                 opponent.destroyConstruction(c);
                 self.addGold(-c.getValue()+1);
                 MyLogger.log(Level.INFO, "Le joueur " + self.getNumber() + " a détruit la construction " + c.getName() + " du joueur " + opponent.getNumber());

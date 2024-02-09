@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.CardsName;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 
@@ -38,7 +39,7 @@ public class Draw {
 
     public Construction draw() {
         if (drawDeck.isEmpty()) {
-            return new Construction("pioche vide", Color.NEUTRE, 0);
+            return new Construction(CardsName.EMPTY_DRAW, Color.NEUTRE, 0);
         }
         return drawDeck.poll();
     }

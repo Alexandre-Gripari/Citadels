@@ -1,15 +1,15 @@
 package fr.cotedazur.univ.polytech.startingpoint.cards;
 
 public abstract class Card {
-    protected String name;
+    protected CardsName name;
     protected Color color;
 
-    protected Card(String name, Color color){
+    protected Card(CardsName name, Color color){
         this.name=name;
         this.color=color;
     }
 
-    public String getName(){
+    public CardsName getName(){
         return this.name;
     }
 
@@ -19,7 +19,7 @@ public abstract class Card {
 
     @Override
     public String toString(){
-        return this.name;
+        return this.name.getCardName();
     }
 
 }

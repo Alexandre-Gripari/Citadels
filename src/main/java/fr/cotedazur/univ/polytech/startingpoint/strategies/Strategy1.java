@@ -34,7 +34,6 @@ public class Strategy1 extends Strategy{
         characterPriority.add(Character.ARCHITECTE);
         characterPriority.add(Character.ROI);
         if (!hand.isEmpty() && averageCostInHand(hand, hand.size()) > 4) characterPriority.add(Character.MAGICIEN);
-        // en attende de la méthode qui arrangera les persos avec une couleur;
         characterPriority.add(Character.CONDOTTIERE);
         characterPriority.add(Character.EVEQUE);
         characterPriority.add(Character.MARCHAND);
@@ -46,7 +45,7 @@ public class Strategy1 extends Strategy{
 
     @Override
     public Construction chooseCard(List<Construction> constructions, Player player) {
-        Construction c = new Construction("null", Color.NEUTRE, 10);
+        Construction c = new Construction(CardsName.NO_NAME, Color.NEUTRE, 10);
 
         for (Construction construction : constructions) {
             if (construction.getValue() < c.getValue() && !player.getHand().contains(construction)
@@ -54,7 +53,7 @@ public class Strategy1 extends Strategy{
             if (construction.getValue() == c.getValue() && construction.getColor() == Color.MERVEILLEUX) c = construction;
         }
 
-        if (c.getName().equals("null")) c = constructions.get(0);
+        if (c.getName().getCardName().equals("no name")) c = constructions.get(0);
         constructions.remove(c);
         return c;
     }
@@ -69,13 +68,13 @@ public class Strategy1 extends Strategy{
     public void play(Player[] players, Draw draw) {
         for (Wonder wonder : players[0].getWonders()) {
             switch (wonder.getName()) {
-                case "Laboratoire":
+                case LABORATOIRE:
                     capacityLaboratoire(players, draw);
                     break;
-                case "Manufacture":
+                case MANUFACTURE:
                     capacityManufacture(players, draw);
                     break;
-                case "Ecole de magie":
+                case ECOLE_DE_MAGIE:
                     capacityEcoleDeMagie(players);
                     break;
                 default:
@@ -84,7 +83,7 @@ public class Strategy1 extends Strategy{
         }
         super.play(players, draw);
         for (Wonder wonder : players[0].getWonders()) {
-            if (wonder.getName().equals("Ecole de magie")) wonder.setColor(Color.MERVEILLEUX);
+            if (wonder.getName().equals(CardsName.ECOLE_DE_MAGIE)) wonder.setColor(Color.MERVEILLEUX);
         }
     }
 
@@ -98,7 +97,7 @@ public class Strategy1 extends Strategy{
     public int goldOrCard(Player[] players) {
         if (players[0].getHand().isEmpty()) {
             for (Wonder w : players[0].getWonders()) {
-                if (w.getName().equals("Observatoire") || w.getName().equals("Bibliothèque")) {
+                if (w.getName().equals(CardsName.OBSERVATOIRE) || w.getName().equals(CardsName.BIBLIOTHEQUE)) {
                     return -players[0].getWonders().indexOf(w);
                 }
             }
@@ -192,7 +191,7 @@ public class Strategy1 extends Strategy{
     public int minCostInCity(City city) {
         int minCost = Integer.MAX_VALUE;
         for (Construction c : city.getCity()) {
-            if (c.getValue() < minCost && !Objects.equals(c.getName(), "Donjon")) minCost = c.getValue();
+            if (c.getValue() < minCost && !Objects.equals(c.getName(), CardsName.DONJON)) minCost = c.getValue();
         }
         return minCost;
     }
@@ -202,7 +201,7 @@ public class Strategy1 extends Strategy{
         int index = -1;
         for (int i = 0; i < city.size(); i++) {
             int cityValue = city.get(i).getValue();
-            if (cityValue < minCost && !Objects.equals(city.get(i).getName(), "Donjon")) {
+            if (cityValue < minCost && !Objects.equals(city.get(i).getName(), CardsName.DONJON)) {
                 index = i;
                 minCost = cityValue;
             }

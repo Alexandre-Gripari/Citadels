@@ -15,9 +15,9 @@ class WondersPowerTest {
 
     Draw draw = new Draw();
     Player player1 = new Player(1, new Hand());
-    Wonder wonder = new Wonder("Cimetière", 3, WondersPower.CIMETIERE);
-    Construction constructions = new Construction("Test", Color.COMMERCIAL, 1);
-    Construction constructions2 = new Construction("Test2", Color.COMMERCIAL, 1);
+    Wonder wonder = new Wonder(CardsName.CIMETIERE, 3, WondersPower.CIMETIERE);
+    Construction constructions = new Construction(CardsName.NO_NAME, Color.COMMERCIAL, 1);
+    Construction constructions2 = new Construction(CardsName.NO_NAME, Color.COMMERCIAL, 1);
     Player player2 = new Player(2, new Hand());
     Player player3 = new Player(3, new Hand());
 
@@ -49,11 +49,11 @@ class WondersPowerTest {
     @Test
     void testPowerDonjon(){
         Player player4 = new Player(4, new Hand());
-        player4.getCity().add(new Wonder("Donjon", 3, WondersPower.DONJON));
+        player4.getCity().add(new Wonder(CardsName.DONJON, 3, WondersPower.DONJON));
         Player[] players = {player2, player4, player1};
         player2.setCharacter(Character.CONDOTTIERE);
         player2.addGold(10);
-        Construction donjon = new Wonder("Donjon",3, WondersPower.DONJON);
+        Construction donjon = new Wonder(CardsName.DONJON,3, WondersPower.DONJON);
         player2.getCharacter().ability(donjon, player2, player4);
         assertEquals(12, player2.getGold());
         assertEquals(1,player4.getCity().size());
@@ -65,13 +65,13 @@ class WondersPowerTest {
     void ecoleDeMagieTest() {
         City playerWithEcoleDeMagieCity = new City();
         Hand playerWithEcoleDeMagieHand = new Hand();
-        Wonder edm = new Wonder("Ecole de magie", 6, WondersPower.ECOLE_DE_MAGIE);
+        Wonder edm = new Wonder(CardsName.ECOLE_DE_MAGIE, 6, WondersPower.ECOLE_DE_MAGIE);
         playerWithEcoleDeMagieCity.add(edm);
         Player playerWithEcoleDeMagie = new Player(0,  2, playerWithEcoleDeMagieHand, playerWithEcoleDeMagieCity);
         playerWithEcoleDeMagie.getWonders().add(edm);
 
         Draw d = new Draw();
-        d.addXConstructions(new Construction("testEDM", Color.MERVEILLEUX, 100), 100);
+        d.addXConstructions(new Construction(CardsName.NO_NAME, Color.MERVEILLEUX, 100), 100);
 
         assertEquals(2, playerWithEcoleDeMagie.getGold());
 
@@ -105,11 +105,11 @@ class WondersPowerTest {
     @Test
     void testPowerCourDesMiracles(){
         Player player4 = new Player(4, new Hand());
-        Wonder wonder = new Wonder("Cour des miracles", 3, WondersPower.COUR_DES_MIRACLES);
-        Construction c1 = new Construction("test1", Color.NOBLE, 1);
-        Construction c2 = new Construction("test2", Color.SOLDATESQUE, 2);
-        Construction c3 = new Construction("test3", Color.COMMERCIAL, 3);
-        Construction c5 = new Construction("test5", Color.RELIGIEUX, 5);
+        Wonder wonder = new Wonder(CardsName.COUR_DES_MIRACLES, 3, WondersPower.COUR_DES_MIRACLES);
+        Construction c1 = new Construction(CardsName.NO_NAME, Color.NOBLE, 1);
+        Construction c2 = new Construction(CardsName.NO_NAME, Color.SOLDATESQUE, 2);
+        Construction c3 = new Construction(CardsName.NO_NAME, Color.COMMERCIAL, 3);
+        Construction c5 = new Construction(CardsName.NO_NAME, Color.RELIGIEUX, 5);
         player4.getCity().add(wonder);
         wonder.getWondersPower().power(player4.getCity(), wonder);
         assertEquals(Color.RELIGIEUX, wonder.getColor());
@@ -129,11 +129,11 @@ class WondersPowerTest {
     void testPowerLaboratoire(){
         Draw d = new Draw();
         Player player4 = new Player(4, new Hand());
-        Wonder wonder = new Wonder("Laboratoire", 5, WondersPower.LABORATOIRE);
-        Construction c1 = new Construction("test1", Color.NOBLE, 1);
-        Construction c2 = new Construction("test2", Color.SOLDATESQUE, 2);
-        Construction c3 = new Construction("test3", Color.COMMERCIAL, 3);
-        Construction c5 = new Construction("test5", Color.RELIGIEUX, 5);
+        Wonder wonder = new Wonder(CardsName.LABORATOIRE, 5, WondersPower.LABORATOIRE);
+        Construction c1 = new Construction(CardsName.NO_NAME, Color.NOBLE, 1);
+        Construction c2 = new Construction(CardsName.NO_NAME, Color.SOLDATESQUE, 2);
+        Construction c3 = new Construction(CardsName.NO_NAME, Color.COMMERCIAL, 3);
+        Construction c5 = new Construction(CardsName.NO_NAME, Color.RELIGIEUX, 5);
         player1.getHand().add(c1);
         player1.getHand().add(c2);
         player1.getHand().add(c3);

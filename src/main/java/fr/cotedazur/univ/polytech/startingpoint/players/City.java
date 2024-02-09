@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.CardsName;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
@@ -30,11 +31,11 @@ public class City{
     public int cityValue(){
         int value=0;
         for(int i=0;i<this.size();i++){
-            if (this.get(i).getName().equals("Cour des miracles")) {
+            if (this.get(i).getName().equals(CardsName.COUR_DES_MIRACLES)) {
                 Wonder temp = (Wonder) this.get(i);
                 temp.getWondersPower().power(this, temp);
             }
-            if (this.get(i).getName().equals("Dracoport") || this.get(i).getName().equals("Université")) value+=2;
+            if (this.get(i).getName().equals(CardsName.DRACOPORT) || this.get(i).getName().equals(CardsName.UNIVERSITE)) value+=2;
             value+=this.get(i).getValue();
         }
         if (missingColor() == Color.NEUTRE) value+=3; // Bonus si toutes les couleurs sont présentes dans la cité

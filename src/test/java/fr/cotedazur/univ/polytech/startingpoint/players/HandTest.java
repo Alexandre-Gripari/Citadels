@@ -1,5 +1,6 @@
 package fr.cotedazur.univ.polytech.startingpoint.players;
 
+import fr.cotedazur.univ.polytech.startingpoint.cards.CardsName;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import org.junit.jupiter.api.Test;
@@ -11,9 +12,9 @@ class HandTest {
     @Test
     void testMin() {
         Hand hand = new Hand();
-        Construction c1 = new Construction("c1", Color.RELIGIEUX, 5);
-        Construction c2 = new Construction("c2", Color.MERVEILLEUX, 3);
-        Construction c3 = new Construction("c3", Color.COMMERCIAL, 1);
+        Construction c1 = new Construction(CardsName.DRACOPORT, Color.RELIGIEUX, 5);
+        Construction c2 = new Construction(CardsName.DONJON, Color.MERVEILLEUX, 3);
+        Construction c3 = new Construction(CardsName.MARCHE, Color.COMMERCIAL, 1);
 
         hand.add(c1);
         hand.add(c2);
