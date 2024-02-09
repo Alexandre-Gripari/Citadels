@@ -23,7 +23,7 @@ class StrategyTest {
     Player p1 = new Player(1,0, new Hand());
     Player p2 = new Player(2, new Hand());
 
-    Strategy strategy = new Strategy1("Agressif");
+    Strategy strategy = new StrategyAggro("Agressif");
     Construction cathédrale = new Construction(CardsName.CATHEDRALE, Color.RELIGIEUX, 5);
     Construction chateau = new Construction(CardsName.CHATEAU, Color.NOBLE, 4);
     Construction monastère = new Construction(CardsName.MONASTERE, Color.RELIGIEUX, 3);
@@ -47,7 +47,7 @@ class StrategyTest {
 
     @Test
     void getDescriptionTest() {
-        Strategy s = new Strategy1("la description");
+        Strategy s = new StrategyAggro("la description");
         assertEquals("la description", s.getDescription());
     }
 

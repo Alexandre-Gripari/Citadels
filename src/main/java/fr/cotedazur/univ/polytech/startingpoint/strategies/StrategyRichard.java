@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class StrategyRichard extends Strategy1{
+public class StrategyRichard extends StrategyAggro {
     private List<Character> characters = new ArrayList<>();
 
     public void setCharacters(List<Character> characters) {

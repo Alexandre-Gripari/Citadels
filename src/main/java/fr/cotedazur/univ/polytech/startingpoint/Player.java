@@ -8,7 +8,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
-import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyAggro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class Player implements Comparable<Player> {
     private final static Logger LOGGER = Logger.getLogger(Player.class.getName());
 
     public Player(int i, int gold, Hand hand, City city) {
-        this(i,gold,hand,city,new Strategy1("Agressif"));
+        this(i,gold,hand,city,new StrategyAggro("Agressif"));
     }
 
     public void kill() {
@@ -81,11 +81,11 @@ public class Player implements Comparable<Player> {
     public void resurrect(){this.isDead = false;}
 
     public Player(int number, int gold, Hand hand){
-        this(number, gold, hand, new City(), new Strategy1("Agressif"));
+        this(number, gold, hand, new City(), new StrategyAggro("Agressif"));
     }
 
     public Player(int number, Hand hand){
-        this(number, 2, hand, new City(), new Strategy1("Agressif"));
+        this(number, 2, hand, new City(), new StrategyAggro("Agressif"));
     }
 
     public void setGold(int gold) {

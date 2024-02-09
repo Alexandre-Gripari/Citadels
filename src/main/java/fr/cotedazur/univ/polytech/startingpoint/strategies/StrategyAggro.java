@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Strategy1 extends Strategy{
+public class StrategyAggro extends Strategy{
 
-    public Strategy1(String description) {
+    public StrategyAggro(String description) {
         super(description);
     }
 

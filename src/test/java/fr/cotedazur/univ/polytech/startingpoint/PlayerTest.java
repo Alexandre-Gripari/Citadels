@@ -5,7 +5,7 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
-import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyAggro;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -230,7 +230,7 @@ class PlayerTest {
     @Test
     void testPick() {
         init();
-        Strategy1 s = new Strategy1("Test");
+        StrategyAggro s = new StrategyAggro("Test");
         Player p = new Player(0, 2, new Hand(), new City(), s);
 
         p.pick(draw, s.goldOrCard(new Player[]{p}));

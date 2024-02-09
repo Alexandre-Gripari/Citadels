@@ -8,15 +8,13 @@ import com.opencsv.exceptions.CsvException;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 
-import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyAggro;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyEco;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyRichard;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +45,7 @@ public class Main {
         Player[] players = new Player[]{p1, p2, p3, p4};
         Player p5 = new Player(5, 2, new Hand(), new City(), new StrategyRichard("Richard"));
         Player p6 = new Player(6, 2, new Hand(), new City(), new StrategyRichard("Richard2"));
-        Player p7 = new Player(7, 2, new Hand(), new City(), new Strategy1("Agro"));
+        Player p7 = new Player(7, 2, new Hand(), new City(), new StrategyAggro("Agro"));
         Player p8 = new Player(8, 2, new Hand(), new City(), new StrategyEco("Lamiri"));
         Player[] playersRichard = new Player[]{p5, p6, p7, p8};
         if (twoThousands) {

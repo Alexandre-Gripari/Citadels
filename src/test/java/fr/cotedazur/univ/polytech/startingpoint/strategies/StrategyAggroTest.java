@@ -18,7 +18,7 @@ import java.util.logging.Level;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Strategy1Test {
+class StrategyAggroTest {
 
     Construction temple = new Construction(CardsName.TEMPLE, Color.RELIGIEUX, 1);
     Construction eglise = new Construction(CardsName.EGLISE, Color.RELIGIEUX, 2);
@@ -54,7 +54,7 @@ class Strategy1Test {
 
     @Test
     void testChooseCard() {
-        Strategy1 s = new Strategy1("Test");
+        StrategyAggro s = new StrategyAggro("Test");
         Player p = new Player(0, 2, new Hand(), new City(), s);
         p.getCity().add(temple);
         p.getCity().add(palais);
@@ -77,7 +77,7 @@ class Strategy1Test {
 
         City city = new City();
 
-        Strategy1 s = new Strategy1("Test");
+        StrategyAggro s = new StrategyAggro("Test");
 
         Player player = new Player(1, 2, hand, city,s);
 
@@ -89,7 +89,7 @@ class Strategy1Test {
 
     @Test
     void testGoldOrCard() {
-        Strategy1 s = new Strategy1("Test");
+        StrategyAggro s = new StrategyAggro("Test");
         Player p = new Player(0, 2, new Hand(), new City(), s);
         Draw d = new Draw();
 
@@ -110,7 +110,7 @@ class Strategy1Test {
         assertEquals(1, s.goldOrCard(new Player[]{p}));
     }
 
-    Strategy1 strat;
+    StrategyAggro strat;
     Player p1;
     Hand h1;
     Player p2;
@@ -125,7 +125,7 @@ class Strategy1Test {
     @BeforeEach
     void init() {
         MyLogger.setLogLevel(Level.OFF);
-        strat = new Strategy1("rush");
+        strat = new StrategyAggro("rush");
         h1 = new Hand();
         p1 = new Player(1, h1);
         h2 = new Hand();
@@ -413,7 +413,7 @@ class Strategy1Test {
 
     @Test
     void testChooseCharacter() {
-        Strategy1 strategy1 = new Strategy1("Agressif");
+        StrategyAggro strategy1 = new StrategyAggro("Agressif");
         assertEquals(Character.MAGICIEN, strategy1.chooseCharacter(player, characters, players3));
         player.getHand().add(cathedrale);
         player.getHand().add(chateau);
@@ -426,7 +426,7 @@ class Strategy1Test {
 
     @Test
     void testGetCharacterPriority() {
-        Strategy1 strategy1 = new Strategy1("Agressif");
+        StrategyAggro strategy1 = new StrategyAggro("Agressif");
         List<Character> characterPriority = strategy1.getCharacterPriority(players3);
         assertEquals(Character.ARCHITECTE, characterPriority.get(0));
         assertEquals(Character.ROI, characterPriority.get(1));

@@ -77,7 +77,7 @@ class StrategyRichardTest {
 
         City city = new City();
 
-        Strategy1 s = new Strategy1("Test");
+        StrategyAggro s = new StrategyAggro("Test");
 
         Player player = new Player(1, 2, hand, city,s);
 

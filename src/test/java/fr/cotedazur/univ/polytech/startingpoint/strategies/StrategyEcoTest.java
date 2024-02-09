@@ -91,7 +91,7 @@ class StrategyEcoTest {
     }
     @Test
     void testChooseCard() {
-        Strategy1 s = new Strategy1("Test");
+        StrategyAggro s = new StrategyAggro("Test");
         Player p = new Player(0, 2, new Hand(), new City(), s);
         p.getCity().add(temple);
         p.getCity().add(palais);

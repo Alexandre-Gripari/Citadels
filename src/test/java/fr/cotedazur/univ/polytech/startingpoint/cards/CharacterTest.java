@@ -6,7 +6,7 @@ import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy;
-import fr.cotedazur.univ.polytech.startingpoint.strategies.Strategy1;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyAggro;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ class CharacterTest {
     Player p2;
     Player p3;
 
-    Strategy s1 = new Strategy1("Agressif");
+    Strategy s1 = new StrategyAggro("Agressif");
 
     @BeforeEach
     void init1() {
