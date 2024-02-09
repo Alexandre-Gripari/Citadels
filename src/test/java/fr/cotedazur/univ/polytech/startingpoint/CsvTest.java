@@ -1,13 +1,11 @@
 package fr.cotedazur.univ.polytech.startingpoint;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
-import com.opencsv.exceptions.CsvValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -15,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CsvTest {
     private final List<String[]> testString = new ArrayList<>();
-    private String testPath = "test/test.csv";
 
     @BeforeEach
     void init() {
@@ -27,6 +24,9 @@ class CsvTest {
 
     @Test
     void testAppendIntoCsvFile() throws IOException, CsvException {
+        String testPath = "test/test.csv";
+        File fichier = new File(testPath);
+        fichier.delete();
         Csv.appendIntoCsvFile(testPath, testString);
         assertTrue(new File(testPath).exists());
         CSVReader reader = new CSVReader(new FileReader(testPath));

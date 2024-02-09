@@ -17,8 +17,11 @@ public class Construction extends Card {
         this.value = value;
     }
 
-    public boolean equals(Construction c){
-        return this.name.equals(c.getName());
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (!(o instanceof Wonder)) return false;
+        return this.getName().equals(((Construction)o).getName());
     }
 
     public String toString() {

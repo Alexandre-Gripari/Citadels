@@ -16,6 +16,12 @@ public abstract class Card {
     public Color getColor(){
         return this.color;
     }
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (!(o instanceof Card)) return false;
+        return this.getName().equals(((Card)o).getName());
+    }
 
     @Override
     public String toString(){
