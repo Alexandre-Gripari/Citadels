@@ -22,7 +22,8 @@ public abstract class Card {
         if (!(o instanceof Card)) return false;
         return this.getName().equals(((Card)o).getName());
     }
-
+    @Override
+    public int hashCode(){ return this.getName().hashCode();}
     @Override
     public String toString(){
         return this.name.getCardName();

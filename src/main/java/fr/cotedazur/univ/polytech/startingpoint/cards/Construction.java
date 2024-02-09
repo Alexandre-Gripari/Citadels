@@ -23,7 +23,9 @@ public class Construction extends Card {
         if (!(o instanceof Wonder)) return false;
         return this.getName().equals(((Construction)o).getName());
     }
-
+    @Override
+    public int hashCode(){return super.hashCode();}
+    @Override
     public String toString() {
         return super.toString() + "(" + value + ")";
     }
