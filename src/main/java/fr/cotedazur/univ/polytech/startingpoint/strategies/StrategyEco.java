@@ -191,32 +191,11 @@ public class StrategyEco extends Strategy{
         if (biggestCitySize == 0) Character.CONDOTTIERE.ability(null, players[0], null); // On récupère juste l'or
         else {
             int consToDestructIndex = minCostInCityIndex(players[biggestCityIndex].getCity());
-            if (players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue()) {
+            if (consToDestructIndex != -1 && players[0].getGold()-1 >= players[biggestCityIndex].getCity().get(consToDestructIndex).getValue()) {
                 WondersPower.CIMETIERE.power(players[biggestCityIndex].getCity().get(consToDestructIndex), players);
                 Character.CONDOTTIERE.ability(players[biggestCityIndex].getCity().get(consToDestructIndex), players[0], players[biggestCityIndex]);
             }
         }
-    }
-
-    public int minCostInCity(City city) {
-        int minCost = Integer.MAX_VALUE;
-        for (Construction c : city.getCity()) {
-            if (c.getValue() < minCost && !Objects.equals(c.getName(), CardsName.DONJON)) minCost = c.getValue();
-        }
-        return minCost;
-    }
-
-    public int minCostInCityIndex(City city) {
-        int minCost = Integer.MAX_VALUE;
-        int index = -1;
-        for (int i = 0; i < city.size(); i++) {
-            int cityValue = city.get(i).getValue();
-            if (cityValue < minCost && !Objects.equals(city.get(i).getName(), CardsName.DONJON)) {
-                index = i;
-                minCost = cityValue;
-            }
-        }
-        return index;
     }
 
     public void capacityLaboratoire(Player[] players, Draw draw) {

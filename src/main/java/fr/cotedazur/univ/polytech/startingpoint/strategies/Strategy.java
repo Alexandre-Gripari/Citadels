@@ -2,8 +2,10 @@ package fr.cotedazur.univ.polytech.startingpoint.strategies;
 
 import fr.cotedazur.univ.polytech.startingpoint.Draw;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
+import fr.cotedazur.univ.polytech.startingpoint.cards.CardsName;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
+import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
 import java.util.*;
 
@@ -178,6 +180,27 @@ public abstract class Strategy {
             if (player.getCity().size() >= size && player.getCity().size() != 8 && player != players[0]) size = player.getCity().size();
         }
         return size;
+    }
+
+    public int minCostInCity(City city) {
+        int minCost = Integer.MAX_VALUE;
+        for (Construction c : city.getCity()) {
+            if (c.getValue() < minCost && !Objects.equals(c.getName(), CardsName.DONJON)) minCost = c.getValue();
+        }
+        return minCost;
+    }
+
+    public int minCostInCityIndex(City city) {
+        int minCost = Integer.MAX_VALUE;
+        int index = -1;
+        for (int i = 0; i < city.size(); i++) {
+            int cityValue = city.get(i).getValue();
+            if (cityValue < minCost && !Objects.equals(city.get(i).getName(), CardsName.DONJON)) {
+                index = i;
+                minCost = cityValue;
+            }
+        }
+        return index;
     }
 }
 

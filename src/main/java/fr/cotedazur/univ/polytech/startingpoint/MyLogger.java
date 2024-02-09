@@ -1,6 +1,4 @@
 package fr.cotedazur.univ.polytech.startingpoint;
-
-import java.io.IOException;
 import java.util.logging.*;
 
 public class MyLogger  {
@@ -18,6 +16,7 @@ public class MyLogger  {
         if(logger == null){
             new MyLogger();
         }
+        assert logger!=null;
         return logger;
     }
     public static void log(Level level, String msg){
