@@ -148,8 +148,6 @@ public class Game {
         if (refValue == players[players.length-2].getScore()) players[players.length-1].setNumberOfDraw(players[players.length-1].getNumberOfDraw() + 1);
         else players[players.length-1].setNumberOfVictory(players[players.length-1].getNumberOfVictory() + 1);
         players[players.length-1].setCumulatedScore(players[players.length-1].getCumulatedScore() + players[players.length-1].getScore());
-
-
     }
 
     public void sortPlayersByPoints(){

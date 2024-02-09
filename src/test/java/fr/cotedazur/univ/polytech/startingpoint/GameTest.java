@@ -3,7 +3,11 @@ package fr.cotedazur.univ.polytech.startingpoint;
 import fr.cotedazur.univ.polytech.startingpoint.cards.CardsName;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
+import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.players.Hand;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyAggro;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyEco;
+import fr.cotedazur.univ.polytech.startingpoint.strategies.StrategyRichard;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -206,5 +210,41 @@ class GameTest {
         assertEquals(0, p4.getCity().size());
         assertEquals(0, p4.getHand().size());
         assertEquals(2, p4.getGold());
+    }
+    @Test
+    void testCalculateStats(){
+        Player p5 = new Player(5, 2, new Hand(), new City(), new StrategyRichard("Richard"));
+        Player p6 = new Player(6, 2, new Hand(), new City(), new StrategyRichard("Richard2"));
+        Player p7 = new Player(7, 2, new Hand(), new City(), new StrategyAggro("Agro"));
+        Player p8 = new Player(8, 2, new Hand(), new City(), new StrategyEco("Lamiri"));
+        Player[] playersRichard = new Player[]{p5, p6, p7, p8};
+        Game game = new Game(playersRichard);
+        p5.setScore(2);
+        p6.setScore(4);
+        p7.setScore(7);
+        p8.setScore(65);
+        game.calculateStats();
+        assertEquals(1,p8.getNumberOfVictory());
+        assertEquals(1,p7.getNumberOfDefeat());
+        assertEquals(1,p6.getNumberOfDefeat());
+        assertEquals(1,p5.getNumberOfDefeat());
+        p7.setScore(65);
+        game.calculateStats();
+        assertEquals(1,p8.getNumberOfDraw());
+        assertEquals(1,p7.getNumberOfDraw());
+    }
+    @Test
+    void testRearrangePlayers(){
+        Player p5 = new Player(5, 2, new Hand(), new City(), new StrategyRichard("Richard"));
+        Player p6 = new Player(6, 2, new Hand(), new City(), new StrategyRichard("Richard2"));
+        Player p7 = new Player(7, 2, new Hand(), new City(), new StrategyAggro("Agro"));
+        Player p8 = new Player(8, 2, new Hand(), new City(), new StrategyEco("Lamiri"));
+        Player[] playersRichard = new Player[]{p8, p6, p7, p5};
+        Game game = new Game(playersRichard);
+        game.rearrangePlayer();
+        assertEquals(p5,playersRichard[0]);
+        assertEquals(p6,playersRichard[1]);
+        assertEquals(p7,playersRichard[2]);
+        assertEquals(p8,playersRichard[3]);
     }
 }

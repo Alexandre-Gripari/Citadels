@@ -5,13 +5,11 @@ import fr.cotedazur.univ.polytech.startingpoint.cards.Color;
 import fr.cotedazur.univ.polytech.startingpoint.Player;
 import fr.cotedazur.univ.polytech.startingpoint.cards.*;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Character;
-import fr.cotedazur.univ.polytech.startingpoint.players.City;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Construction;
 import fr.cotedazur.univ.polytech.startingpoint.cards.Wonder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 /*Le bot qui préfère économiser son or pour poser la carte au coût le plus élevé de sa main*/
@@ -41,10 +39,10 @@ public class StrategyEco extends Strategy{
     }
 
     public Construction constructionToBuild(Player player) {
-        List<Construction> main = player.getHand().getHand();
+        List<Construction> main = new ArrayList<>(player.getHand().getHand());
         Construction choix = chooseCard(main,player);
         if (choix == null) return null;
-        while(choix.getValue()> player.getGold()){
+        while(choix.getValue()> player.getGold() || player.getCity().getCity().contains(choix)){
             main.remove(choix);
             if(main.isEmpty()) return null;
             choix = chooseCard(main,player);

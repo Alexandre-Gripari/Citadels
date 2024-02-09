@@ -57,6 +57,12 @@ public class Main {
                 game.play();
                 game.calculateStats();
                 game.resetGame();
+
+                Game game2 = new Game(playersRichard);
+                game2.init();
+                game2.play();
+                game2.calculateStats();
+                game2.resetGame();
             }
             MyLogger.setLogLevel(Level.INFO);
             for (Player player : players) {
@@ -64,15 +70,6 @@ public class Main {
                         + "(" + player.getNumberOfVictory() / 10 + "%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat() / 10 + "%)" +
                         " E:" + player.getNumberOfDraw() + "(" + player.getNumberOfDraw() / 10 + "%)" + " SM:" + player.getAverageScore());
             }
-            MyLogger.setLogLevel(Level.OFF);
-            for (int i = 0; i < 1000; i++) {
-                Game game = new Game(playersRichard);
-                game.init();
-                game.play();
-                game.calculateStats();
-                game.resetGame();
-            }
-            MyLogger.setLogLevel(Level.INFO);
             for (Player player : playersRichard) {
                 MyLogger.log(Level.INFO, "Player " + player.getStrategy().getDescription() + " V:" + player.getNumberOfVictory()
                         + "(" + player.getNumberOfVictory() / 10 + "%)" + " D:" + player.getNumberOfDefeat() + "(" + player.getNumberOfDefeat() / 10 + "%)" +
@@ -85,7 +82,7 @@ public class Main {
         } else if (csv) {
             File fichier = new File(Csv.getFilePath());
             if (fichier.exists()) {
-                try(CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()))) {
+                    CSVReader reader = new CSVReader(new FileReader(Csv.getFilePath()));
                     List<String[]> oldData = reader.readAll();
                     for (int a = 0; a < playersRichard.length; a++) {
                         playersRichard[a].setNumberOfVictory(Integer.parseInt(oldData.get(a + 1)[1]));
@@ -97,8 +94,6 @@ public class Main {
                         playersRichard[a].setCumulatedScore(Integer.parseInt(oldData.get(a + 1)[7]));
                         playersRichard[a].setAverageScore(Float.parseFloat(oldData.get(a + 1)[8]));
                     }
-                } catch (IOException e) {
-                    MyLogger.log(Level.WARNING, "Erreur de lecture" + e.getMessage());
                 }
                 MyLogger.setLogLevel(Level.OFF);
                 for (int i = 0; i < 2000; i++) {
@@ -119,4 +114,3 @@ public class Main {
         }
 
     }
-}

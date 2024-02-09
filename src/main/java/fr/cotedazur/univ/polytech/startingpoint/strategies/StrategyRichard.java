@@ -191,7 +191,6 @@ public class StrategyRichard extends StrategyAggro {
             playDefault(players, draw);
             return;
         }
-
         super.magician(players, draw);
     }
 }

@@ -15,7 +15,7 @@ public class Csv {
     private static final String FILEPATH = "stats/gamestats.csv";
     public static void createFile(String filePath) throws IOException {
         File fichier = new File(filePath);
-            if (fichier.getParentFile().mkdirs() && (!fichier.createNewFile())) {MyLogger.log(Level.WARNING, "Impossible de créer le fichier");
+            if (fichier.getParentFile().mkdirs() &&(!fichier.createNewFile())) {MyLogger.log(Level.WARNING, "Impossible de créer le fichier");
             }
     }
 
